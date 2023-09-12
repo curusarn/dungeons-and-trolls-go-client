@@ -11,11 +11,11 @@ package swagger
 type DungeonsandtrollsSkillAttributes struct {
 	Strength *DungeonsandtrollsAttributes `json:"strength,omitempty"`
 	Dexterity *DungeonsandtrollsAttributes `json:"dexterity,omitempty"`
-	Inteligence *DungeonsandtrollsAttributes `json:"inteligence,omitempty"`
+	Intelligence *DungeonsandtrollsAttributes `json:"intelligence,omitempty"`
 	Willpower *DungeonsandtrollsAttributes `json:"willpower,omitempty"`
 	Constitution *DungeonsandtrollsAttributes `json:"constitution,omitempty"`
-	SlashArmor *DungeonsandtrollsAttributes `json:"slashArmor,omitempty"`
-	PiercingResist *DungeonsandtrollsAttributes `json:"piercingResist,omitempty"`
+	SlashResist *DungeonsandtrollsAttributes `json:"slashResist,omitempty"`
+	PierceResist *DungeonsandtrollsAttributes `json:"pierceResist,omitempty"`
 	FireResist *DungeonsandtrollsAttributes `json:"fireResist,omitempty"`
 	PoisonResist *DungeonsandtrollsAttributes `json:"poisonResist,omitempty"`
 	ElectricResist *DungeonsandtrollsAttributes `json:"electricResist,omitempty"`

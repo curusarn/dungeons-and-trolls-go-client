@@ -9,6 +9,6 @@
 package swagger
 
 type DungeonsandtrollsPosition struct {
-	X int32 `json:"x,omitempty"`
-	Y int32 `json:"y,omitempty"`
+	PositionX int32 `json:"positionX,omitempty"`
+	PositionY int32 `json:"positionY,omitempty"`
 }

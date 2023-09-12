@@ -11,7 +11,7 @@ package swagger
 type DungeonsandtrollsSkill struct {
 	Id string `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
-	TargetType *SkillTarget `json:"targetType,omitempty"`
+	Target *SkillTarget `json:"target,omitempty"`
 	Effects []DungeonsandtrollsEffect `json:"effects,omitempty"`
 	Cost *DungeonsandtrollsAttributes `json:"cost,omitempty"`
 	Range_ *DungeonsandtrollsAttributes `json:"range,omitempty"`
@@ -19,6 +19,6 @@ type DungeonsandtrollsSkill struct {
 	Duration *DungeonsandtrollsAttributes `json:"duration,omitempty"`
 	DamageAmount *DungeonsandtrollsAttributes `json:"damageAmount,omitempty"`
 	DamageType *DungeonsandtrollsDamageType `json:"damageType,omitempty"`
-	Caster *DungeonsandtrollsSkillEffect `json:"caster,omitempty"`
-	Target *DungeonsandtrollsSkillEffect `json:"target,omitempty"`
+	CasterEffects *DungeonsandtrollsSkillEffect `json:"casterEffects,omitempty"`
+	TargetEffects *DungeonsandtrollsSkillEffect `json:"targetEffects,omitempty"`
 }

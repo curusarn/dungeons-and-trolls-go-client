@@ -12,8 +12,9 @@ type DungeonsandtrollsItem struct {
 	Id string `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
 	Slot *DungeonsandtrollsItemType `json:"slot,omitempty"`
-	BuyPrice int32 `json:"buyPrice,omitempty"`
+	Price int32 `json:"price,omitempty"`
 	Requirements *DungeonsandtrollsAttributes `json:"requirements,omitempty"`
 	Attributes *DungeonsandtrollsAttributes `json:"attributes,omitempty"`
 	Skills []DungeonsandtrollsSkill `json:"skills,omitempty"`
+	Icon string `json:"icon,omitempty"`
 }

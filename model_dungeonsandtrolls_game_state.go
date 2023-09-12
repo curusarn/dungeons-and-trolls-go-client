@@ -10,11 +10,12 @@ package swagger
 
 type DungeonsandtrollsGameState struct {
 	Map_ *DungeonsandtrollsMap `json:"map,omitempty"`
-	Items []DungeonsandtrollsItem `json:"items,omitempty"`
+	ShopItems []DungeonsandtrollsItem `json:"shopItems,omitempty"`
 	Character *DungeonsandtrollsCharacter `json:"character,omitempty"`
 	CurrentPosition *DungeonsandtrollsCoordinates `json:"currentPosition,omitempty"`
+	CurrentLevel int32 `json:"currentLevel,omitempty"`
 	Tick string `json:"tick,omitempty"`
 	// List of events which occurred in the previous tick. Useful for visualising effects, debugging and communication.
 	Events []DungeonsandtrollsEvent `json:"events,omitempty"`
-	Score string `json:"score,omitempty"`
+	Score float32 `json:"score,omitempty"`
 }

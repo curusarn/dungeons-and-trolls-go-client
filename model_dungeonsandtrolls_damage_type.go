@@ -14,7 +14,7 @@ type DungeonsandtrollsDamageType string
 const (
 	NONE_DungeonsandtrollsDamageType DungeonsandtrollsDamageType = "none"
 	SLASH_DungeonsandtrollsDamageType DungeonsandtrollsDamageType = "slash"
-	PIERCING_DungeonsandtrollsDamageType DungeonsandtrollsDamageType = "piercing"
+	PIERCE_DungeonsandtrollsDamageType DungeonsandtrollsDamageType = "pierce"
 	FIRE_DungeonsandtrollsDamageType DungeonsandtrollsDamageType = "fire"
 	POISON_DungeonsandtrollsDamageType DungeonsandtrollsDamageType = "poison"
 	ELECTRIC_DungeonsandtrollsDamageType DungeonsandtrollsDamageType = "electric"

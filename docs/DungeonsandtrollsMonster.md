@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **Attributes** | [***DungeonsandtrollsAttributes**](dungeonsandtrollsAttributes.md) |  | [optional] [default to null]
 **Effects** | [**[]DungeonsandtrollsEffect**](dungeonsandtrollsEffect.md) |  | [optional] [default to null]
 **EquippedItems** | [**[]DungeonsandtrollsItem**](dungeonsandtrollsItem.md) |  | [optional] [default to null]
-**Score** | **string** |  | [optional] [default to null]
+**Score** | **float32** |  | [optional] [default to null]
 **Icon** | **string** |  | [optional] [default to null]
 **Algorithm** | **string** |  | [optional] [default to null]
 **Faction** | **string** |  | [optional] [default to null]

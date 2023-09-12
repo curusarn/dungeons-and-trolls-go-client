@@ -14,8 +14,8 @@ type DungeonsandtrollsAttributes struct {
 	Intelligence float32 `json:"intelligence,omitempty"`
 	Willpower float32 `json:"willpower,omitempty"`
 	Constitution float32 `json:"constitution,omitempty"`
-	SlashArmor float32 `json:"slashArmor,omitempty"`
-	PiercingResist float32 `json:"piercingResist,omitempty"`
+	SlashResist float32 `json:"slashResist,omitempty"`
+	PierceResist float32 `json:"pierceResist,omitempty"`
 	FireResist float32 `json:"fireResist,omitempty"`
 	PoisonResist float32 `json:"poisonResist,omitempty"`
 	ElectricResist float32 `json:"electricResist,omitempty"`

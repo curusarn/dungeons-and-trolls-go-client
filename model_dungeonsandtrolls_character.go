@@ -12,7 +12,7 @@ type DungeonsandtrollsCharacter struct {
 	Id string `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
 	Attributes *DungeonsandtrollsAttributes `json:"attributes,omitempty"`
-	Money string `json:"money,omitempty"`
+	Money int32 `json:"money,omitempty"`
 	Equip []DungeonsandtrollsItem `json:"equip,omitempty"`
-	Score string `json:"score,omitempty"`
+	Score float32 `json:"score,omitempty"`
 }

@@ -14,7 +14,7 @@ type DungeonsandtrollsMonster struct {
 	Attributes *DungeonsandtrollsAttributes `json:"attributes,omitempty"`
 	Effects []DungeonsandtrollsEffect `json:"effects,omitempty"`
 	EquippedItems []DungeonsandtrollsItem `json:"equippedItems,omitempty"`
-	Score string `json:"score,omitempty"`
+	Score float32 `json:"score,omitempty"`
 	Icon string `json:"icon,omitempty"`
 	Algorithm string `json:"algorithm,omitempty"`
 	Faction string `json:"faction,omitempty"`
