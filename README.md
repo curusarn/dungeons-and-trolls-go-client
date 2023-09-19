@@ -21,6 +21,7 @@ All URIs are relative to *https://dt.garage-trip.cz/*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*DungeonsAndTrollsApi* | [**DungeonsAndTrollsAssignSkillPoints**](docs/DungeonsAndTrollsApi.md#dungeonsandtrollsassignskillpoints) | **Post** /v1/assign-skill-points | Send multiple commands to the Character bound to the logged user. The order of execution is defined in the message.
 *DungeonsAndTrollsApi* | [**DungeonsAndTrollsBuy**](docs/DungeonsAndTrollsApi.md#dungeonsandtrollsbuy) | **Post** /v1/buy | Buy Items identified by the provided ID for the Character bound to the logged user.
 *DungeonsAndTrollsApi* | [**DungeonsAndTrollsCommands**](docs/DungeonsAndTrollsApi.md#dungeonsandtrollscommands) | **Post** /v1/commands | Send multiple commands to the Character bound to the logged user. The order of execution is defined in the message.
 *DungeonsAndTrollsApi* | [**DungeonsAndTrollsGame**](docs/DungeonsAndTrollsApi.md#dungeonsandtrollsgame) | **Get** /v1/game | Sends all info about the game.
@@ -43,7 +44,6 @@ Class | Method | HTTP request | Description
  - [DungeonsandtrollsDecoration](docs/DungeonsandtrollsDecoration.md)
  - [DungeonsandtrollsDroppable](docs/DungeonsandtrollsDroppable.md)
  - [DungeonsandtrollsEffect](docs/DungeonsandtrollsEffect.md)
- - [DungeonsandtrollsElements](docs/DungeonsandtrollsElements.md)
  - [DungeonsandtrollsEvent](docs/DungeonsandtrollsEvent.md)
  - [DungeonsandtrollsEventType](docs/DungeonsandtrollsEventType.md)
  - [DungeonsandtrollsGameState](docs/DungeonsandtrollsGameState.md)
@@ -59,12 +59,10 @@ Class | Method | HTTP request | Description
  - [DungeonsandtrollsMonster](docs/DungeonsandtrollsMonster.md)
  - [DungeonsandtrollsPosition](docs/DungeonsandtrollsPosition.md)
  - [DungeonsandtrollsRegistration](docs/DungeonsandtrollsRegistration.md)
- - [DungeonsandtrollsShortcut](docs/DungeonsandtrollsShortcut.md)
  - [DungeonsandtrollsSkill](docs/DungeonsandtrollsSkill.md)
  - [DungeonsandtrollsSkillAttributes](docs/DungeonsandtrollsSkillAttributes.md)
  - [DungeonsandtrollsSkillEffect](docs/DungeonsandtrollsSkillEffect.md)
  - [DungeonsandtrollsSkillUse](docs/DungeonsandtrollsSkillUse.md)
- - [DungeonsandtrollsStats](docs/DungeonsandtrollsStats.md)
  - [DungeonsandtrollsUser](docs/DungeonsandtrollsUser.md)
  - [DungeonsandtrollsWaypoint](docs/DungeonsandtrollsWaypoint.md)
  - [ProtobufNullValue](docs/ProtobufNullValue.md)

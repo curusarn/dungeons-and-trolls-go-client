@@ -12,7 +12,6 @@ type DungeonsandtrollsSkill struct {
 	Id string `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
 	Target *SkillTarget `json:"target,omitempty"`
-	Effects []DungeonsandtrollsEffect `json:"effects,omitempty"`
 	Cost *DungeonsandtrollsAttributes `json:"cost,omitempty"`
 	Range_ *DungeonsandtrollsAttributes `json:"range,omitempty"`
 	Radius *DungeonsandtrollsAttributes `json:"radius,omitempty"`

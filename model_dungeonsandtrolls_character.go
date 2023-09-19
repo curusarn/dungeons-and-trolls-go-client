@@ -15,4 +15,6 @@ type DungeonsandtrollsCharacter struct {
 	Money int32 `json:"money,omitempty"`
 	Equip []DungeonsandtrollsItem `json:"equip,omitempty"`
 	Score float32 `json:"score,omitempty"`
+	SkillPoints int32 `json:"skillPoints,omitempty"`
+	Effects []DungeonsandtrollsEffect `json:"effects,omitempty"`
 }

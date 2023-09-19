@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **Monsters** | [**[]DungeonsandtrollsMonster**](dungeonsandtrollsMonster.md) |  | [optional] [default to null]
 **Players** | [**[]DungeonsandtrollsCharacter**](dungeonsandtrollsCharacter.md) |  | [optional] [default to null]
 **IsStairs** | **bool** |  | [optional] [default to null]
-**Portals** | [**[]DungeonsandtrollsShortcut**](dungeonsandtrollsShortcut.md) |  | [optional] [default to null]
+**Portal** | [***DungeonsandtrollsWaypoint**](dungeonsandtrollsWaypoint.md) |  | [optional] [default to null]
 **Decorations** | [**[]DungeonsandtrollsDecoration**](dungeonsandtrollsDecoration.md) |  | [optional] [default to null]
 **Effects** | [**[]DungeonsandtrollsEffect**](dungeonsandtrollsEffect.md) |  | [optional] [default to null]
 **Items** | [**[]DungeonsandtrollsItem**](dungeonsandtrollsItem.md) |  | [optional] [default to null]

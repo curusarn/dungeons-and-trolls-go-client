@@ -11,11 +11,13 @@ package swagger
 type DungeonsandtrollsMonster struct {
 	Id string `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
-	Attributes *DungeonsandtrollsAttributes `json:"attributes,omitempty"`
+	Icon string `json:"icon,omitempty"`
+	Items []string `json:"items,omitempty"`
 	Effects []DungeonsandtrollsEffect `json:"effects,omitempty"`
+	LifePercentage float32 `json:"lifePercentage,omitempty"`
+	Attributes *DungeonsandtrollsAttributes `json:"attributes,omitempty"`
 	EquippedItems []DungeonsandtrollsItem `json:"equippedItems,omitempty"`
 	Score float32 `json:"score,omitempty"`
-	Icon string `json:"icon,omitempty"`
 	Algorithm string `json:"algorithm,omitempty"`
 	Faction string `json:"faction,omitempty"`
 	OnDeath []DungeonsandtrollsDroppable `json:"onDeath,omitempty"`

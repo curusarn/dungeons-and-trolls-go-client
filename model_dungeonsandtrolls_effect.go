@@ -9,11 +9,8 @@
 package swagger
 
 type DungeonsandtrollsEffect struct {
-	MinDamage *DungeonsandtrollsElements `json:"minDamage,omitempty"`
-	MaxDamage *DungeonsandtrollsElements `json:"maxDamage,omitempty"`
+	DamageAmount float32 `json:"damageAmount,omitempty"`
+	DamageType *DungeonsandtrollsDamageType `json:"damageType,omitempty"`
+	Effects *DungeonsandtrollsAttributes `json:"effects,omitempty"`
 	Duration int32 `json:"duration,omitempty"`
-	AreaOfEffect int32 `json:"areaOfEffect,omitempty"`
-	Boosts *DungeonsandtrollsAttributes `json:"boosts,omitempty"`
-	MinStats *DungeonsandtrollsStats `json:"minStats,omitempty"`
-	MaxStats *DungeonsandtrollsStats `json:"maxStats,omitempty"`
 }

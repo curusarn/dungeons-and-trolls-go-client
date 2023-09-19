@@ -13,7 +13,7 @@ type DungeonsandtrollsMapObjects struct {
 	Monsters []DungeonsandtrollsMonster `json:"monsters,omitempty"`
 	Players []DungeonsandtrollsCharacter `json:"players,omitempty"`
 	IsStairs bool `json:"isStairs,omitempty"`
-	Portals []DungeonsandtrollsShortcut `json:"portals,omitempty"`
+	Portal *DungeonsandtrollsWaypoint `json:"portal,omitempty"`
 	Decorations []DungeonsandtrollsDecoration `json:"decorations,omitempty"`
 	Effects []DungeonsandtrollsEffect `json:"effects,omitempty"`
 	Items []DungeonsandtrollsItem `json:"items,omitempty"`

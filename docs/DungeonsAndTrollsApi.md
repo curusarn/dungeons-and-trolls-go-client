@@ -4,6 +4,7 @@ All URIs are relative to *https://dt.garage-trip.cz/*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**DungeonsAndTrollsAssignSkillPoints**](DungeonsAndTrollsApi.md#DungeonsAndTrollsAssignSkillPoints) | **Post** /v1/assign-skill-points | Send multiple commands to the Character bound to the logged user. The order of execution is defined in the message.
 [**DungeonsAndTrollsBuy**](DungeonsAndTrollsApi.md#DungeonsAndTrollsBuy) | **Post** /v1/buy | Buy Items identified by the provided ID for the Character bound to the logged user.
 [**DungeonsAndTrollsCommands**](DungeonsAndTrollsApi.md#DungeonsAndTrollsCommands) | **Post** /v1/commands | Send multiple commands to the Character bound to the logged user. The order of execution is defined in the message.
 [**DungeonsAndTrollsGame**](DungeonsAndTrollsApi.md#DungeonsAndTrollsGame) | **Get** /v1/game | Sends all info about the game.
@@ -14,6 +15,32 @@ Method | HTTP request | Description
 [**DungeonsAndTrollsRespawn**](DungeonsAndTrollsApi.md#DungeonsAndTrollsRespawn) | **Post** /v1/respawn | Respawn the Character bound to the logged user.
 [**DungeonsAndTrollsSkill**](DungeonsAndTrollsApi.md#DungeonsAndTrollsSkill) | **Post** /v1/skill | Use a skill (provided by an item) by the Character bound to the logged user.
 [**DungeonsAndTrollsYell**](DungeonsAndTrollsApi.md#DungeonsAndTrollsYell) | **Post** /v1/yell | The Character bound to the logged user yells a messages (visible for everyone).
+
+# **DungeonsAndTrollsAssignSkillPoints**
+> interface{} DungeonsAndTrollsAssignSkillPoints(ctx, body)
+Send multiple commands to the Character bound to the logged user. The order of execution is defined in the message.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **body** | [**DungeonsandtrollsAttributes**](DungeonsandtrollsAttributes.md)|  | 
+
+### Return type
+
+[**interface{}**](interface{}.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **DungeonsAndTrollsBuy**
 > interface{} DungeonsAndTrollsBuy(ctx, body)

@@ -17,4 +17,5 @@ const (
 	BUY_DungeonsandtrollsEventType DungeonsandtrollsEventType = "BUY"
 	EQUIP_DungeonsandtrollsEventType DungeonsandtrollsEventType = "EQUIP"
 	ERROR__DungeonsandtrollsEventType DungeonsandtrollsEventType = "ERROR"
+	SKILL_DungeonsandtrollsEventType DungeonsandtrollsEventType = "SKILL"
 )
