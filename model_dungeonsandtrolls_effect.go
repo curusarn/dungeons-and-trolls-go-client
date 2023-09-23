@@ -13,4 +13,5 @@ type DungeonsandtrollsEffect struct {
 	DamageType *DungeonsandtrollsDamageType `json:"damageType,omitempty"`
 	Effects *DungeonsandtrollsAttributes `json:"effects,omitempty"`
 	Duration int32 `json:"duration,omitempty"`
+	CasterId string `json:"CasterId,omitempty"`
 }

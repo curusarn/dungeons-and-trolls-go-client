@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **Money** | **int32** |  | [optional] [default to null]
 **Equip** | [**[]DungeonsandtrollsItem**](dungeonsandtrollsItem.md) |  | [optional] [default to null]
 **Score** | **float32** |  | [optional] [default to null]
-**SkillPoints** | **int32** |  | [optional] [default to null]
+**SkillPoints** | **float32** |  | [optional] [default to null]
 **Effects** | [**[]DungeonsandtrollsEffect**](dungeonsandtrollsEffect.md) |  | [optional] [default to null]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

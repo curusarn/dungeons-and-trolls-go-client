@@ -11,7 +11,8 @@ package swagger
 type DungeonsandtrollsCommandsBatch struct {
 	Buy *DungeonsandtrollsIdentifiers `json:"buy,omitempty"`
 	PickUp *DungeonsandtrollsIdentifier `json:"pickUp,omitempty"`
-	Move *DungeonsandtrollsCoordinates `json:"move,omitempty"`
+	Move *DungeonsandtrollsPosition `json:"move,omitempty"`
 	Skill *DungeonsandtrollsSkillUse `json:"skill,omitempty"`
 	Yell *DungeonsandtrollsMessage `json:"yell,omitempty"`
+	AssignSkillPoints *DungeonsandtrollsAttributes `json:"assignSkillPoints,omitempty"`
 }

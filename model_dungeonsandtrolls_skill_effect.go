@@ -10,6 +10,6 @@ package swagger
 
 type DungeonsandtrollsSkillEffect struct {
 	Attributes *DungeonsandtrollsSkillAttributes `json:"attributes,omitempty"`
-	Flags []string `json:"flags,omitempty"`
+	Flags *DungeonsandtrollsSkillFlags `json:"flags,omitempty"`
 	Summons []DungeonsandtrollsDroppable `json:"summons,omitempty"`
 }

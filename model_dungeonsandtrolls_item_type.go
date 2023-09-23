@@ -12,7 +12,6 @@ type DungeonsandtrollsItemType string
 
 // List of dungeonsandtrollsItemType
 const (
-	NONE_DungeonsandtrollsItemType DungeonsandtrollsItemType = "none"
 	HEAD_DungeonsandtrollsItemType DungeonsandtrollsItemType = "head"
 	MAIN_HAND_DungeonsandtrollsItemType DungeonsandtrollsItemType = "mainHand"
 	OFF_HAND_DungeonsandtrollsItemType DungeonsandtrollsItemType = "offHand"

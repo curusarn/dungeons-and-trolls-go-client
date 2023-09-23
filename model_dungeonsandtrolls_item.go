@@ -17,4 +17,5 @@ type DungeonsandtrollsItem struct {
 	Attributes *DungeonsandtrollsAttributes `json:"attributes,omitempty"`
 	Skills []DungeonsandtrollsSkill `json:"skills,omitempty"`
 	Icon string `json:"icon,omitempty"`
+	Unidentified bool `json:"unidentified,omitempty"`
 }

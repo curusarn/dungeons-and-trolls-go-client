@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **Life** | [***DungeonsandtrollsAttributes**](dungeonsandtrollsAttributes.md) |  | [optional] [default to null]
 **Stamina** | [***DungeonsandtrollsAttributes**](dungeonsandtrollsAttributes.md) |  | [optional] [default to null]
 **Mana** | [***DungeonsandtrollsAttributes**](dungeonsandtrollsAttributes.md) |  | [optional] [default to null]
-**Scalar** | [***DungeonsandtrollsAttributes**](dungeonsandtrollsAttributes.md) |  | [optional] [default to null]
+**Constant** | [***DungeonsandtrollsAttributes**](dungeonsandtrollsAttributes.md) |  | [optional] [default to null]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

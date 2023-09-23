@@ -163,7 +163,7 @@ Assign skill point to the attribute for the Character bound to the logged user.
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **body** | [**DungeonsandtrollsCoordinates**](DungeonsandtrollsCoordinates.md)|  | 
+  **body** | [**DungeonsandtrollsPosition**](DungeonsandtrollsPosition.md)|  | 
 
 ### Return type
 

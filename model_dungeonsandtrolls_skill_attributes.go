@@ -22,5 +22,5 @@ type DungeonsandtrollsSkillAttributes struct {
 	Life *DungeonsandtrollsAttributes `json:"life,omitempty"`
 	Stamina *DungeonsandtrollsAttributes `json:"stamina,omitempty"`
 	Mana *DungeonsandtrollsAttributes `json:"mana,omitempty"`
-	Scalar *DungeonsandtrollsAttributes `json:"scalar,omitempty"`
+	Constant *DungeonsandtrollsAttributes `json:"constant,omitempty"`
 }
