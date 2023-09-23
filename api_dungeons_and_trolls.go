@@ -687,7 +687,7 @@ DungeonsAndTrollsApiService Assign skill point to the attribute for the Characte
  * @param body
 @return interface{}
 */
-func (a *DungeonsAndTrollsApiService) DungeonsAndTrollsMove(ctx context.Context, body DungeonsandtrollsCoordinates) (interface{}, *http.Response, error) {
+func (a *DungeonsAndTrollsApiService) DungeonsAndTrollsMove(ctx context.Context, body DungeonsandtrollsPosition) (interface{}, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}

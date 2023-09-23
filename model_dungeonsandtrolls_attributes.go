@@ -22,5 +22,5 @@ type DungeonsandtrollsAttributes struct {
 	Life float32 `json:"life,omitempty"`
 	Stamina float32 `json:"stamina,omitempty"`
 	Mana float32 `json:"mana,omitempty"`
-	Scalar float32 `json:"scalar,omitempty"`
+	Constant float32 `json:"constant,omitempty"`
 }

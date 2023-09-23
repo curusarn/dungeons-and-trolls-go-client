@@ -11,4 +11,5 @@ package swagger
 type DungeonsandtrollsDecoration struct {
 	Name string `json:"name,omitempty"`
 	Type_ string `json:"type,omitempty"`
+	Icon string `json:"icon,omitempty"`
 }

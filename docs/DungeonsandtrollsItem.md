@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **Attributes** | [***DungeonsandtrollsAttributes**](dungeonsandtrollsAttributes.md) |  | [optional] [default to null]
 **Skills** | [**[]DungeonsandtrollsSkill**](dungeonsandtrollsSkill.md) |  | [optional] [default to null]
 **Icon** | **string** |  | [optional] [default to null]
+**Unidentified** | **bool** |  | [optional] [default to null]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

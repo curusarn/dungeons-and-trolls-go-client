@@ -12,7 +12,7 @@ type DungeonsandtrollsGameState struct {
 	Map_ *DungeonsandtrollsMap `json:"map,omitempty"`
 	ShopItems []DungeonsandtrollsItem `json:"shopItems,omitempty"`
 	Character *DungeonsandtrollsCharacter `json:"character,omitempty"`
-	CurrentPosition *DungeonsandtrollsCoordinates `json:"currentPosition,omitempty"`
+	CurrentPosition *DungeonsandtrollsPosition `json:"currentPosition,omitempty"`
 	CurrentLevel int32 `json:"currentLevel,omitempty"`
 	Tick string `json:"tick,omitempty"`
 	// List of events which occurred in the previous tick. Useful for visualising effects, debugging and communication.

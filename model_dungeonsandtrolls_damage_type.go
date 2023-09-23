@@ -12,7 +12,6 @@ type DungeonsandtrollsDamageType string
 
 // List of dungeonsandtrollsDamageType
 const (
-	NONE_DungeonsandtrollsDamageType DungeonsandtrollsDamageType = "none"
 	SLASH_DungeonsandtrollsDamageType DungeonsandtrollsDamageType = "slash"
 	PIERCE_DungeonsandtrollsDamageType DungeonsandtrollsDamageType = "pierce"
 	FIRE_DungeonsandtrollsDamageType DungeonsandtrollsDamageType = "fire"

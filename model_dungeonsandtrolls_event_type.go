@@ -18,4 +18,6 @@ const (
 	EQUIP_DungeonsandtrollsEventType DungeonsandtrollsEventType = "EQUIP"
 	ERROR__DungeonsandtrollsEventType DungeonsandtrollsEventType = "ERROR"
 	SKILL_DungeonsandtrollsEventType DungeonsandtrollsEventType = "SKILL"
+	DEATH_DungeonsandtrollsEventType DungeonsandtrollsEventType = "DEATH"
+	SCORE_DungeonsandtrollsEventType DungeonsandtrollsEventType = "SCORE"
 )

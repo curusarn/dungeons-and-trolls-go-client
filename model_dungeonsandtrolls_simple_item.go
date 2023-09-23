@@ -8,8 +8,8 @@
  */
 package swagger
 
-type DungeonsandtrollsSkillUse struct {
-	SkillId string `json:"skillId,omitempty"`
-	TargetId string `json:"targetId,omitempty"`
-	Coordinates *DungeonsandtrollsPosition `json:"coordinates,omitempty"`
+type DungeonsandtrollsSimpleItem struct {
+	Name string `json:"name,omitempty"`
+	Slot *DungeonsandtrollsItemType `json:"slot,omitempty"`
+	Icon string `json:"icon,omitempty"`
 }
