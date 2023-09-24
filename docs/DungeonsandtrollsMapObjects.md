@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Position** | [***DungeonsandtrollsCoordinates**](dungeonsandtrollsCoordinates.md) |  | [optional] [default to null]
+**Position** | [***DungeonsandtrollsPosition**](dungeonsandtrollsPosition.md) |  | [optional] [default to null]
 **Monsters** | [**[]DungeonsandtrollsMonster**](dungeonsandtrollsMonster.md) |  | [optional] [default to null]
 **Players** | [**[]DungeonsandtrollsCharacter**](dungeonsandtrollsCharacter.md) |  | [optional] [default to null]
 **IsStairs** | **bool** |  | [optional] [default to null]
