@@ -17,7 +17,7 @@ Method | HTTP request | Description
 [**DungeonsAndTrollsYell**](DungeonsAndTrollsApi.md#DungeonsAndTrollsYell) | **Post** /v1/yell | The Character bound to the logged user yells a messages (visible for everyone).
 
 # **DungeonsAndTrollsAssignSkillPoints**
-> interface{} DungeonsAndTrollsAssignSkillPoints(ctx, body)
+> interface{} DungeonsAndTrollsAssignSkillPoints(ctx, body, optional)
 Send multiple commands to the Character bound to the logged user. The order of execution is defined in the message.
 
 ### Required Parameters
@@ -26,6 +26,14 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **body** | [**DungeonsandtrollsAttributes**](DungeonsandtrollsAttributes.md)|  | 
+ **optional** | ***DungeonsAndTrollsApiDungeonsAndTrollsAssignSkillPointsOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a pointer to a DungeonsAndTrollsApiDungeonsAndTrollsAssignSkillPointsOpts struct
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **blocking** | **optional.**| default true | 
 
 ### Return type
 
@@ -43,7 +51,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **DungeonsAndTrollsBuy**
-> interface{} DungeonsAndTrollsBuy(ctx, body)
+> interface{} DungeonsAndTrollsBuy(ctx, body, optional)
 Buy Items identified by the provided ID for the Character bound to the logged user.
 
 ### Required Parameters
@@ -52,6 +60,14 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **body** | [**DungeonsandtrollsIdentifiers**](DungeonsandtrollsIdentifiers.md)|  | 
+ **optional** | ***DungeonsAndTrollsApiDungeonsAndTrollsBuyOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a pointer to a DungeonsAndTrollsApiDungeonsAndTrollsBuyOpts struct
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **blocking** | **optional.**| default true | 
 
 ### Return type
 
@@ -69,7 +85,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **DungeonsAndTrollsCommands**
-> interface{} DungeonsAndTrollsCommands(ctx, body)
+> interface{} DungeonsAndTrollsCommands(ctx, body, optional)
 Send multiple commands to the Character bound to the logged user. The order of execution is defined in the message.
 
 ### Required Parameters
@@ -78,6 +94,14 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **body** | [**DungeonsandtrollsCommandsBatch**](DungeonsandtrollsCommandsBatch.md)|  | 
+ **optional** | ***DungeonsAndTrollsApiDungeonsAndTrollsCommandsOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a pointer to a DungeonsAndTrollsApiDungeonsAndTrollsCommandsOpts struct
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **blocking** | **optional.**| default true | 
 
 ### Return type
 
@@ -109,9 +133,7 @@ Name | Type | Description  | Notes
 Optional parameters are passed through a pointer to a DungeonsAndTrollsApiDungeonsAndTrollsGameOpts struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ascii** | **optional.Bool**| default false | 
- **events** | **optional.Bool**| default false | 
- **blocking** | **optional.Bool**| default true | 
+ **blocking** | **optional.Bool**| default false | 
 
 ### Return type
 
@@ -129,7 +151,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **DungeonsAndTrollsMonstersCommands**
-> interface{} DungeonsAndTrollsMonstersCommands(ctx, body)
+> interface{} DungeonsAndTrollsMonstersCommands(ctx, body, optional)
 Control monsters. Admin only.
 
 ### Required Parameters
@@ -138,6 +160,14 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **body** | [**DungeonsandtrollsCommandsForMonsters**](DungeonsandtrollsCommandsForMonsters.md)|  | 
+ **optional** | ***DungeonsAndTrollsApiDungeonsAndTrollsMonstersCommandsOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a pointer to a DungeonsAndTrollsApiDungeonsAndTrollsMonstersCommandsOpts struct
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **blocking** | **optional.**| default true | 
 
 ### Return type
 
@@ -155,7 +185,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **DungeonsAndTrollsMove**
-> interface{} DungeonsAndTrollsMove(ctx, body)
+> interface{} DungeonsAndTrollsMove(ctx, body, optional)
 Assign skill point to the attribute for the Character bound to the logged user.
 
 ### Required Parameters
@@ -164,6 +194,14 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **body** | [**DungeonsandtrollsPosition**](DungeonsandtrollsPosition.md)|  | 
+ **optional** | ***DungeonsAndTrollsApiDungeonsAndTrollsMoveOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a pointer to a DungeonsAndTrollsApiDungeonsAndTrollsMoveOpts struct
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **blocking** | **optional.**| default true | 
 
 ### Return type
 
@@ -181,7 +219,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **DungeonsAndTrollsPickUp**
-> interface{} DungeonsAndTrollsPickUp(ctx, body)
+> interface{} DungeonsAndTrollsPickUp(ctx, body, optional)
 Equip the Item from the ground identified by the provided ID for the Character bound to the logged user (unused).
 
 ### Required Parameters
@@ -190,6 +228,14 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **body** | [**DungeonsandtrollsIdentifier**](DungeonsandtrollsIdentifier.md)|  | 
+ **optional** | ***DungeonsAndTrollsApiDungeonsAndTrollsPickUpOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a pointer to a DungeonsAndTrollsApiDungeonsAndTrollsPickUpOpts struct
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **blocking** | **optional.**| default true | 
 
 ### Return type
 
@@ -233,7 +279,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **DungeonsAndTrollsRespawn**
-> interface{} DungeonsAndTrollsRespawn(ctx, body)
+> interface{} DungeonsAndTrollsRespawn(ctx, body, optional)
 Respawn the Character bound to the logged user.
 
 ### Required Parameters
@@ -242,6 +288,14 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **body** | [**interface{}**](interface{}.md)|  | 
+ **optional** | ***DungeonsAndTrollsApiDungeonsAndTrollsRespawnOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a pointer to a DungeonsAndTrollsApiDungeonsAndTrollsRespawnOpts struct
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **blocking** | **optional.**| default true | 
 
 ### Return type
 
@@ -259,7 +313,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **DungeonsAndTrollsSkill**
-> interface{} DungeonsAndTrollsSkill(ctx, body)
+> interface{} DungeonsAndTrollsSkill(ctx, body, optional)
 Use a skill (provided by an item) by the Character bound to the logged user.
 
 ### Required Parameters
@@ -268,6 +322,14 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **body** | [**DungeonsandtrollsSkillUse**](DungeonsandtrollsSkillUse.md)|  | 
+ **optional** | ***DungeonsAndTrollsApiDungeonsAndTrollsSkillOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a pointer to a DungeonsAndTrollsApiDungeonsAndTrollsSkillOpts struct
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **blocking** | **optional.**| default true | 
 
 ### Return type
 
@@ -285,7 +347,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **DungeonsAndTrollsYell**
-> interface{} DungeonsAndTrollsYell(ctx, body)
+> interface{} DungeonsAndTrollsYell(ctx, body, optional)
 The Character bound to the logged user yells a messages (visible for everyone).
 
 ### Required Parameters
@@ -294,6 +356,14 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **body** | [**DungeonsandtrollsMessage**](DungeonsandtrollsMessage.md)|  | 
+ **optional** | ***DungeonsAndTrollsApiDungeonsAndTrollsYellOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a pointer to a DungeonsAndTrollsApiDungeonsAndTrollsYellOpts struct
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **blocking** | **optional.**| default true | 
 
 ### Return type
 

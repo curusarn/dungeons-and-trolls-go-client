@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Dungeons and Trolls
-  version: 1.1.1
+  version: 1.2.0
 externalDocs:
   description: More about Dungeons and trolls
   url: https://github.com/gdg-garage/dungeons-and-trolls
@@ -20,6 +20,15 @@ paths:
         Send multiple commands to the Character bound to the logged user. The order
         of execution is defined in the message.
       operationId: DungeonsAndTrolls_AssignSkillPoints
+      parameters:
+      - name: blocking
+        in: query
+        description: default true
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       requestBody:
         content:
           application/json:
@@ -55,7 +64,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/rpcStatus'
-      x-codegen-request-body-name: body
+      x-codegen-request-body-name: attributes
   /v1/buy:
     post:
       tags:
@@ -64,6 +73,15 @@ paths:
         Buy Items identified by the provided ID for the Character bound to the
         logged user.
       operationId: DungeonsAndTrolls_Buy
+      parameters:
+      - name: blocking
+        in: query
+        description: default true
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       requestBody:
         content:
           application/json:
@@ -99,7 +117,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/rpcStatus'
-      x-codegen-request-body-name: body
+      x-codegen-request-body-name: identifiers
   /v1/commands:
     post:
       tags:
@@ -108,6 +126,15 @@ paths:
         Send multiple commands to the Character bound to the logged user. The order
         of execution is defined in the message.
       operationId: DungeonsAndTrolls_Commands
+      parameters:
+      - name: blocking
+        in: query
+        description: default true
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       requestBody:
         content:
           application/json:
@@ -143,7 +170,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/rpcStatus'
-      x-codegen-request-body-name: body
+      x-codegen-request-body-name: commandsBatch
   /v1/game:
     get:
       tags:
@@ -151,25 +178,9 @@ paths:
       summary: Sends all info about the game.
       operationId: DungeonsAndTrolls_Game
       parameters:
-      - name: ascii
-        in: query
-        description: default false
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: events
-        in: query
-        description: default false
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
       - name: blocking
         in: query
-        description: default true
+        description: default false
         required: false
         style: form
         explode: true
@@ -209,6 +220,15 @@ paths:
       - DungeonsAndTrolls
       summary: Control monsters. Admin only.
       operationId: DungeonsAndTrolls_MonstersCommands
+      parameters:
+      - name: blocking
+        in: query
+        description: default true
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       requestBody:
         content:
           application/json:
@@ -244,7 +264,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/rpcStatus'
-      x-codegen-request-body-name: body
+      x-codegen-request-body-name: commandsForMonsters
   /v1/move:
     post:
       tags:
@@ -253,6 +273,15 @@ paths:
         Assign skill point to the attribute for the Character bound to the logged
         user.
       operationId: DungeonsAndTrolls_Move
+      parameters:
+      - name: blocking
+        in: query
+        description: default true
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       requestBody:
         content:
           application/json:
@@ -288,7 +317,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/rpcStatus'
-      x-codegen-request-body-name: body
+      x-codegen-request-body-name: position
   /v1/pick-up:
     post:
       tags:
@@ -297,6 +326,15 @@ paths:
         Equip the Item from the ground identified by the provided ID for the Character bound to the
         logged user (unused).
       operationId: DungeonsAndTrolls_PickUp
+      parameters:
+      - name: blocking
+        in: query
+        description: default true
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       requestBody:
         content:
           application/json:
@@ -332,7 +370,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/rpcStatus'
-      x-codegen-request-body-name: body
+      x-codegen-request-body-name: identifier
   /v1/register:
     post:
       tags:
@@ -380,6 +418,15 @@ paths:
       - DungeonsAndTrolls
       summary: Respawn the Character bound to the logged user.
       operationId: DungeonsAndTrolls_Respawn
+      parameters:
+      - name: blocking
+        in: query
+        description: default true
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       requestBody:
         content:
           application/json:
@@ -415,7 +462,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/rpcStatus'
-      x-codegen-request-body-name: body
+      x-codegen-request-body-name: respawn
   /v1/skill:
     post:
       tags:
@@ -424,6 +471,15 @@ paths:
         Use a skill (provided by an item) by the Character bound to the logged
         user.
       operationId: DungeonsAndTrolls_Skill
+      parameters:
+      - name: blocking
+        in: query
+        description: default true
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       requestBody:
         content:
           application/json:
@@ -459,7 +515,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/rpcStatus'
-      x-codegen-request-body-name: body
+      x-codegen-request-body-name: skillUse
   /v1/yell:
     post:
       tags:
@@ -468,6 +524,15 @@ paths:
         The Character bound to the logged user yells a messages (visible for
         everyone).
       operationId: DungeonsAndTrolls_Yell
+      parameters:
+      - name: blocking
+        in: query
+        description: default true
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       requestBody:
         content:
           application/json:
@@ -503,7 +568,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/rpcStatus'
-      x-codegen-request-body-name: body
+      x-codegen-request-body-name: message
 components:
   schemas:
     SkillTarget:
@@ -665,8 +730,8 @@ components:
           type: integer
           format: int32
       example:
-        positionY: 6
-        level: 2
+        positionY: 5
+        level: 6
         positionX: 6
     dungeonsandtrollsDamageType:
       type: string
@@ -767,8 +832,8 @@ components:
           $ref: '#/components/schemas/dungeonsandtrollsCoordinates'
       example:
         coordinates:
-          positionY: 6
-          level: 2
+          positionY: 5
+          level: 6
           positionX: 6
         message: message
         type: DAMAGE
@@ -803,8 +868,8 @@ components:
           format: int32
           nullable: true
         tick:
-          type: string
-          format: int64
+          type: integer
+          format: int32
         events:
           type: array
           description: |-
@@ -817,10 +882,10 @@ components:
           format: float
       example:
         currentLevel: 1
-        score: 5.9448957
+        score: 6.704019
         character: null
         currentPosition: null
-        tick: tick
+        tick: 2
         map:
           levels:
           - level: 0
@@ -3617,14 +3682,14 @@ components:
             height: 1
         events:
         - coordinates:
-            positionY: 6
-            level: 2
+            positionY: 5
+            level: 6
             positionX: 6
           message: message
           type: DAMAGE
         - coordinates:
-            positionY: 6
-            level: 2
+            positionY: 5
+            level: 6
             positionX: 6
           message: message
           type: DAMAGE
