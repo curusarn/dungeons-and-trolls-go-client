@@ -8,7 +8,8 @@
  */
 package swagger
 
-type DungeonsandtrollsPosition struct {
-	PositionX int32 `json:"positionX,omitempty"`
-	PositionY int32 `json:"positionY,omitempty"`
+type DungeonsandtrollsSkillGenericFlags struct {
+	RequiresAlone bool `json:"requiresAlone,omitempty"`
+	RequiresLineOfSight bool `json:"requiresLineOfSight,omitempty"`
+	Passive bool `json:"passive,omitempty"`
 }
