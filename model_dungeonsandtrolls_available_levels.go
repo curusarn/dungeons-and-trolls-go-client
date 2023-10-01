@@ -8,6 +8,6 @@
  */
 package swagger
 
-type DungeonsandtrollsKey struct {
-	Doors []DungeonsandtrollsPosition `json:"doors,omitempty"`
+type DungeonsandtrollsAvailableLevels struct {
+	Levels []int32 `json:"levels,omitempty"`
 }

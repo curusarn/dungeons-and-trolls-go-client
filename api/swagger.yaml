@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Dungeons and Trolls
-  version: 1.3.1
+  version: 1.5.0
 externalDocs:
   description: More about Dungeons and trolls
   url: https://github.com/gdg-garage/dungeons-and-trolls
@@ -186,6 +186,14 @@ paths:
         explode: true
         schema:
           type: boolean
+      - name: items
+        in: query
+        description: default true
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       responses:
         "200":
           description: A successful response.
@@ -193,6 +201,108 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/dungeonsandtrollsGameState'
+        "403":
+          description: Returned when the user does not have permission to access the
+            resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+        "404":
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+  /v1/game/{level}:
+    get:
+      tags:
+      - DungeonsAndTrolls
+      summary: Sends all info about the game level.
+      operationId: DungeonsAndTrolls_GameLevel
+      parameters:
+      - name: level
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      - name: blocking
+        in: query
+        description: default false
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      - name: items
+        in: query
+        description: default true
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dungeonsandtrollsGameState'
+        "403":
+          description: Returned when the user does not have permission to access the
+            resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+        "404":
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+  /v1/levels:
+    get:
+      tags:
+      - DungeonsAndTrolls
+      summary: Sends info about
+      operationId: DungeonsAndTrolls_Levels
+      parameters:
+      - name: blocking
+        in: query
+        description: default false
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dungeonsandtrollsAvailableLevels'
         "403":
           description: Returned when the user does not have permission to access the
             resource.
@@ -371,6 +481,49 @@ paths:
               schema:
                 $ref: '#/components/schemas/rpcStatus'
       x-codegen-request-body-name: identifier
+  /v1/players:
+    get:
+      tags:
+      - DungeonsAndTrolls
+      summary: Sends all info about all players.
+      operationId: DungeonsAndTrolls_Players
+      parameters:
+      - name: blocking
+        in: query
+        description: default false
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dungeonsandtrollsPlayersInfo'
+        "403":
+          description: Returned when the user does not have permission to access the
+            resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+        "404":
+          description: Returned when the resource does not exist.
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+        default:
+          description: An unexpected error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
   /v1/register:
     post:
       tags:
@@ -652,6 +805,18 @@ components:
         dexterity: 9.301444
         poisonResist: 1.4894159
         mana: 4.9652185
+    dungeonsandtrollsAvailableLevels:
+      type: object
+      properties:
+        levels:
+          type: array
+          items:
+            type: integer
+            format: int32
+      example:
+        levels:
+        - 0
+        - 0
     dungeonsandtrollsCharacter:
       type: object
       properties:
@@ -680,18 +845,28 @@ components:
             $ref: '#/components/schemas/dungeonsandtrollsEffect'
         maxAttributes:
           $ref: '#/components/schemas/dungeonsandtrollsAttributes'
+        lastDamageTaken:
+          type: integer
+          format: int32
+        coordinates:
+          $ref: '#/components/schemas/dungeonsandtrollsCoordinates'
       example:
-        score: 3.5571952
+        score: 6.965118
         effects:
         - null
         - null
-        money: 6
+        money: 3
         equip:
         - null
         - null
-        skillPoints: 6.965118
+        lastDamageTaken: 2
+        skillPoints: 1.284659
         maxAttributes: null
         name: name
+        coordinates:
+          positionY: 5
+          level: 6
+          positionX: 6
         attributes: null
         id: id
     dungeonsandtrollsCommandsBatch:
@@ -734,17 +909,10 @@ components:
         level: 6
         positionX: 6
     dungeonsandtrollsDamageType:
-      title: |-
-        TODO enable none
-          none = 0;
-          slash = 1;
-          pierce = 2;
-          fire = 3;
-          poison = 4;
-          electric = 5;
       type: string
-      default: slash
+      default: none
       enum:
+      - none
       - slash
       - pierce
       - fire
@@ -827,7 +995,7 @@ components:
           poisonResist: 1.4894159
           mana: 4.9652185
         damageAmount: 2.302136
-        damageType: slash
+        damageType: none
         CasterId: CasterId
     dungeonsandtrollsEvent:
       type: object
@@ -842,14 +1010,19 @@ components:
           type: number
           format: float
           nullable: true
+        playerId:
+          type: string
+          nullable: true
+        skillName:
+          type: string
+          nullable: true
       example:
-        damage: 6.704019
-        coordinates:
-          positionY: 5
-          level: 6
-          positionX: 6
+        skillName: skillName
+        damage: 3.0937452
+        coordinates: null
         message: message
         type: DAMAGE
+        playerId: playerId
     dungeonsandtrollsEventType:
       type: string
       default: DAMAGE
@@ -893,12 +1066,16 @@ components:
         score:
           type: number
           format: float
+        maxLevel:
+          type: integer
+          format: int32
       example:
-        currentLevel: 1
-        score: 3.3531933
+        currentLevel: 6
+        maxLevel: 0
+        score: 7.143538
         character: null
         currentPosition: null
-        tick: 2
+        tick: 3
         map:
           levels:
           - level: 0
@@ -909,30 +1086,40 @@ components:
               - null
               isFree: true
               players:
-              - score: 3.5571952
+              - score: 6.965118
                 effects:
                 - null
                 - null
-                money: 6
+                money: 3
                 equip:
                 - null
                 - null
-                skillPoints: 6.965118
+                lastDamageTaken: 2
+                skillPoints: 1.284659
                 maxAttributes: null
                 name: name
+                coordinates:
+                  positionY: 5
+                  level: 6
+                  positionX: 6
                 attributes: null
                 id: id
-              - score: 3.5571952
+              - score: 6.965118
                 effects:
                 - null
                 - null
-                money: 6
+                money: 3
                 equip:
                 - null
                 - null
-                skillPoints: 6.965118
+                lastDamageTaken: 2
+                skillPoints: 1.284659
                 maxAttributes: null
                 name: name
+                coordinates:
+                  positionY: 5
+                  level: 6
+                  positionX: 6
                 attributes: null
                 id: id
               isDoor: true
@@ -940,6 +1127,7 @@ components:
               - onDeath:
                 - null
                 - null
+                lastDamageTaken: 6
                 lifePercentage: 9.36931
                 icon: icon
                 equippedItems:
@@ -950,8 +1138,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -1012,8 +1200,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -1083,8 +1271,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -1145,8 +1333,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -1228,7 +1416,7 @@ components:
                     poisonResist: 1.4894159
                     mana: 4.9652185
                   damageAmount: 2.302136
-                  damageType: slash
+                  damageType: none
                   CasterId: CasterId
                 - duration: 9
                   effects:
@@ -1247,7 +1435,7 @@ components:
                     poisonResist: 1.4894159
                     mana: 4.9652185
                   damageAmount: 2.302136
-                  damageType: slash
+                  damageType: none
                   CasterId: CasterId
                 faction: faction
                 maxAttributes: null
@@ -1265,6 +1453,7 @@ components:
               - onDeath:
                 - null
                 - null
+                lastDamageTaken: 6
                 lifePercentage: 9.36931
                 icon: icon
                 equippedItems:
@@ -1275,8 +1464,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -1337,8 +1526,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -1408,8 +1597,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -1470,8 +1659,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -1553,7 +1742,7 @@ components:
                     poisonResist: 1.4894159
                     mana: 4.9652185
                   damageAmount: 2.302136
-                  damageType: slash
+                  damageType: none
                   CasterId: CasterId
                 - duration: 9
                   effects:
@@ -1572,7 +1761,7 @@ components:
                     poisonResist: 1.4894159
                     mana: 4.9652185
                   damageAmount: 2.302136
-                  damageType: slash
+                  damageType: none
                   CasterId: CasterId
                 faction: faction
                 maxAttributes: null
@@ -1605,30 +1794,40 @@ components:
               - null
               isFree: true
               players:
-              - score: 3.5571952
+              - score: 6.965118
                 effects:
                 - null
                 - null
-                money: 6
+                money: 3
                 equip:
                 - null
                 - null
-                skillPoints: 6.965118
+                lastDamageTaken: 2
+                skillPoints: 1.284659
                 maxAttributes: null
                 name: name
+                coordinates:
+                  positionY: 5
+                  level: 6
+                  positionX: 6
                 attributes: null
                 id: id
-              - score: 3.5571952
+              - score: 6.965118
                 effects:
                 - null
                 - null
-                money: 6
+                money: 3
                 equip:
                 - null
                 - null
-                skillPoints: 6.965118
+                lastDamageTaken: 2
+                skillPoints: 1.284659
                 maxAttributes: null
                 name: name
+                coordinates:
+                  positionY: 5
+                  level: 6
+                  positionX: 6
                 attributes: null
                 id: id
               isDoor: true
@@ -1636,6 +1835,7 @@ components:
               - onDeath:
                 - null
                 - null
+                lastDamageTaken: 6
                 lifePercentage: 9.36931
                 icon: icon
                 equippedItems:
@@ -1646,8 +1846,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -1708,8 +1908,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -1779,8 +1979,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -1841,8 +2041,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -1924,7 +2124,7 @@ components:
                     poisonResist: 1.4894159
                     mana: 4.9652185
                   damageAmount: 2.302136
-                  damageType: slash
+                  damageType: none
                   CasterId: CasterId
                 - duration: 9
                   effects:
@@ -1943,7 +2143,7 @@ components:
                     poisonResist: 1.4894159
                     mana: 4.9652185
                   damageAmount: 2.302136
-                  damageType: slash
+                  damageType: none
                   CasterId: CasterId
                 faction: faction
                 maxAttributes: null
@@ -1961,6 +2161,7 @@ components:
               - onDeath:
                 - null
                 - null
+                lastDamageTaken: 6
                 lifePercentage: 9.36931
                 icon: icon
                 equippedItems:
@@ -1971,8 +2172,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -2033,8 +2234,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -2104,8 +2305,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -2166,8 +2367,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -2249,7 +2450,7 @@ components:
                     poisonResist: 1.4894159
                     mana: 4.9652185
                   damageAmount: 2.302136
-                  damageType: slash
+                  damageType: none
                   CasterId: CasterId
                 - duration: 9
                   effects:
@@ -2268,7 +2469,7 @@ components:
                     poisonResist: 1.4894159
                     mana: 4.9652185
                   damageAmount: 2.302136
-                  damageType: slash
+                  damageType: none
                   CasterId: CasterId
                 faction: faction
                 maxAttributes: null
@@ -2313,30 +2514,40 @@ components:
               - null
               isFree: true
               players:
-              - score: 3.5571952
+              - score: 6.965118
                 effects:
                 - null
                 - null
-                money: 6
+                money: 3
                 equip:
                 - null
                 - null
-                skillPoints: 6.965118
+                lastDamageTaken: 2
+                skillPoints: 1.284659
                 maxAttributes: null
                 name: name
+                coordinates:
+                  positionY: 5
+                  level: 6
+                  positionX: 6
                 attributes: null
                 id: id
-              - score: 3.5571952
+              - score: 6.965118
                 effects:
                 - null
                 - null
-                money: 6
+                money: 3
                 equip:
                 - null
                 - null
-                skillPoints: 6.965118
+                lastDamageTaken: 2
+                skillPoints: 1.284659
                 maxAttributes: null
                 name: name
+                coordinates:
+                  positionY: 5
+                  level: 6
+                  positionX: 6
                 attributes: null
                 id: id
               isDoor: true
@@ -2344,6 +2555,7 @@ components:
               - onDeath:
                 - null
                 - null
+                lastDamageTaken: 6
                 lifePercentage: 9.36931
                 icon: icon
                 equippedItems:
@@ -2354,8 +2566,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -2416,8 +2628,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -2487,8 +2699,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -2549,8 +2761,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -2632,7 +2844,7 @@ components:
                     poisonResist: 1.4894159
                     mana: 4.9652185
                   damageAmount: 2.302136
-                  damageType: slash
+                  damageType: none
                   CasterId: CasterId
                 - duration: 9
                   effects:
@@ -2651,7 +2863,7 @@ components:
                     poisonResist: 1.4894159
                     mana: 4.9652185
                   damageAmount: 2.302136
-                  damageType: slash
+                  damageType: none
                   CasterId: CasterId
                 faction: faction
                 maxAttributes: null
@@ -2669,6 +2881,7 @@ components:
               - onDeath:
                 - null
                 - null
+                lastDamageTaken: 6
                 lifePercentage: 9.36931
                 icon: icon
                 equippedItems:
@@ -2679,8 +2892,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -2741,8 +2954,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -2812,8 +3025,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -2874,8 +3087,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -2957,7 +3170,7 @@ components:
                     poisonResist: 1.4894159
                     mana: 4.9652185
                   damageAmount: 2.302136
-                  damageType: slash
+                  damageType: none
                   CasterId: CasterId
                 - duration: 9
                   effects:
@@ -2976,7 +3189,7 @@ components:
                     poisonResist: 1.4894159
                     mana: 4.9652185
                   damageAmount: 2.302136
-                  damageType: slash
+                  damageType: none
                   CasterId: CasterId
                 faction: faction
                 maxAttributes: null
@@ -3009,30 +3222,40 @@ components:
               - null
               isFree: true
               players:
-              - score: 3.5571952
+              - score: 6.965118
                 effects:
                 - null
                 - null
-                money: 6
+                money: 3
                 equip:
                 - null
                 - null
-                skillPoints: 6.965118
+                lastDamageTaken: 2
+                skillPoints: 1.284659
                 maxAttributes: null
                 name: name
+                coordinates:
+                  positionY: 5
+                  level: 6
+                  positionX: 6
                 attributes: null
                 id: id
-              - score: 3.5571952
+              - score: 6.965118
                 effects:
                 - null
                 - null
-                money: 6
+                money: 3
                 equip:
                 - null
                 - null
-                skillPoints: 6.965118
+                lastDamageTaken: 2
+                skillPoints: 1.284659
                 maxAttributes: null
                 name: name
+                coordinates:
+                  positionY: 5
+                  level: 6
+                  positionX: 6
                 attributes: null
                 id: id
               isDoor: true
@@ -3040,6 +3263,7 @@ components:
               - onDeath:
                 - null
                 - null
+                lastDamageTaken: 6
                 lifePercentage: 9.36931
                 icon: icon
                 equippedItems:
@@ -3050,8 +3274,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -3112,8 +3336,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -3183,8 +3407,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -3245,8 +3469,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -3328,7 +3552,7 @@ components:
                     poisonResist: 1.4894159
                     mana: 4.9652185
                   damageAmount: 2.302136
-                  damageType: slash
+                  damageType: none
                   CasterId: CasterId
                 - duration: 9
                   effects:
@@ -3347,7 +3571,7 @@ components:
                     poisonResist: 1.4894159
                     mana: 4.9652185
                   damageAmount: 2.302136
-                  damageType: slash
+                  damageType: none
                   CasterId: CasterId
                 faction: faction
                 maxAttributes: null
@@ -3365,6 +3589,7 @@ components:
               - onDeath:
                 - null
                 - null
+                lastDamageTaken: 6
                 lifePercentage: 9.36931
                 icon: icon
                 equippedItems:
@@ -3375,8 +3600,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -3437,8 +3662,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -3508,8 +3733,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -3570,8 +3795,8 @@ components:
                     name: name
                     flags:
                       requiresLineOfSight: true
+                      requiresOutOfCombat: true
                       passive: true
-                      requiresAlone: true
                     range: null
                     damageAmount: null
                     id: id
@@ -3653,7 +3878,7 @@ components:
                     poisonResist: 1.4894159
                     mana: 4.9652185
                   damageAmount: 2.302136
-                  damageType: slash
+                  damageType: none
                   CasterId: CasterId
                 - duration: 9
                   effects:
@@ -3672,7 +3897,7 @@ components:
                     poisonResist: 1.4894159
                     mana: 4.9652185
                   damageAmount: 2.302136
-                  damageType: slash
+                  damageType: none
                   CasterId: CasterId
                 faction: faction
                 maxAttributes: null
@@ -3710,20 +3935,18 @@ components:
             - ascii
             height: 1
         events:
-        - damage: 6.704019
-          coordinates:
-            positionY: 5
-            level: 6
-            positionX: 6
+        - skillName: skillName
+          damage: 3.0937452
+          coordinates: null
           message: message
           type: DAMAGE
-        - damage: 6.704019
-          coordinates:
-            positionY: 5
-            level: 6
-            positionX: 6
+          playerId: playerId
+        - skillName: skillName
+          damage: 3.0937452
+          coordinates: null
           message: message
           type: DAMAGE
+          playerId: playerId
         shopItems:
         - null
         - null
@@ -3772,8 +3995,8 @@ components:
           name: name
           flags:
             requiresLineOfSight: true
+            requiresOutOfCombat: true
             passive: true
-            requiresAlone: true
           range: null
           damageAmount: null
           id: id
@@ -3834,8 +4057,8 @@ components:
           name: name
           flags:
             requiresLineOfSight: true
+            requiresOutOfCombat: true
             passive: true
-            requiresAlone: true
           range: null
           damageAmount: null
           id: id
@@ -3956,30 +4179,40 @@ components:
           - null
           isFree: true
           players:
-          - score: 3.5571952
+          - score: 6.965118
             effects:
             - null
             - null
-            money: 6
+            money: 3
             equip:
             - null
             - null
-            skillPoints: 6.965118
+            lastDamageTaken: 2
+            skillPoints: 1.284659
             maxAttributes: null
             name: name
+            coordinates:
+              positionY: 5
+              level: 6
+              positionX: 6
             attributes: null
             id: id
-          - score: 3.5571952
+          - score: 6.965118
             effects:
             - null
             - null
-            money: 6
+            money: 3
             equip:
             - null
             - null
-            skillPoints: 6.965118
+            lastDamageTaken: 2
+            skillPoints: 1.284659
             maxAttributes: null
             name: name
+            coordinates:
+              positionY: 5
+              level: 6
+              positionX: 6
             attributes: null
             id: id
           isDoor: true
@@ -3987,6 +4220,7 @@ components:
           - onDeath:
             - null
             - null
+            lastDamageTaken: 6
             lifePercentage: 9.36931
             icon: icon
             equippedItems:
@@ -3997,8 +4231,8 @@ components:
                 name: name
                 flags:
                   requiresLineOfSight: true
+                  requiresOutOfCombat: true
                   passive: true
-                  requiresAlone: true
                 range: null
                 damageAmount: null
                 id: id
@@ -4059,8 +4293,8 @@ components:
                 name: name
                 flags:
                   requiresLineOfSight: true
+                  requiresOutOfCombat: true
                   passive: true
-                  requiresAlone: true
                 range: null
                 damageAmount: null
                 id: id
@@ -4130,8 +4364,8 @@ components:
                 name: name
                 flags:
                   requiresLineOfSight: true
+                  requiresOutOfCombat: true
                   passive: true
-                  requiresAlone: true
                 range: null
                 damageAmount: null
                 id: id
@@ -4192,8 +4426,8 @@ components:
                 name: name
                 flags:
                   requiresLineOfSight: true
+                  requiresOutOfCombat: true
                   passive: true
-                  requiresAlone: true
                 range: null
                 damageAmount: null
                 id: id
@@ -4275,7 +4509,7 @@ components:
                 poisonResist: 1.4894159
                 mana: 4.9652185
               damageAmount: 2.302136
-              damageType: slash
+              damageType: none
               CasterId: CasterId
             - duration: 9
               effects:
@@ -4294,7 +4528,7 @@ components:
                 poisonResist: 1.4894159
                 mana: 4.9652185
               damageAmount: 2.302136
-              damageType: slash
+              damageType: none
               CasterId: CasterId
             faction: faction
             maxAttributes: null
@@ -4312,6 +4546,7 @@ components:
           - onDeath:
             - null
             - null
+            lastDamageTaken: 6
             lifePercentage: 9.36931
             icon: icon
             equippedItems:
@@ -4322,8 +4557,8 @@ components:
                 name: name
                 flags:
                   requiresLineOfSight: true
+                  requiresOutOfCombat: true
                   passive: true
-                  requiresAlone: true
                 range: null
                 damageAmount: null
                 id: id
@@ -4384,8 +4619,8 @@ components:
                 name: name
                 flags:
                   requiresLineOfSight: true
+                  requiresOutOfCombat: true
                   passive: true
-                  requiresAlone: true
                 range: null
                 damageAmount: null
                 id: id
@@ -4455,8 +4690,8 @@ components:
                 name: name
                 flags:
                   requiresLineOfSight: true
+                  requiresOutOfCombat: true
                   passive: true
-                  requiresAlone: true
                 range: null
                 damageAmount: null
                 id: id
@@ -4517,8 +4752,8 @@ components:
                 name: name
                 flags:
                   requiresLineOfSight: true
+                  requiresOutOfCombat: true
                   passive: true
-                  requiresAlone: true
                 range: null
                 damageAmount: null
                 id: id
@@ -4600,7 +4835,7 @@ components:
                 poisonResist: 1.4894159
                 mana: 4.9652185
               damageAmount: 2.302136
-              damageType: slash
+              damageType: none
               CasterId: CasterId
             - duration: 9
               effects:
@@ -4619,7 +4854,7 @@ components:
                 poisonResist: 1.4894159
                 mana: 4.9652185
               damageAmount: 2.302136
-              damageType: slash
+              damageType: none
               CasterId: CasterId
             faction: faction
             maxAttributes: null
@@ -4652,30 +4887,40 @@ components:
           - null
           isFree: true
           players:
-          - score: 3.5571952
+          - score: 6.965118
             effects:
             - null
             - null
-            money: 6
+            money: 3
             equip:
             - null
             - null
-            skillPoints: 6.965118
+            lastDamageTaken: 2
+            skillPoints: 1.284659
             maxAttributes: null
             name: name
+            coordinates:
+              positionY: 5
+              level: 6
+              positionX: 6
             attributes: null
             id: id
-          - score: 3.5571952
+          - score: 6.965118
             effects:
             - null
             - null
-            money: 6
+            money: 3
             equip:
             - null
             - null
-            skillPoints: 6.965118
+            lastDamageTaken: 2
+            skillPoints: 1.284659
             maxAttributes: null
             name: name
+            coordinates:
+              positionY: 5
+              level: 6
+              positionX: 6
             attributes: null
             id: id
           isDoor: true
@@ -4683,6 +4928,7 @@ components:
           - onDeath:
             - null
             - null
+            lastDamageTaken: 6
             lifePercentage: 9.36931
             icon: icon
             equippedItems:
@@ -4693,8 +4939,8 @@ components:
                 name: name
                 flags:
                   requiresLineOfSight: true
+                  requiresOutOfCombat: true
                   passive: true
-                  requiresAlone: true
                 range: null
                 damageAmount: null
                 id: id
@@ -4755,8 +5001,8 @@ components:
                 name: name
                 flags:
                   requiresLineOfSight: true
+                  requiresOutOfCombat: true
                   passive: true
-                  requiresAlone: true
                 range: null
                 damageAmount: null
                 id: id
@@ -4826,8 +5072,8 @@ components:
                 name: name
                 flags:
                   requiresLineOfSight: true
+                  requiresOutOfCombat: true
                   passive: true
-                  requiresAlone: true
                 range: null
                 damageAmount: null
                 id: id
@@ -4888,8 +5134,8 @@ components:
                 name: name
                 flags:
                   requiresLineOfSight: true
+                  requiresOutOfCombat: true
                   passive: true
-                  requiresAlone: true
                 range: null
                 damageAmount: null
                 id: id
@@ -4971,7 +5217,7 @@ components:
                 poisonResist: 1.4894159
                 mana: 4.9652185
               damageAmount: 2.302136
-              damageType: slash
+              damageType: none
               CasterId: CasterId
             - duration: 9
               effects:
@@ -4990,7 +5236,7 @@ components:
                 poisonResist: 1.4894159
                 mana: 4.9652185
               damageAmount: 2.302136
-              damageType: slash
+              damageType: none
               CasterId: CasterId
             faction: faction
             maxAttributes: null
@@ -5008,6 +5254,7 @@ components:
           - onDeath:
             - null
             - null
+            lastDamageTaken: 6
             lifePercentage: 9.36931
             icon: icon
             equippedItems:
@@ -5018,8 +5265,8 @@ components:
                 name: name
                 flags:
                   requiresLineOfSight: true
+                  requiresOutOfCombat: true
                   passive: true
-                  requiresAlone: true
                 range: null
                 damageAmount: null
                 id: id
@@ -5080,8 +5327,8 @@ components:
                 name: name
                 flags:
                   requiresLineOfSight: true
+                  requiresOutOfCombat: true
                   passive: true
-                  requiresAlone: true
                 range: null
                 damageAmount: null
                 id: id
@@ -5151,8 +5398,8 @@ components:
                 name: name
                 flags:
                   requiresLineOfSight: true
+                  requiresOutOfCombat: true
                   passive: true
-                  requiresAlone: true
                 range: null
                 damageAmount: null
                 id: id
@@ -5213,8 +5460,8 @@ components:
                 name: name
                 flags:
                   requiresLineOfSight: true
+                  requiresOutOfCombat: true
                   passive: true
-                  requiresAlone: true
                 range: null
                 damageAmount: null
                 id: id
@@ -5296,7 +5543,7 @@ components:
                 poisonResist: 1.4894159
                 mana: 4.9652185
               damageAmount: 2.302136
-              damageType: slash
+              damageType: none
               CasterId: CasterId
             - duration: 9
               effects:
@@ -5315,7 +5562,7 @@ components:
                 poisonResist: 1.4894159
                 mana: 4.9652185
               damageAmount: 2.302136
-              damageType: slash
+              damageType: none
               CasterId: CasterId
             faction: faction
             maxAttributes: null
@@ -5369,30 +5616,40 @@ components:
             - null
             isFree: true
             players:
-            - score: 3.5571952
+            - score: 6.965118
               effects:
               - null
               - null
-              money: 6
+              money: 3
               equip:
               - null
               - null
-              skillPoints: 6.965118
+              lastDamageTaken: 2
+              skillPoints: 1.284659
               maxAttributes: null
               name: name
+              coordinates:
+                positionY: 5
+                level: 6
+                positionX: 6
               attributes: null
               id: id
-            - score: 3.5571952
+            - score: 6.965118
               effects:
               - null
               - null
-              money: 6
+              money: 3
               equip:
               - null
               - null
-              skillPoints: 6.965118
+              lastDamageTaken: 2
+              skillPoints: 1.284659
               maxAttributes: null
               name: name
+              coordinates:
+                positionY: 5
+                level: 6
+                positionX: 6
               attributes: null
               id: id
             isDoor: true
@@ -5400,6 +5657,7 @@ components:
             - onDeath:
               - null
               - null
+              lastDamageTaken: 6
               lifePercentage: 9.36931
               icon: icon
               equippedItems:
@@ -5410,8 +5668,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -5472,8 +5730,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -5543,8 +5801,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -5605,8 +5863,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -5688,7 +5946,7 @@ components:
                   poisonResist: 1.4894159
                   mana: 4.9652185
                 damageAmount: 2.302136
-                damageType: slash
+                damageType: none
                 CasterId: CasterId
               - duration: 9
                 effects:
@@ -5707,7 +5965,7 @@ components:
                   poisonResist: 1.4894159
                   mana: 4.9652185
                 damageAmount: 2.302136
-                damageType: slash
+                damageType: none
                 CasterId: CasterId
               faction: faction
               maxAttributes: null
@@ -5725,6 +5983,7 @@ components:
             - onDeath:
               - null
               - null
+              lastDamageTaken: 6
               lifePercentage: 9.36931
               icon: icon
               equippedItems:
@@ -5735,8 +5994,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -5797,8 +6056,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -5868,8 +6127,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -5930,8 +6189,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -6013,7 +6272,7 @@ components:
                   poisonResist: 1.4894159
                   mana: 4.9652185
                 damageAmount: 2.302136
-                damageType: slash
+                damageType: none
                 CasterId: CasterId
               - duration: 9
                 effects:
@@ -6032,7 +6291,7 @@ components:
                   poisonResist: 1.4894159
                   mana: 4.9652185
                 damageAmount: 2.302136
-                damageType: slash
+                damageType: none
                 CasterId: CasterId
               faction: faction
               maxAttributes: null
@@ -6065,30 +6324,40 @@ components:
             - null
             isFree: true
             players:
-            - score: 3.5571952
+            - score: 6.965118
               effects:
               - null
               - null
-              money: 6
+              money: 3
               equip:
               - null
               - null
-              skillPoints: 6.965118
+              lastDamageTaken: 2
+              skillPoints: 1.284659
               maxAttributes: null
               name: name
+              coordinates:
+                positionY: 5
+                level: 6
+                positionX: 6
               attributes: null
               id: id
-            - score: 3.5571952
+            - score: 6.965118
               effects:
               - null
               - null
-              money: 6
+              money: 3
               equip:
               - null
               - null
-              skillPoints: 6.965118
+              lastDamageTaken: 2
+              skillPoints: 1.284659
               maxAttributes: null
               name: name
+              coordinates:
+                positionY: 5
+                level: 6
+                positionX: 6
               attributes: null
               id: id
             isDoor: true
@@ -6096,6 +6365,7 @@ components:
             - onDeath:
               - null
               - null
+              lastDamageTaken: 6
               lifePercentage: 9.36931
               icon: icon
               equippedItems:
@@ -6106,8 +6376,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -6168,8 +6438,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -6239,8 +6509,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -6301,8 +6571,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -6384,7 +6654,7 @@ components:
                   poisonResist: 1.4894159
                   mana: 4.9652185
                 damageAmount: 2.302136
-                damageType: slash
+                damageType: none
                 CasterId: CasterId
               - duration: 9
                 effects:
@@ -6403,7 +6673,7 @@ components:
                   poisonResist: 1.4894159
                   mana: 4.9652185
                 damageAmount: 2.302136
-                damageType: slash
+                damageType: none
                 CasterId: CasterId
               faction: faction
               maxAttributes: null
@@ -6421,6 +6691,7 @@ components:
             - onDeath:
               - null
               - null
+              lastDamageTaken: 6
               lifePercentage: 9.36931
               icon: icon
               equippedItems:
@@ -6431,8 +6702,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -6493,8 +6764,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -6564,8 +6835,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -6626,8 +6897,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -6709,7 +6980,7 @@ components:
                   poisonResist: 1.4894159
                   mana: 4.9652185
                 damageAmount: 2.302136
-                damageType: slash
+                damageType: none
                 CasterId: CasterId
               - duration: 9
                 effects:
@@ -6728,7 +6999,7 @@ components:
                   poisonResist: 1.4894159
                   mana: 4.9652185
                 damageAmount: 2.302136
-                damageType: slash
+                damageType: none
                 CasterId: CasterId
               faction: faction
               maxAttributes: null
@@ -6773,30 +7044,40 @@ components:
             - null
             isFree: true
             players:
-            - score: 3.5571952
+            - score: 6.965118
               effects:
               - null
               - null
-              money: 6
+              money: 3
               equip:
               - null
               - null
-              skillPoints: 6.965118
+              lastDamageTaken: 2
+              skillPoints: 1.284659
               maxAttributes: null
               name: name
+              coordinates:
+                positionY: 5
+                level: 6
+                positionX: 6
               attributes: null
               id: id
-            - score: 3.5571952
+            - score: 6.965118
               effects:
               - null
               - null
-              money: 6
+              money: 3
               equip:
               - null
               - null
-              skillPoints: 6.965118
+              lastDamageTaken: 2
+              skillPoints: 1.284659
               maxAttributes: null
               name: name
+              coordinates:
+                positionY: 5
+                level: 6
+                positionX: 6
               attributes: null
               id: id
             isDoor: true
@@ -6804,6 +7085,7 @@ components:
             - onDeath:
               - null
               - null
+              lastDamageTaken: 6
               lifePercentage: 9.36931
               icon: icon
               equippedItems:
@@ -6814,8 +7096,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -6876,8 +7158,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -6947,8 +7229,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -7009,8 +7291,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -7092,7 +7374,7 @@ components:
                   poisonResist: 1.4894159
                   mana: 4.9652185
                 damageAmount: 2.302136
-                damageType: slash
+                damageType: none
                 CasterId: CasterId
               - duration: 9
                 effects:
@@ -7111,7 +7393,7 @@ components:
                   poisonResist: 1.4894159
                   mana: 4.9652185
                 damageAmount: 2.302136
-                damageType: slash
+                damageType: none
                 CasterId: CasterId
               faction: faction
               maxAttributes: null
@@ -7129,6 +7411,7 @@ components:
             - onDeath:
               - null
               - null
+              lastDamageTaken: 6
               lifePercentage: 9.36931
               icon: icon
               equippedItems:
@@ -7139,8 +7422,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -7201,8 +7484,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -7272,8 +7555,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -7334,8 +7617,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -7417,7 +7700,7 @@ components:
                   poisonResist: 1.4894159
                   mana: 4.9652185
                 damageAmount: 2.302136
-                damageType: slash
+                damageType: none
                 CasterId: CasterId
               - duration: 9
                 effects:
@@ -7436,7 +7719,7 @@ components:
                   poisonResist: 1.4894159
                   mana: 4.9652185
                 damageAmount: 2.302136
-                damageType: slash
+                damageType: none
                 CasterId: CasterId
               faction: faction
               maxAttributes: null
@@ -7469,30 +7752,40 @@ components:
             - null
             isFree: true
             players:
-            - score: 3.5571952
+            - score: 6.965118
               effects:
               - null
               - null
-              money: 6
+              money: 3
               equip:
               - null
               - null
-              skillPoints: 6.965118
+              lastDamageTaken: 2
+              skillPoints: 1.284659
               maxAttributes: null
               name: name
+              coordinates:
+                positionY: 5
+                level: 6
+                positionX: 6
               attributes: null
               id: id
-            - score: 3.5571952
+            - score: 6.965118
               effects:
               - null
               - null
-              money: 6
+              money: 3
               equip:
               - null
               - null
-              skillPoints: 6.965118
+              lastDamageTaken: 2
+              skillPoints: 1.284659
               maxAttributes: null
               name: name
+              coordinates:
+                positionY: 5
+                level: 6
+                positionX: 6
               attributes: null
               id: id
             isDoor: true
@@ -7500,6 +7793,7 @@ components:
             - onDeath:
               - null
               - null
+              lastDamageTaken: 6
               lifePercentage: 9.36931
               icon: icon
               equippedItems:
@@ -7510,8 +7804,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -7572,8 +7866,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -7643,8 +7937,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -7705,8 +7999,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -7788,7 +8082,7 @@ components:
                   poisonResist: 1.4894159
                   mana: 4.9652185
                 damageAmount: 2.302136
-                damageType: slash
+                damageType: none
                 CasterId: CasterId
               - duration: 9
                 effects:
@@ -7807,7 +8101,7 @@ components:
                   poisonResist: 1.4894159
                   mana: 4.9652185
                 damageAmount: 2.302136
-                damageType: slash
+                damageType: none
                 CasterId: CasterId
               faction: faction
               maxAttributes: null
@@ -7825,6 +8119,7 @@ components:
             - onDeath:
               - null
               - null
+              lastDamageTaken: 6
               lifePercentage: 9.36931
               icon: icon
               equippedItems:
@@ -7835,8 +8130,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -7897,8 +8192,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -7968,8 +8263,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -8030,8 +8325,8 @@ components:
                   name: name
                   flags:
                     requiresLineOfSight: true
+                    requiresOutOfCombat: true
                     passive: true
-                    requiresAlone: true
                   range: null
                   damageAmount: null
                   id: id
@@ -8113,7 +8408,7 @@ components:
                   poisonResist: 1.4894159
                   mana: 4.9652185
                 damageAmount: 2.302136
-                damageType: slash
+                damageType: none
                 CasterId: CasterId
               - duration: 9
                 effects:
@@ -8132,7 +8427,7 @@ components:
                   poisonResist: 1.4894159
                   mana: 4.9652185
                 damageAmount: 2.302136
-                damageType: slash
+                damageType: none
                 CasterId: CasterId
               faction: faction
               maxAttributes: null
@@ -8214,30 +8509,40 @@ components:
         - null
         isFree: true
         players:
-        - score: 3.5571952
+        - score: 6.965118
           effects:
           - null
           - null
-          money: 6
+          money: 3
           equip:
           - null
           - null
-          skillPoints: 6.965118
+          lastDamageTaken: 2
+          skillPoints: 1.284659
           maxAttributes: null
           name: name
+          coordinates:
+            positionY: 5
+            level: 6
+            positionX: 6
           attributes: null
           id: id
-        - score: 3.5571952
+        - score: 6.965118
           effects:
           - null
           - null
-          money: 6
+          money: 3
           equip:
           - null
           - null
-          skillPoints: 6.965118
+          lastDamageTaken: 2
+          skillPoints: 1.284659
           maxAttributes: null
           name: name
+          coordinates:
+            positionY: 5
+            level: 6
+            positionX: 6
           attributes: null
           id: id
         isDoor: true
@@ -8245,6 +8550,7 @@ components:
         - onDeath:
           - null
           - null
+          lastDamageTaken: 6
           lifePercentage: 9.36931
           icon: icon
           equippedItems:
@@ -8255,8 +8561,8 @@ components:
               name: name
               flags:
                 requiresLineOfSight: true
+                requiresOutOfCombat: true
                 passive: true
-                requiresAlone: true
               range: null
               damageAmount: null
               id: id
@@ -8317,8 +8623,8 @@ components:
               name: name
               flags:
                 requiresLineOfSight: true
+                requiresOutOfCombat: true
                 passive: true
-                requiresAlone: true
               range: null
               damageAmount: null
               id: id
@@ -8388,8 +8694,8 @@ components:
               name: name
               flags:
                 requiresLineOfSight: true
+                requiresOutOfCombat: true
                 passive: true
-                requiresAlone: true
               range: null
               damageAmount: null
               id: id
@@ -8450,8 +8756,8 @@ components:
               name: name
               flags:
                 requiresLineOfSight: true
+                requiresOutOfCombat: true
                 passive: true
-                requiresAlone: true
               range: null
               damageAmount: null
               id: id
@@ -8533,7 +8839,7 @@ components:
               poisonResist: 1.4894159
               mana: 4.9652185
             damageAmount: 2.302136
-            damageType: slash
+            damageType: none
             CasterId: CasterId
           - duration: 9
             effects:
@@ -8552,7 +8858,7 @@ components:
               poisonResist: 1.4894159
               mana: 4.9652185
             damageAmount: 2.302136
-            damageType: slash
+            damageType: none
             CasterId: CasterId
           faction: faction
           maxAttributes: null
@@ -8570,6 +8876,7 @@ components:
         - onDeath:
           - null
           - null
+          lastDamageTaken: 6
           lifePercentage: 9.36931
           icon: icon
           equippedItems:
@@ -8580,8 +8887,8 @@ components:
               name: name
               flags:
                 requiresLineOfSight: true
+                requiresOutOfCombat: true
                 passive: true
-                requiresAlone: true
               range: null
               damageAmount: null
               id: id
@@ -8642,8 +8949,8 @@ components:
               name: name
               flags:
                 requiresLineOfSight: true
+                requiresOutOfCombat: true
                 passive: true
-                requiresAlone: true
               range: null
               damageAmount: null
               id: id
@@ -8713,8 +9020,8 @@ components:
               name: name
               flags:
                 requiresLineOfSight: true
+                requiresOutOfCombat: true
                 passive: true
-                requiresAlone: true
               range: null
               damageAmount: null
               id: id
@@ -8775,8 +9082,8 @@ components:
               name: name
               flags:
                 requiresLineOfSight: true
+                requiresOutOfCombat: true
                 passive: true
-                requiresAlone: true
               range: null
               damageAmount: null
               id: id
@@ -8858,7 +9165,7 @@ components:
               poisonResist: 1.4894159
               mana: 4.9652185
             damageAmount: 2.302136
-            damageType: slash
+            damageType: none
             CasterId: CasterId
           - duration: 9
             effects:
@@ -8877,7 +9184,7 @@ components:
               poisonResist: 1.4894159
               mana: 4.9652185
             damageAmount: 2.302136
-            damageType: slash
+            damageType: none
             CasterId: CasterId
           faction: faction
           maxAttributes: null
@@ -8950,10 +9257,15 @@ components:
             $ref: '#/components/schemas/dungeonsandtrollsDroppable'
         maxAttributes:
           $ref: '#/components/schemas/dungeonsandtrollsAttributes'
+        lastDamageTaken:
+          type: integer
+          format: int32
+          nullable: true
       example:
         onDeath:
         - null
         - null
+        lastDamageTaken: 6
         lifePercentage: 9.36931
         icon: icon
         equippedItems:
@@ -8964,8 +9276,8 @@ components:
             name: name
             flags:
               requiresLineOfSight: true
+              requiresOutOfCombat: true
               passive: true
-              requiresAlone: true
             range: null
             damageAmount: null
             id: id
@@ -9026,8 +9338,8 @@ components:
             name: name
             flags:
               requiresLineOfSight: true
+              requiresOutOfCombat: true
               passive: true
-              requiresAlone: true
             range: null
             damageAmount: null
             id: id
@@ -9097,8 +9409,8 @@ components:
             name: name
             flags:
               requiresLineOfSight: true
+              requiresOutOfCombat: true
               passive: true
-              requiresAlone: true
             range: null
             damageAmount: null
             id: id
@@ -9159,8 +9471,8 @@ components:
             name: name
             flags:
               requiresLineOfSight: true
+              requiresOutOfCombat: true
               passive: true
-              requiresAlone: true
             range: null
             damageAmount: null
             id: id
@@ -9242,7 +9554,7 @@ components:
             poisonResist: 1.4894159
             mana: 4.9652185
           damageAmount: 2.302136
-          damageType: slash
+          damageType: none
           CasterId: CasterId
         - duration: 9
           effects:
@@ -9261,7 +9573,7 @@ components:
             poisonResist: 1.4894159
             mana: 4.9652185
           damageAmount: 2.302136
-          damageType: slash
+          damageType: none
           CasterId: CasterId
         faction: faction
         maxAttributes: null
@@ -9276,6 +9588,51 @@ components:
           icon: icon
           slot: head
         algorithm: algorithm
+    dungeonsandtrollsPlayersInfo:
+      type: object
+      properties:
+        players:
+          type: array
+          items:
+            $ref: '#/components/schemas/dungeonsandtrollsCharacter'
+      example:
+        players:
+        - score: 6.965118
+          effects:
+          - null
+          - null
+          money: 3
+          equip:
+          - null
+          - null
+          lastDamageTaken: 2
+          skillPoints: 1.284659
+          maxAttributes: null
+          name: name
+          coordinates:
+            positionY: 5
+            level: 6
+            positionX: 6
+          attributes: null
+          id: id
+        - score: 6.965118
+          effects:
+          - null
+          - null
+          money: 3
+          equip:
+          - null
+          - null
+          lastDamageTaken: 2
+          skillPoints: 1.284659
+          maxAttributes: null
+          name: name
+          coordinates:
+            positionY: 5
+            level: 6
+            positionX: 6
+          attributes: null
+          id: id
     dungeonsandtrollsPosition:
       type: object
       properties:
@@ -9343,8 +9700,8 @@ components:
         name: name
         flags:
           requiresLineOfSight: true
+          requiresOutOfCombat: true
           passive: true
-          requiresAlone: true
         range: null
         damageAmount: null
         id: id
@@ -9507,10 +9864,8 @@ components:
     dungeonsandtrollsSkillGenericFlags:
       type: object
       properties:
-        requiresAlone:
-          title: "requires that the caster is alone (no other creature (player or\
-            \ monster) are visible in 5 range), furthermore the skill is canceled\
-            \ if you take any damage while using it"
+        requiresOutOfCombat:
+          title: requires that the caster has not taken any damage in last 2 ticks
           type: boolean
         requiresLineOfSight:
           title: requires the target position be visible from the caster position
@@ -9521,8 +9876,8 @@ components:
           type: boolean
       example:
         requiresLineOfSight: true
+        requiresOutOfCombat: true
         passive: true
-        requiresAlone: true
     dungeonsandtrollsSkillSpecificFlags:
       type: object
       properties:
