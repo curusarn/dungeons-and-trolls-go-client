@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Dungeons and Trolls
-  version: 1.5.0
+  version: 1.6.0
 externalDocs:
   description: More about Dungeons and trolls
   url: https://github.com/gdg-garage/dungeons-and-trolls
@@ -850,6 +850,8 @@ components:
           format: int32
         coordinates:
           $ref: '#/components/schemas/dungeonsandtrollsCoordinates'
+        stun:
+          $ref: '#/components/schemas/dungeonsandtrollsStun'
       example:
         score: 6.965118
         effects:
@@ -869,6 +871,7 @@ components:
           positionX: 6
         attributes: null
         id: id
+        stun: null
     dungeonsandtrollsCommandsBatch:
       type: object
       properties:
@@ -1016,13 +1019,24 @@ components:
         skillName:
           type: string
           nullable: true
+        radius:
+          type: number
+          format: float
+          nullable: true
+        target:
+          $ref: '#/components/schemas/dungeonsandtrollsCoordinates'
+        skill:
+          $ref: '#/components/schemas/dungeonsandtrollsSkill'
       example:
         skillName: skillName
         damage: 3.0937452
+        skill: null
         coordinates: null
         message: message
         type: DAMAGE
+        radius: 7.143538
         playerId: playerId
+        target: null
     dungeonsandtrollsEventType:
       type: string
       default: DAMAGE
@@ -1036,6 +1050,7 @@ components:
       - DEATH
       - SCORE
       - MOVE
+      - AOE
     dungeonsandtrollsGameState:
       type: object
       properties:
@@ -1071,8 +1086,8 @@ components:
           format: int32
       example:
         currentLevel: 6
-        maxLevel: 0
-        score: 7.143538
+        maxLevel: 7
+        score: 0.8851375
         character: null
         currentPosition: null
         tick: 3
@@ -1104,6 +1119,7 @@ components:
                   positionX: 6
                 attributes: null
                 id: id
+                stun: null
               - score: 6.965118
                 effects:
                 - null
@@ -1122,6 +1138,7 @@ components:
                   positionX: 6
                 attributes: null
                 id: id
+                stun: null
               isDoor: true
               monsters:
               - onDeath:
@@ -1397,6 +1414,9 @@ components:
                   unidentified: true
                   id: id
                   slot: null
+                stun:
+                  isImmune: true
+                  isStunned: true
                 score: 9.018348
                 effects:
                 - duration: 9
@@ -1723,6 +1743,9 @@ components:
                   unidentified: true
                   id: id
                   slot: null
+                stun:
+                  isImmune: true
+                  isStunned: true
                 score: 9.018348
                 effects:
                 - duration: 9
@@ -1812,6 +1835,7 @@ components:
                   positionX: 6
                 attributes: null
                 id: id
+                stun: null
               - score: 6.965118
                 effects:
                 - null
@@ -1830,6 +1854,7 @@ components:
                   positionX: 6
                 attributes: null
                 id: id
+                stun: null
               isDoor: true
               monsters:
               - onDeath:
@@ -2105,6 +2130,9 @@ components:
                   unidentified: true
                   id: id
                   slot: null
+                stun:
+                  isImmune: true
+                  isStunned: true
                 score: 9.018348
                 effects:
                 - duration: 9
@@ -2431,6 +2459,9 @@ components:
                   unidentified: true
                   id: id
                   slot: null
+                stun:
+                  isImmune: true
+                  isStunned: true
                 score: 9.018348
                 effects:
                 - duration: 9
@@ -2532,6 +2563,7 @@ components:
                   positionX: 6
                 attributes: null
                 id: id
+                stun: null
               - score: 6.965118
                 effects:
                 - null
@@ -2550,6 +2582,7 @@ components:
                   positionX: 6
                 attributes: null
                 id: id
+                stun: null
               isDoor: true
               monsters:
               - onDeath:
@@ -2825,6 +2858,9 @@ components:
                   unidentified: true
                   id: id
                   slot: null
+                stun:
+                  isImmune: true
+                  isStunned: true
                 score: 9.018348
                 effects:
                 - duration: 9
@@ -3151,6 +3187,9 @@ components:
                   unidentified: true
                   id: id
                   slot: null
+                stun:
+                  isImmune: true
+                  isStunned: true
                 score: 9.018348
                 effects:
                 - duration: 9
@@ -3240,6 +3279,7 @@ components:
                   positionX: 6
                 attributes: null
                 id: id
+                stun: null
               - score: 6.965118
                 effects:
                 - null
@@ -3258,6 +3298,7 @@ components:
                   positionX: 6
                 attributes: null
                 id: id
+                stun: null
               isDoor: true
               monsters:
               - onDeath:
@@ -3533,6 +3574,9 @@ components:
                   unidentified: true
                   id: id
                   slot: null
+                stun:
+                  isImmune: true
+                  isStunned: true
                 score: 9.018348
                 effects:
                 - duration: 9
@@ -3859,6 +3903,9 @@ components:
                   unidentified: true
                   id: id
                   slot: null
+                stun:
+                  isImmune: true
+                  isStunned: true
                 score: 9.018348
                 effects:
                 - duration: 9
@@ -3937,16 +3984,22 @@ components:
         events:
         - skillName: skillName
           damage: 3.0937452
+          skill: null
           coordinates: null
           message: message
           type: DAMAGE
+          radius: 7.143538
           playerId: playerId
+          target: null
         - skillName: skillName
           damage: 3.0937452
+          skill: null
           coordinates: null
           message: message
           type: DAMAGE
+          radius: 7.143538
           playerId: playerId
+          target: null
         shopItems:
         - null
         - null
@@ -4197,6 +4250,7 @@ components:
               positionX: 6
             attributes: null
             id: id
+            stun: null
           - score: 6.965118
             effects:
             - null
@@ -4215,6 +4269,7 @@ components:
               positionX: 6
             attributes: null
             id: id
+            stun: null
           isDoor: true
           monsters:
           - onDeath:
@@ -4490,6 +4545,9 @@ components:
               unidentified: true
               id: id
               slot: null
+            stun:
+              isImmune: true
+              isStunned: true
             score: 9.018348
             effects:
             - duration: 9
@@ -4816,6 +4874,9 @@ components:
               unidentified: true
               id: id
               slot: null
+            stun:
+              isImmune: true
+              isStunned: true
             score: 9.018348
             effects:
             - duration: 9
@@ -4905,6 +4966,7 @@ components:
               positionX: 6
             attributes: null
             id: id
+            stun: null
           - score: 6.965118
             effects:
             - null
@@ -4923,6 +4985,7 @@ components:
               positionX: 6
             attributes: null
             id: id
+            stun: null
           isDoor: true
           monsters:
           - onDeath:
@@ -5198,6 +5261,9 @@ components:
               unidentified: true
               id: id
               slot: null
+            stun:
+              isImmune: true
+              isStunned: true
             score: 9.018348
             effects:
             - duration: 9
@@ -5524,6 +5590,9 @@ components:
               unidentified: true
               id: id
               slot: null
+            stun:
+              isImmune: true
+              isStunned: true
             score: 9.018348
             effects:
             - duration: 9
@@ -5634,6 +5703,7 @@ components:
                 positionX: 6
               attributes: null
               id: id
+              stun: null
             - score: 6.965118
               effects:
               - null
@@ -5652,6 +5722,7 @@ components:
                 positionX: 6
               attributes: null
               id: id
+              stun: null
             isDoor: true
             monsters:
             - onDeath:
@@ -5927,6 +5998,9 @@ components:
                 unidentified: true
                 id: id
                 slot: null
+              stun:
+                isImmune: true
+                isStunned: true
               score: 9.018348
               effects:
               - duration: 9
@@ -6253,6 +6327,9 @@ components:
                 unidentified: true
                 id: id
                 slot: null
+              stun:
+                isImmune: true
+                isStunned: true
               score: 9.018348
               effects:
               - duration: 9
@@ -6342,6 +6419,7 @@ components:
                 positionX: 6
               attributes: null
               id: id
+              stun: null
             - score: 6.965118
               effects:
               - null
@@ -6360,6 +6438,7 @@ components:
                 positionX: 6
               attributes: null
               id: id
+              stun: null
             isDoor: true
             monsters:
             - onDeath:
@@ -6635,6 +6714,9 @@ components:
                 unidentified: true
                 id: id
                 slot: null
+              stun:
+                isImmune: true
+                isStunned: true
               score: 9.018348
               effects:
               - duration: 9
@@ -6961,6 +7043,9 @@ components:
                 unidentified: true
                 id: id
                 slot: null
+              stun:
+                isImmune: true
+                isStunned: true
               score: 9.018348
               effects:
               - duration: 9
@@ -7062,6 +7147,7 @@ components:
                 positionX: 6
               attributes: null
               id: id
+              stun: null
             - score: 6.965118
               effects:
               - null
@@ -7080,6 +7166,7 @@ components:
                 positionX: 6
               attributes: null
               id: id
+              stun: null
             isDoor: true
             monsters:
             - onDeath:
@@ -7355,6 +7442,9 @@ components:
                 unidentified: true
                 id: id
                 slot: null
+              stun:
+                isImmune: true
+                isStunned: true
               score: 9.018348
               effects:
               - duration: 9
@@ -7681,6 +7771,9 @@ components:
                 unidentified: true
                 id: id
                 slot: null
+              stun:
+                isImmune: true
+                isStunned: true
               score: 9.018348
               effects:
               - duration: 9
@@ -7770,6 +7863,7 @@ components:
                 positionX: 6
               attributes: null
               id: id
+              stun: null
             - score: 6.965118
               effects:
               - null
@@ -7788,6 +7882,7 @@ components:
                 positionX: 6
               attributes: null
               id: id
+              stun: null
             isDoor: true
             monsters:
             - onDeath:
@@ -8063,6 +8158,9 @@ components:
                 unidentified: true
                 id: id
                 slot: null
+              stun:
+                isImmune: true
+                isStunned: true
               score: 9.018348
               effects:
               - duration: 9
@@ -8389,6 +8487,9 @@ components:
                 unidentified: true
                 id: id
                 slot: null
+              stun:
+                isImmune: true
+                isStunned: true
               score: 9.018348
               effects:
               - duration: 9
@@ -8527,6 +8628,7 @@ components:
             positionX: 6
           attributes: null
           id: id
+          stun: null
         - score: 6.965118
           effects:
           - null
@@ -8545,6 +8647,7 @@ components:
             positionX: 6
           attributes: null
           id: id
+          stun: null
         isDoor: true
         monsters:
         - onDeath:
@@ -8820,6 +8923,9 @@ components:
             unidentified: true
             id: id
             slot: null
+          stun:
+            isImmune: true
+            isStunned: true
           score: 9.018348
           effects:
           - duration: 9
@@ -9146,6 +9252,9 @@ components:
             unidentified: true
             id: id
             slot: null
+          stun:
+            isImmune: true
+            isStunned: true
           score: 9.018348
           effects:
           - duration: 9
@@ -9261,6 +9370,8 @@ components:
           type: integer
           format: int32
           nullable: true
+        stun:
+          $ref: '#/components/schemas/dungeonsandtrollsStun'
       example:
         onDeath:
         - null
@@ -9535,6 +9646,9 @@ components:
           unidentified: true
           id: id
           slot: null
+        stun:
+          isImmune: true
+          isStunned: true
         score: 9.018348
         effects:
         - duration: 9
@@ -9615,6 +9729,7 @@ components:
             positionX: 6
           attributes: null
           id: id
+          stun: null
         - score: 6.965118
           effects:
           - null
@@ -9633,6 +9748,7 @@ components:
             positionX: 6
           attributes: null
           id: id
+          stun: null
     dungeonsandtrollsPosition:
       type: object
       properties:
@@ -9911,6 +10027,16 @@ components:
           nullable: true
         position:
           $ref: '#/components/schemas/dungeonsandtrollsPosition'
+    dungeonsandtrollsStun:
+      type: object
+      properties:
+        isStunned:
+          type: boolean
+        isImmune:
+          type: boolean
+      example:
+        isImmune: true
+        isStunned: true
     dungeonsandtrollsUser:
       type: object
       properties:

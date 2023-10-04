@@ -8,7 +8,7 @@
  */
 package swagger
 
-type DungeonsandtrollsPosition struct {
-	PositionX int32 `json:"positionX,omitempty"`
-	PositionY int32 `json:"positionY,omitempty"`
+type DungeonsandtrollsStun struct {
+	IsStunned bool `json:"isStunned,omitempty"`
+	IsImmune bool `json:"isImmune,omitempty"`
 }

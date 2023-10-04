@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **OnDeath** | [**[]DungeonsandtrollsDroppable**](dungeonsandtrollsDroppable.md) |  | [optional] [default to null]
 **MaxAttributes** | [***DungeonsandtrollsAttributes**](dungeonsandtrollsAttributes.md) |  | [optional] [default to null]
 **LastDamageTaken** | **int32** |  | [optional] [default to null]
+**Stun** | [***DungeonsandtrollsStun**](dungeonsandtrollsStun.md) |  | [optional] [default to null]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
