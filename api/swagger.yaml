@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Dungeons and Trolls
-  version: 1.6.0
+  version: 1.10.0
 externalDocs:
   description: More about Dungeons and trolls
   url: https://github.com/gdg-garage/dungeons-and-trolls
@@ -194,6 +194,14 @@ paths:
         explode: true
         schema:
           type: boolean
+      - name: fogOfWar
+        in: query
+        description: default false
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       responses:
         "200":
           description: A successful response.
@@ -248,6 +256,14 @@ paths:
       - name: items
         in: query
         description: default true
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      - name: fogOfWar
+        in: query
+        description: default false
         required: false
         style: form
         explode: true
@@ -791,20 +807,20 @@ components:
           format: float
           nullable: true
       example:
-        slashResist: 7.386282
-        electricResist: 6.846853
-        fireResist: 1.0246457
-        constitution: 4.145608
-        constant: 5.025005
-        strength: 7.0614014
-        willpower: 2.027123
-        pierceResist: 1.2315135
-        stamina: 1.1730742
-        life: 7.4577446
-        intelligence: 3.6160767
-        dexterity: 9.301444
-        poisonResist: 1.4894159
-        mana: 4.9652185
+        slashResist: 1.0246457
+        electricResist: 1.1730742
+        fireResist: 6.846853
+        constitution: 1.2315135
+        constant: 9.36931
+        strength: 3.6160767
+        willpower: 7.386282
+        pierceResist: 1.4894159
+        stamina: 5.025005
+        life: 4.9652185
+        intelligence: 4.145608
+        dexterity: 2.027123
+        poisonResist: 7.4577446
+        mana: 9.965781
     dungeonsandtrollsAvailableLevels:
       type: object
       properties:
@@ -853,21 +869,21 @@ components:
         stun:
           $ref: '#/components/schemas/dungeonsandtrollsStun'
       example:
-        score: 6.965118
+        score: 2.8841622
         effects:
         - null
         - null
-        money: 3
+        money: 1
         equip:
         - null
         - null
-        lastDamageTaken: 2
-        skillPoints: 1.284659
+        lastDamageTaken: 6
+        skillPoints: 6.778325
         maxAttributes: null
         name: name
         coordinates:
-          positionY: 5
-          level: 6
+          positionY: 3
+          level: 5
           positionX: 6
         attributes: null
         id: id
@@ -908,8 +924,8 @@ components:
           type: integer
           format: int32
       example:
-        positionY: 5
-        level: 6
+        positionY: 3
+        level: 5
         positionX: 6
     dungeonsandtrollsDamageType:
       type: string
@@ -951,7 +967,7 @@ components:
           $ref: '#/components/schemas/dungeonsandtrollsKey'
       example:
         waypoint:
-          destinationFloor: 8
+          destinationFloor: 6
         item: null
         skill: null
         decoration:
@@ -981,23 +997,23 @@ components:
           type: string
           nullable: true
       example:
-        duration: 9
+        duration: 6
         effects:
-          slashResist: 7.386282
-          electricResist: 6.846853
-          fireResist: 1.0246457
-          constitution: 4.145608
-          constant: 5.025005
-          strength: 7.0614014
-          willpower: 2.027123
-          pierceResist: 1.2315135
-          stamina: 1.1730742
-          life: 7.4577446
-          intelligence: 3.6160767
-          dexterity: 9.301444
-          poisonResist: 1.4894159
-          mana: 4.9652185
-        damageAmount: 2.302136
+          slashResist: 1.0246457
+          electricResist: 1.1730742
+          fireResist: 6.846853
+          constitution: 1.2315135
+          constant: 9.36931
+          strength: 3.6160767
+          willpower: 7.386282
+          pierceResist: 1.4894159
+          stamina: 5.025005
+          life: 4.9652185
+          intelligence: 4.145608
+          dexterity: 2.027123
+          poisonResist: 7.4577446
+          mana: 9.965781
+        damageAmount: 9.301444
         damageType: none
         CasterId: CasterId
     dungeonsandtrollsEvent:
@@ -1027,14 +1043,18 @@ components:
           $ref: '#/components/schemas/dungeonsandtrollsCoordinates'
         skill:
           $ref: '#/components/schemas/dungeonsandtrollsSkill'
+        isRanged:
+          type: boolean
+          nullable: true
       example:
         skillName: skillName
-        damage: 3.0937452
+        damage: 7.05877
         skill: null
         coordinates: null
         message: message
         type: DAMAGE
-        radius: 7.143538
+        radius: 6.519181
+        isRanged: true
         playerId: playerId
         target: null
     dungeonsandtrollsEventType:
@@ -1051,6 +1071,16 @@ components:
       - SCORE
       - MOVE
       - AOE
+    dungeonsandtrollsFogOfWarMap:
+      type: object
+      properties:
+        position:
+          $ref: '#/components/schemas/dungeonsandtrollsPosition'
+        fogOfWar:
+          type: boolean
+      example:
+        fogOfWar: true
+        position: null
     dungeonsandtrollsGameState:
       type: object
       properties:
@@ -1085,15 +1115,29 @@ components:
           type: integer
           format: int32
       example:
-        currentLevel: 6
-        maxLevel: 7
-        score: 0.8851375
+        currentLevel: 7
+        maxLevel: 4
+        score: 0.10263654
         character: null
         currentPosition: null
-        tick: 3
+        tick: 0
         map:
           levels:
-          - level: 0
+          - deprecationInSeconds: 5
+            playerMap:
+            - distance: 3
+              lineOfSight: true
+              position: null
+            - distance: 3
+              lineOfSight: true
+              position: null
+            horror: 5.962134
+            fogOfWar:
+            - fogOfWar: true
+              position: null
+            - fogOfWar: true
+              position: null
+            level: 0
             objects:
             - isSpawn: true
               effects:
@@ -1101,40 +1145,40 @@ components:
               - null
               isFree: true
               players:
-              - score: 6.965118
+              - score: 2.8841622
                 effects:
                 - null
                 - null
-                money: 3
+                money: 1
                 equip:
                 - null
                 - null
-                lastDamageTaken: 2
-                skillPoints: 1.284659
+                lastDamageTaken: 6
+                skillPoints: 6.778325
                 maxAttributes: null
                 name: name
                 coordinates:
-                  positionY: 5
-                  level: 6
+                  positionY: 3
+                  level: 5
                   positionX: 6
                 attributes: null
                 id: id
                 stun: null
-              - score: 6.965118
+              - score: 2.8841622
                 effects:
                 - null
                 - null
-                money: 3
+                money: 1
                 equip:
                 - null
                 - null
-                lastDamageTaken: 2
-                skillPoints: 1.284659
+                lastDamageTaken: 6
+                skillPoints: 6.778325
                 maxAttributes: null
                 name: name
                 coordinates:
-                  positionY: 5
-                  level: 6
+                  positionY: 3
+                  level: 5
                   positionX: 6
                 attributes: null
                 id: id
@@ -1145,7 +1189,7 @@ components:
                 - null
                 - null
                 lastDamageTaken: 6
-                lifePercentage: 9.36931
+                lifePercentage: 8.762042
                 icon: icon
                 equippedItems:
                 - skills:
@@ -1163,7 +1207,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1176,7 +1220,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1225,7 +1269,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1238,7 +1282,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1274,7 +1318,7 @@ components:
                     damageType: null
                     target: none
                   requirements: null
-                  price: 6
+                  price: 9
                   name: name
                   icon: icon
                   attributes: null
@@ -1296,7 +1340,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1309,7 +1353,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1358,7 +1402,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1371,7 +1415,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1407,7 +1451,7 @@ components:
                     damageType: null
                     target: none
                   requirements: null
-                  price: 6
+                  price: 9
                   name: name
                   icon: icon
                   attributes: null
@@ -1417,44 +1461,44 @@ components:
                 stun:
                   isImmune: true
                   isStunned: true
-                score: 9.018348
+                score: 3.5571952
                 effects:
-                - duration: 9
+                - duration: 6
                   effects:
-                    slashResist: 7.386282
-                    electricResist: 6.846853
-                    fireResist: 1.0246457
-                    constitution: 4.145608
-                    constant: 5.025005
-                    strength: 7.0614014
-                    willpower: 2.027123
-                    pierceResist: 1.2315135
-                    stamina: 1.1730742
-                    life: 7.4577446
-                    intelligence: 3.6160767
-                    dexterity: 9.301444
-                    poisonResist: 1.4894159
-                    mana: 4.9652185
-                  damageAmount: 2.302136
+                    slashResist: 1.0246457
+                    electricResist: 1.1730742
+                    fireResist: 6.846853
+                    constitution: 1.2315135
+                    constant: 9.36931
+                    strength: 3.6160767
+                    willpower: 7.386282
+                    pierceResist: 1.4894159
+                    stamina: 5.025005
+                    life: 4.9652185
+                    intelligence: 4.145608
+                    dexterity: 2.027123
+                    poisonResist: 7.4577446
+                    mana: 9.965781
+                  damageAmount: 9.301444
                   damageType: none
                   CasterId: CasterId
-                - duration: 9
+                - duration: 6
                   effects:
-                    slashResist: 7.386282
-                    electricResist: 6.846853
-                    fireResist: 1.0246457
-                    constitution: 4.145608
-                    constant: 5.025005
-                    strength: 7.0614014
-                    willpower: 2.027123
-                    pierceResist: 1.2315135
-                    stamina: 1.1730742
-                    life: 7.4577446
-                    intelligence: 3.6160767
-                    dexterity: 9.301444
-                    poisonResist: 1.4894159
-                    mana: 4.9652185
-                  damageAmount: 2.302136
+                    slashResist: 1.0246457
+                    electricResist: 1.1730742
+                    fireResist: 6.846853
+                    constitution: 1.2315135
+                    constant: 9.36931
+                    strength: 3.6160767
+                    willpower: 7.386282
+                    pierceResist: 1.4894159
+                    stamina: 5.025005
+                    life: 4.9652185
+                    intelligence: 4.145608
+                    dexterity: 2.027123
+                    poisonResist: 7.4577446
+                    mana: 9.965781
+                  damageAmount: 9.301444
                   damageType: none
                   CasterId: CasterId
                 faction: faction
@@ -1474,7 +1518,7 @@ components:
                 - null
                 - null
                 lastDamageTaken: 6
-                lifePercentage: 9.36931
+                lifePercentage: 8.762042
                 icon: icon
                 equippedItems:
                 - skills:
@@ -1492,7 +1536,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1505,7 +1549,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1554,7 +1598,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1567,7 +1611,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1603,7 +1647,7 @@ components:
                     damageType: null
                     target: none
                   requirements: null
-                  price: 6
+                  price: 9
                   name: name
                   icon: icon
                   attributes: null
@@ -1625,7 +1669,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1638,7 +1682,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1687,7 +1731,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1700,7 +1744,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1736,7 +1780,7 @@ components:
                     damageType: null
                     target: none
                   requirements: null
-                  price: 6
+                  price: 9
                   name: name
                   icon: icon
                   attributes: null
@@ -1746,44 +1790,44 @@ components:
                 stun:
                   isImmune: true
                   isStunned: true
-                score: 9.018348
+                score: 3.5571952
                 effects:
-                - duration: 9
+                - duration: 6
                   effects:
-                    slashResist: 7.386282
-                    electricResist: 6.846853
-                    fireResist: 1.0246457
-                    constitution: 4.145608
-                    constant: 5.025005
-                    strength: 7.0614014
-                    willpower: 2.027123
-                    pierceResist: 1.2315135
-                    stamina: 1.1730742
-                    life: 7.4577446
-                    intelligence: 3.6160767
-                    dexterity: 9.301444
-                    poisonResist: 1.4894159
-                    mana: 4.9652185
-                  damageAmount: 2.302136
+                    slashResist: 1.0246457
+                    electricResist: 1.1730742
+                    fireResist: 6.846853
+                    constitution: 1.2315135
+                    constant: 9.36931
+                    strength: 3.6160767
+                    willpower: 7.386282
+                    pierceResist: 1.4894159
+                    stamina: 5.025005
+                    life: 4.9652185
+                    intelligence: 4.145608
+                    dexterity: 2.027123
+                    poisonResist: 7.4577446
+                    mana: 9.965781
+                  damageAmount: 9.301444
                   damageType: none
                   CasterId: CasterId
-                - duration: 9
+                - duration: 6
                   effects:
-                    slashResist: 7.386282
-                    electricResist: 6.846853
-                    fireResist: 1.0246457
-                    constitution: 4.145608
-                    constant: 5.025005
-                    strength: 7.0614014
-                    willpower: 2.027123
-                    pierceResist: 1.2315135
-                    stamina: 1.1730742
-                    life: 7.4577446
-                    intelligence: 3.6160767
-                    dexterity: 9.301444
-                    poisonResist: 1.4894159
-                    mana: 4.9652185
-                  damageAmount: 2.302136
+                    slashResist: 1.0246457
+                    electricResist: 1.1730742
+                    fireResist: 6.846853
+                    constitution: 1.2315135
+                    constant: 9.36931
+                    strength: 3.6160767
+                    willpower: 7.386282
+                    pierceResist: 1.4894159
+                    stamina: 5.025005
+                    life: 4.9652185
+                    intelligence: 4.145608
+                    dexterity: 2.027123
+                    poisonResist: 7.4577446
+                    mana: 9.965781
+                  damageAmount: 9.301444
                   damageType: none
                   CasterId: CasterId
                 faction: faction
@@ -1803,8 +1847,8 @@ components:
               - null
               - null
               position:
-                positionY: 5
-                positionX: 5
+                positionY: 7
+                positionX: 2
               portal: null
               items:
               - null
@@ -1817,40 +1861,40 @@ components:
               - null
               isFree: true
               players:
-              - score: 6.965118
+              - score: 2.8841622
                 effects:
                 - null
                 - null
-                money: 3
+                money: 1
                 equip:
                 - null
                 - null
-                lastDamageTaken: 2
-                skillPoints: 1.284659
+                lastDamageTaken: 6
+                skillPoints: 6.778325
                 maxAttributes: null
                 name: name
                 coordinates:
-                  positionY: 5
-                  level: 6
+                  positionY: 3
+                  level: 5
                   positionX: 6
                 attributes: null
                 id: id
                 stun: null
-              - score: 6.965118
+              - score: 2.8841622
                 effects:
                 - null
                 - null
-                money: 3
+                money: 1
                 equip:
                 - null
                 - null
-                lastDamageTaken: 2
-                skillPoints: 1.284659
+                lastDamageTaken: 6
+                skillPoints: 6.778325
                 maxAttributes: null
                 name: name
                 coordinates:
-                  positionY: 5
-                  level: 6
+                  positionY: 3
+                  level: 5
                   positionX: 6
                 attributes: null
                 id: id
@@ -1861,7 +1905,7 @@ components:
                 - null
                 - null
                 lastDamageTaken: 6
-                lifePercentage: 9.36931
+                lifePercentage: 8.762042
                 icon: icon
                 equippedItems:
                 - skills:
@@ -1879,7 +1923,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1892,7 +1936,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1941,7 +1985,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1954,7 +1998,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -1990,7 +2034,7 @@ components:
                     damageType: null
                     target: none
                   requirements: null
-                  price: 6
+                  price: 9
                   name: name
                   icon: icon
                   attributes: null
@@ -2012,7 +2056,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2025,7 +2069,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2074,7 +2118,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2087,7 +2131,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2123,7 +2167,7 @@ components:
                     damageType: null
                     target: none
                   requirements: null
-                  price: 6
+                  price: 9
                   name: name
                   icon: icon
                   attributes: null
@@ -2133,44 +2177,44 @@ components:
                 stun:
                   isImmune: true
                   isStunned: true
-                score: 9.018348
+                score: 3.5571952
                 effects:
-                - duration: 9
+                - duration: 6
                   effects:
-                    slashResist: 7.386282
-                    electricResist: 6.846853
-                    fireResist: 1.0246457
-                    constitution: 4.145608
-                    constant: 5.025005
-                    strength: 7.0614014
-                    willpower: 2.027123
-                    pierceResist: 1.2315135
-                    stamina: 1.1730742
-                    life: 7.4577446
-                    intelligence: 3.6160767
-                    dexterity: 9.301444
-                    poisonResist: 1.4894159
-                    mana: 4.9652185
-                  damageAmount: 2.302136
+                    slashResist: 1.0246457
+                    electricResist: 1.1730742
+                    fireResist: 6.846853
+                    constitution: 1.2315135
+                    constant: 9.36931
+                    strength: 3.6160767
+                    willpower: 7.386282
+                    pierceResist: 1.4894159
+                    stamina: 5.025005
+                    life: 4.9652185
+                    intelligence: 4.145608
+                    dexterity: 2.027123
+                    poisonResist: 7.4577446
+                    mana: 9.965781
+                  damageAmount: 9.301444
                   damageType: none
                   CasterId: CasterId
-                - duration: 9
+                - duration: 6
                   effects:
-                    slashResist: 7.386282
-                    electricResist: 6.846853
-                    fireResist: 1.0246457
-                    constitution: 4.145608
-                    constant: 5.025005
-                    strength: 7.0614014
-                    willpower: 2.027123
-                    pierceResist: 1.2315135
-                    stamina: 1.1730742
-                    life: 7.4577446
-                    intelligence: 3.6160767
-                    dexterity: 9.301444
-                    poisonResist: 1.4894159
-                    mana: 4.9652185
-                  damageAmount: 2.302136
+                    slashResist: 1.0246457
+                    electricResist: 1.1730742
+                    fireResist: 6.846853
+                    constitution: 1.2315135
+                    constant: 9.36931
+                    strength: 3.6160767
+                    willpower: 7.386282
+                    pierceResist: 1.4894159
+                    stamina: 5.025005
+                    life: 4.9652185
+                    intelligence: 4.145608
+                    dexterity: 2.027123
+                    poisonResist: 7.4577446
+                    mana: 9.965781
+                  damageAmount: 9.301444
                   damageType: none
                   CasterId: CasterId
                 faction: faction
@@ -2190,7 +2234,7 @@ components:
                 - null
                 - null
                 lastDamageTaken: 6
-                lifePercentage: 9.36931
+                lifePercentage: 8.762042
                 icon: icon
                 equippedItems:
                 - skills:
@@ -2208,7 +2252,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2221,7 +2265,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2270,7 +2314,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2283,7 +2327,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2319,7 +2363,7 @@ components:
                     damageType: null
                     target: none
                   requirements: null
-                  price: 6
+                  price: 9
                   name: name
                   icon: icon
                   attributes: null
@@ -2341,7 +2385,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2354,7 +2398,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2403,7 +2447,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2416,7 +2460,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2452,7 +2496,7 @@ components:
                     damageType: null
                     target: none
                   requirements: null
-                  price: 6
+                  price: 9
                   name: name
                   icon: icon
                   attributes: null
@@ -2462,44 +2506,44 @@ components:
                 stun:
                   isImmune: true
                   isStunned: true
-                score: 9.018348
+                score: 3.5571952
                 effects:
-                - duration: 9
+                - duration: 6
                   effects:
-                    slashResist: 7.386282
-                    electricResist: 6.846853
-                    fireResist: 1.0246457
-                    constitution: 4.145608
-                    constant: 5.025005
-                    strength: 7.0614014
-                    willpower: 2.027123
-                    pierceResist: 1.2315135
-                    stamina: 1.1730742
-                    life: 7.4577446
-                    intelligence: 3.6160767
-                    dexterity: 9.301444
-                    poisonResist: 1.4894159
-                    mana: 4.9652185
-                  damageAmount: 2.302136
+                    slashResist: 1.0246457
+                    electricResist: 1.1730742
+                    fireResist: 6.846853
+                    constitution: 1.2315135
+                    constant: 9.36931
+                    strength: 3.6160767
+                    willpower: 7.386282
+                    pierceResist: 1.4894159
+                    stamina: 5.025005
+                    life: 4.9652185
+                    intelligence: 4.145608
+                    dexterity: 2.027123
+                    poisonResist: 7.4577446
+                    mana: 9.965781
+                  damageAmount: 9.301444
                   damageType: none
                   CasterId: CasterId
-                - duration: 9
+                - duration: 6
                   effects:
-                    slashResist: 7.386282
-                    electricResist: 6.846853
-                    fireResist: 1.0246457
-                    constitution: 4.145608
-                    constant: 5.025005
-                    strength: 7.0614014
-                    willpower: 2.027123
-                    pierceResist: 1.2315135
-                    stamina: 1.1730742
-                    life: 7.4577446
-                    intelligence: 3.6160767
-                    dexterity: 9.301444
-                    poisonResist: 1.4894159
-                    mana: 4.9652185
-                  damageAmount: 2.302136
+                    slashResist: 1.0246457
+                    electricResist: 1.1730742
+                    fireResist: 6.846853
+                    constitution: 1.2315135
+                    constant: 9.36931
+                    strength: 3.6160767
+                    willpower: 7.386282
+                    pierceResist: 1.4894159
+                    stamina: 5.025005
+                    life: 4.9652185
+                    intelligence: 4.145608
+                    dexterity: 2.027123
+                    poisonResist: 7.4577446
+                    mana: 9.965781
+                  damageAmount: 9.301444
                   damageType: none
                   CasterId: CasterId
                 faction: faction
@@ -2519,8 +2563,8 @@ components:
               - null
               - null
               position:
-                positionY: 5
-                positionX: 5
+                positionY: 7
+                positionX: 2
               portal: null
               items:
               - null
@@ -2528,16 +2572,22 @@ components:
               isStairs: true
               isWall: true
             width: 6
-            free:
-            - - {}
-              - {}
-            - - {}
-              - {}
-            ascii:
-            - ascii
-            - ascii
             height: 1
-          - level: 0
+          - deprecationInSeconds: 5
+            playerMap:
+            - distance: 3
+              lineOfSight: true
+              position: null
+            - distance: 3
+              lineOfSight: true
+              position: null
+            horror: 5.962134
+            fogOfWar:
+            - fogOfWar: true
+              position: null
+            - fogOfWar: true
+              position: null
+            level: 0
             objects:
             - isSpawn: true
               effects:
@@ -2545,40 +2595,40 @@ components:
               - null
               isFree: true
               players:
-              - score: 6.965118
+              - score: 2.8841622
                 effects:
                 - null
                 - null
-                money: 3
+                money: 1
                 equip:
                 - null
                 - null
-                lastDamageTaken: 2
-                skillPoints: 1.284659
+                lastDamageTaken: 6
+                skillPoints: 6.778325
                 maxAttributes: null
                 name: name
                 coordinates:
-                  positionY: 5
-                  level: 6
+                  positionY: 3
+                  level: 5
                   positionX: 6
                 attributes: null
                 id: id
                 stun: null
-              - score: 6.965118
+              - score: 2.8841622
                 effects:
                 - null
                 - null
-                money: 3
+                money: 1
                 equip:
                 - null
                 - null
-                lastDamageTaken: 2
-                skillPoints: 1.284659
+                lastDamageTaken: 6
+                skillPoints: 6.778325
                 maxAttributes: null
                 name: name
                 coordinates:
-                  positionY: 5
-                  level: 6
+                  positionY: 3
+                  level: 5
                   positionX: 6
                 attributes: null
                 id: id
@@ -2589,7 +2639,7 @@ components:
                 - null
                 - null
                 lastDamageTaken: 6
-                lifePercentage: 9.36931
+                lifePercentage: 8.762042
                 icon: icon
                 equippedItems:
                 - skills:
@@ -2607,7 +2657,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2620,7 +2670,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2669,7 +2719,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2682,7 +2732,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2718,7 +2768,7 @@ components:
                     damageType: null
                     target: none
                   requirements: null
-                  price: 6
+                  price: 9
                   name: name
                   icon: icon
                   attributes: null
@@ -2740,7 +2790,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2753,7 +2803,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2802,7 +2852,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2815,7 +2865,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2851,7 +2901,7 @@ components:
                     damageType: null
                     target: none
                   requirements: null
-                  price: 6
+                  price: 9
                   name: name
                   icon: icon
                   attributes: null
@@ -2861,44 +2911,44 @@ components:
                 stun:
                   isImmune: true
                   isStunned: true
-                score: 9.018348
+                score: 3.5571952
                 effects:
-                - duration: 9
+                - duration: 6
                   effects:
-                    slashResist: 7.386282
-                    electricResist: 6.846853
-                    fireResist: 1.0246457
-                    constitution: 4.145608
-                    constant: 5.025005
-                    strength: 7.0614014
-                    willpower: 2.027123
-                    pierceResist: 1.2315135
-                    stamina: 1.1730742
-                    life: 7.4577446
-                    intelligence: 3.6160767
-                    dexterity: 9.301444
-                    poisonResist: 1.4894159
-                    mana: 4.9652185
-                  damageAmount: 2.302136
+                    slashResist: 1.0246457
+                    electricResist: 1.1730742
+                    fireResist: 6.846853
+                    constitution: 1.2315135
+                    constant: 9.36931
+                    strength: 3.6160767
+                    willpower: 7.386282
+                    pierceResist: 1.4894159
+                    stamina: 5.025005
+                    life: 4.9652185
+                    intelligence: 4.145608
+                    dexterity: 2.027123
+                    poisonResist: 7.4577446
+                    mana: 9.965781
+                  damageAmount: 9.301444
                   damageType: none
                   CasterId: CasterId
-                - duration: 9
+                - duration: 6
                   effects:
-                    slashResist: 7.386282
-                    electricResist: 6.846853
-                    fireResist: 1.0246457
-                    constitution: 4.145608
-                    constant: 5.025005
-                    strength: 7.0614014
-                    willpower: 2.027123
-                    pierceResist: 1.2315135
-                    stamina: 1.1730742
-                    life: 7.4577446
-                    intelligence: 3.6160767
-                    dexterity: 9.301444
-                    poisonResist: 1.4894159
-                    mana: 4.9652185
-                  damageAmount: 2.302136
+                    slashResist: 1.0246457
+                    electricResist: 1.1730742
+                    fireResist: 6.846853
+                    constitution: 1.2315135
+                    constant: 9.36931
+                    strength: 3.6160767
+                    willpower: 7.386282
+                    pierceResist: 1.4894159
+                    stamina: 5.025005
+                    life: 4.9652185
+                    intelligence: 4.145608
+                    dexterity: 2.027123
+                    poisonResist: 7.4577446
+                    mana: 9.965781
+                  damageAmount: 9.301444
                   damageType: none
                   CasterId: CasterId
                 faction: faction
@@ -2918,7 +2968,7 @@ components:
                 - null
                 - null
                 lastDamageTaken: 6
-                lifePercentage: 9.36931
+                lifePercentage: 8.762042
                 icon: icon
                 equippedItems:
                 - skills:
@@ -2936,7 +2986,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2949,7 +2999,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -2998,7 +3048,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3011,7 +3061,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3047,7 +3097,7 @@ components:
                     damageType: null
                     target: none
                   requirements: null
-                  price: 6
+                  price: 9
                   name: name
                   icon: icon
                   attributes: null
@@ -3069,7 +3119,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3082,7 +3132,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3131,7 +3181,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3144,7 +3194,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3180,7 +3230,7 @@ components:
                     damageType: null
                     target: none
                   requirements: null
-                  price: 6
+                  price: 9
                   name: name
                   icon: icon
                   attributes: null
@@ -3190,44 +3240,44 @@ components:
                 stun:
                   isImmune: true
                   isStunned: true
-                score: 9.018348
+                score: 3.5571952
                 effects:
-                - duration: 9
+                - duration: 6
                   effects:
-                    slashResist: 7.386282
-                    electricResist: 6.846853
-                    fireResist: 1.0246457
-                    constitution: 4.145608
-                    constant: 5.025005
-                    strength: 7.0614014
-                    willpower: 2.027123
-                    pierceResist: 1.2315135
-                    stamina: 1.1730742
-                    life: 7.4577446
-                    intelligence: 3.6160767
-                    dexterity: 9.301444
-                    poisonResist: 1.4894159
-                    mana: 4.9652185
-                  damageAmount: 2.302136
+                    slashResist: 1.0246457
+                    electricResist: 1.1730742
+                    fireResist: 6.846853
+                    constitution: 1.2315135
+                    constant: 9.36931
+                    strength: 3.6160767
+                    willpower: 7.386282
+                    pierceResist: 1.4894159
+                    stamina: 5.025005
+                    life: 4.9652185
+                    intelligence: 4.145608
+                    dexterity: 2.027123
+                    poisonResist: 7.4577446
+                    mana: 9.965781
+                  damageAmount: 9.301444
                   damageType: none
                   CasterId: CasterId
-                - duration: 9
+                - duration: 6
                   effects:
-                    slashResist: 7.386282
-                    electricResist: 6.846853
-                    fireResist: 1.0246457
-                    constitution: 4.145608
-                    constant: 5.025005
-                    strength: 7.0614014
-                    willpower: 2.027123
-                    pierceResist: 1.2315135
-                    stamina: 1.1730742
-                    life: 7.4577446
-                    intelligence: 3.6160767
-                    dexterity: 9.301444
-                    poisonResist: 1.4894159
-                    mana: 4.9652185
-                  damageAmount: 2.302136
+                    slashResist: 1.0246457
+                    electricResist: 1.1730742
+                    fireResist: 6.846853
+                    constitution: 1.2315135
+                    constant: 9.36931
+                    strength: 3.6160767
+                    willpower: 7.386282
+                    pierceResist: 1.4894159
+                    stamina: 5.025005
+                    life: 4.9652185
+                    intelligence: 4.145608
+                    dexterity: 2.027123
+                    poisonResist: 7.4577446
+                    mana: 9.965781
+                  damageAmount: 9.301444
                   damageType: none
                   CasterId: CasterId
                 faction: faction
@@ -3247,8 +3297,8 @@ components:
               - null
               - null
               position:
-                positionY: 5
-                positionX: 5
+                positionY: 7
+                positionX: 2
               portal: null
               items:
               - null
@@ -3261,40 +3311,40 @@ components:
               - null
               isFree: true
               players:
-              - score: 6.965118
+              - score: 2.8841622
                 effects:
                 - null
                 - null
-                money: 3
+                money: 1
                 equip:
                 - null
                 - null
-                lastDamageTaken: 2
-                skillPoints: 1.284659
+                lastDamageTaken: 6
+                skillPoints: 6.778325
                 maxAttributes: null
                 name: name
                 coordinates:
-                  positionY: 5
-                  level: 6
+                  positionY: 3
+                  level: 5
                   positionX: 6
                 attributes: null
                 id: id
                 stun: null
-              - score: 6.965118
+              - score: 2.8841622
                 effects:
                 - null
                 - null
-                money: 3
+                money: 1
                 equip:
                 - null
                 - null
-                lastDamageTaken: 2
-                skillPoints: 1.284659
+                lastDamageTaken: 6
+                skillPoints: 6.778325
                 maxAttributes: null
                 name: name
                 coordinates:
-                  positionY: 5
-                  level: 6
+                  positionY: 3
+                  level: 5
                   positionX: 6
                 attributes: null
                 id: id
@@ -3305,7 +3355,7 @@ components:
                 - null
                 - null
                 lastDamageTaken: 6
-                lifePercentage: 9.36931
+                lifePercentage: 8.762042
                 icon: icon
                 equippedItems:
                 - skills:
@@ -3323,7 +3373,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3336,7 +3386,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3385,7 +3435,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3398,7 +3448,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3434,7 +3484,7 @@ components:
                     damageType: null
                     target: none
                   requirements: null
-                  price: 6
+                  price: 9
                   name: name
                   icon: icon
                   attributes: null
@@ -3456,7 +3506,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3469,7 +3519,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3518,7 +3568,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3531,7 +3581,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3567,7 +3617,7 @@ components:
                     damageType: null
                     target: none
                   requirements: null
-                  price: 6
+                  price: 9
                   name: name
                   icon: icon
                   attributes: null
@@ -3577,44 +3627,44 @@ components:
                 stun:
                   isImmune: true
                   isStunned: true
-                score: 9.018348
+                score: 3.5571952
                 effects:
-                - duration: 9
+                - duration: 6
                   effects:
-                    slashResist: 7.386282
-                    electricResist: 6.846853
-                    fireResist: 1.0246457
-                    constitution: 4.145608
-                    constant: 5.025005
-                    strength: 7.0614014
-                    willpower: 2.027123
-                    pierceResist: 1.2315135
-                    stamina: 1.1730742
-                    life: 7.4577446
-                    intelligence: 3.6160767
-                    dexterity: 9.301444
-                    poisonResist: 1.4894159
-                    mana: 4.9652185
-                  damageAmount: 2.302136
+                    slashResist: 1.0246457
+                    electricResist: 1.1730742
+                    fireResist: 6.846853
+                    constitution: 1.2315135
+                    constant: 9.36931
+                    strength: 3.6160767
+                    willpower: 7.386282
+                    pierceResist: 1.4894159
+                    stamina: 5.025005
+                    life: 4.9652185
+                    intelligence: 4.145608
+                    dexterity: 2.027123
+                    poisonResist: 7.4577446
+                    mana: 9.965781
+                  damageAmount: 9.301444
                   damageType: none
                   CasterId: CasterId
-                - duration: 9
+                - duration: 6
                   effects:
-                    slashResist: 7.386282
-                    electricResist: 6.846853
-                    fireResist: 1.0246457
-                    constitution: 4.145608
-                    constant: 5.025005
-                    strength: 7.0614014
-                    willpower: 2.027123
-                    pierceResist: 1.2315135
-                    stamina: 1.1730742
-                    life: 7.4577446
-                    intelligence: 3.6160767
-                    dexterity: 9.301444
-                    poisonResist: 1.4894159
-                    mana: 4.9652185
-                  damageAmount: 2.302136
+                    slashResist: 1.0246457
+                    electricResist: 1.1730742
+                    fireResist: 6.846853
+                    constitution: 1.2315135
+                    constant: 9.36931
+                    strength: 3.6160767
+                    willpower: 7.386282
+                    pierceResist: 1.4894159
+                    stamina: 5.025005
+                    life: 4.9652185
+                    intelligence: 4.145608
+                    dexterity: 2.027123
+                    poisonResist: 7.4577446
+                    mana: 9.965781
+                  damageAmount: 9.301444
                   damageType: none
                   CasterId: CasterId
                 faction: faction
@@ -3634,7 +3684,7 @@ components:
                 - null
                 - null
                 lastDamageTaken: 6
-                lifePercentage: 9.36931
+                lifePercentage: 8.762042
                 icon: icon
                 equippedItems:
                 - skills:
@@ -3652,7 +3702,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3665,7 +3715,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3714,7 +3764,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3727,7 +3777,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3763,7 +3813,7 @@ components:
                     damageType: null
                     target: none
                   requirements: null
-                  price: 6
+                  price: 9
                   name: name
                   icon: icon
                   attributes: null
@@ -3785,7 +3835,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3798,7 +3848,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3847,7 +3897,7 @@ components:
                     casterEffects:
                       summons:
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3860,7 +3910,7 @@ components:
                           - null
                         monster: null
                       - waypoint:
-                          destinationFloor: 8
+                          destinationFloor: 6
                         item: null
                         skill: null
                         decoration:
@@ -3896,7 +3946,7 @@ components:
                     damageType: null
                     target: none
                   requirements: null
-                  price: 6
+                  price: 9
                   name: name
                   icon: icon
                   attributes: null
@@ -3906,44 +3956,44 @@ components:
                 stun:
                   isImmune: true
                   isStunned: true
-                score: 9.018348
+                score: 3.5571952
                 effects:
-                - duration: 9
+                - duration: 6
                   effects:
-                    slashResist: 7.386282
-                    electricResist: 6.846853
-                    fireResist: 1.0246457
-                    constitution: 4.145608
-                    constant: 5.025005
-                    strength: 7.0614014
-                    willpower: 2.027123
-                    pierceResist: 1.2315135
-                    stamina: 1.1730742
-                    life: 7.4577446
-                    intelligence: 3.6160767
-                    dexterity: 9.301444
-                    poisonResist: 1.4894159
-                    mana: 4.9652185
-                  damageAmount: 2.302136
+                    slashResist: 1.0246457
+                    electricResist: 1.1730742
+                    fireResist: 6.846853
+                    constitution: 1.2315135
+                    constant: 9.36931
+                    strength: 3.6160767
+                    willpower: 7.386282
+                    pierceResist: 1.4894159
+                    stamina: 5.025005
+                    life: 4.9652185
+                    intelligence: 4.145608
+                    dexterity: 2.027123
+                    poisonResist: 7.4577446
+                    mana: 9.965781
+                  damageAmount: 9.301444
                   damageType: none
                   CasterId: CasterId
-                - duration: 9
+                - duration: 6
                   effects:
-                    slashResist: 7.386282
-                    electricResist: 6.846853
-                    fireResist: 1.0246457
-                    constitution: 4.145608
-                    constant: 5.025005
-                    strength: 7.0614014
-                    willpower: 2.027123
-                    pierceResist: 1.2315135
-                    stamina: 1.1730742
-                    life: 7.4577446
-                    intelligence: 3.6160767
-                    dexterity: 9.301444
-                    poisonResist: 1.4894159
-                    mana: 4.9652185
-                  damageAmount: 2.302136
+                    slashResist: 1.0246457
+                    electricResist: 1.1730742
+                    fireResist: 6.846853
+                    constitution: 1.2315135
+                    constant: 9.36931
+                    strength: 3.6160767
+                    willpower: 7.386282
+                    pierceResist: 1.4894159
+                    stamina: 5.025005
+                    life: 4.9652185
+                    intelligence: 4.145608
+                    dexterity: 2.027123
+                    poisonResist: 7.4577446
+                    mana: 9.965781
+                  damageAmount: 9.301444
                   damageType: none
                   CasterId: CasterId
                 faction: faction
@@ -3963,8 +4013,8 @@ components:
               - null
               - null
               position:
-                positionY: 5
-                positionX: 5
+                positionY: 7
+                positionX: 2
               portal: null
               items:
               - null
@@ -3972,32 +4022,26 @@ components:
               isStairs: true
               isWall: true
             width: 6
-            free:
-            - - {}
-              - {}
-            - - {}
-              - {}
-            ascii:
-            - ascii
-            - ascii
             height: 1
         events:
         - skillName: skillName
-          damage: 3.0937452
+          damage: 7.05877
           skill: null
           coordinates: null
           message: message
           type: DAMAGE
-          radius: 7.143538
+          radius: 6.519181
+          isRanged: true
           playerId: playerId
           target: null
         - skillName: skillName
-          damage: 3.0937452
+          damage: 7.05877
           skill: null
           coordinates: null
           message: message
           type: DAMAGE
-          radius: 7.143538
+          radius: 6.519181
+          isRanged: true
           playerId: playerId
           target: null
         shopItems:
@@ -4056,7 +4100,7 @@ components:
           casterEffects:
             summons:
             - waypoint:
-                destinationFloor: 8
+                destinationFloor: 6
               item: null
               skill: null
               decoration:
@@ -4069,7 +4113,7 @@ components:
                 - null
               monster: null
             - waypoint:
-                destinationFloor: 8
+                destinationFloor: 6
               item: null
               skill: null
               decoration:
@@ -4118,7 +4162,7 @@ components:
           casterEffects:
             summons:
             - waypoint:
-                destinationFloor: 8
+                destinationFloor: 6
               item: null
               skill: null
               decoration:
@@ -4131,7 +4175,7 @@ components:
                 - null
               monster: null
             - waypoint:
-                destinationFloor: 8
+                destinationFloor: 6
               item: null
               skill: null
               decoration:
@@ -4167,7 +4211,7 @@ components:
           damageType: null
           target: none
         requirements: null
-        price: 6
+        price: 9
         name: name
         icon: icon
         attributes: null
@@ -4207,23 +4251,39 @@ components:
         height:
           type: integer
           format: int32
-        free:
-          type: array
-          items:
-            type: array
-            items:
-              type: object
-              properties: {}
-              example: {}
+        horror:
+          type: number
+          format: float
+        deprecationInSeconds:
+          type: integer
+          format: int32
         objects:
           type: array
           items:
             $ref: '#/components/schemas/dungeonsandtrollsMapObjects'
-        ascii:
+        fogOfWar:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/dungeonsandtrollsFogOfWarMap'
+        playerMap:
+          type: array
+          items:
+            $ref: '#/components/schemas/dungeonsandtrollsPlayerSpecificMap'
       example:
+        deprecationInSeconds: 5
+        playerMap:
+        - distance: 3
+          lineOfSight: true
+          position: null
+        - distance: 3
+          lineOfSight: true
+          position: null
+        horror: 5.962134
+        fogOfWar:
+        - fogOfWar: true
+          position: null
+        - fogOfWar: true
+          position: null
         level: 0
         objects:
         - isSpawn: true
@@ -4232,40 +4292,40 @@ components:
           - null
           isFree: true
           players:
-          - score: 6.965118
+          - score: 2.8841622
             effects:
             - null
             - null
-            money: 3
+            money: 1
             equip:
             - null
             - null
-            lastDamageTaken: 2
-            skillPoints: 1.284659
+            lastDamageTaken: 6
+            skillPoints: 6.778325
             maxAttributes: null
             name: name
             coordinates:
-              positionY: 5
-              level: 6
+              positionY: 3
+              level: 5
               positionX: 6
             attributes: null
             id: id
             stun: null
-          - score: 6.965118
+          - score: 2.8841622
             effects:
             - null
             - null
-            money: 3
+            money: 1
             equip:
             - null
             - null
-            lastDamageTaken: 2
-            skillPoints: 1.284659
+            lastDamageTaken: 6
+            skillPoints: 6.778325
             maxAttributes: null
             name: name
             coordinates:
-              positionY: 5
-              level: 6
+              positionY: 3
+              level: 5
               positionX: 6
             attributes: null
             id: id
@@ -4276,7 +4336,7 @@ components:
             - null
             - null
             lastDamageTaken: 6
-            lifePercentage: 9.36931
+            lifePercentage: 8.762042
             icon: icon
             equippedItems:
             - skills:
@@ -4294,7 +4354,7 @@ components:
                 casterEffects:
                   summons:
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -4307,7 +4367,7 @@ components:
                       - null
                     monster: null
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -4356,7 +4416,7 @@ components:
                 casterEffects:
                   summons:
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -4369,7 +4429,7 @@ components:
                       - null
                     monster: null
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -4405,7 +4465,7 @@ components:
                 damageType: null
                 target: none
               requirements: null
-              price: 6
+              price: 9
               name: name
               icon: icon
               attributes: null
@@ -4427,7 +4487,7 @@ components:
                 casterEffects:
                   summons:
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -4440,7 +4500,7 @@ components:
                       - null
                     monster: null
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -4489,7 +4549,7 @@ components:
                 casterEffects:
                   summons:
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -4502,7 +4562,7 @@ components:
                       - null
                     monster: null
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -4538,7 +4598,7 @@ components:
                 damageType: null
                 target: none
               requirements: null
-              price: 6
+              price: 9
               name: name
               icon: icon
               attributes: null
@@ -4548,44 +4608,44 @@ components:
             stun:
               isImmune: true
               isStunned: true
-            score: 9.018348
+            score: 3.5571952
             effects:
-            - duration: 9
+            - duration: 6
               effects:
-                slashResist: 7.386282
-                electricResist: 6.846853
-                fireResist: 1.0246457
-                constitution: 4.145608
-                constant: 5.025005
-                strength: 7.0614014
-                willpower: 2.027123
-                pierceResist: 1.2315135
-                stamina: 1.1730742
-                life: 7.4577446
-                intelligence: 3.6160767
-                dexterity: 9.301444
-                poisonResist: 1.4894159
-                mana: 4.9652185
-              damageAmount: 2.302136
+                slashResist: 1.0246457
+                electricResist: 1.1730742
+                fireResist: 6.846853
+                constitution: 1.2315135
+                constant: 9.36931
+                strength: 3.6160767
+                willpower: 7.386282
+                pierceResist: 1.4894159
+                stamina: 5.025005
+                life: 4.9652185
+                intelligence: 4.145608
+                dexterity: 2.027123
+                poisonResist: 7.4577446
+                mana: 9.965781
+              damageAmount: 9.301444
               damageType: none
               CasterId: CasterId
-            - duration: 9
+            - duration: 6
               effects:
-                slashResist: 7.386282
-                electricResist: 6.846853
-                fireResist: 1.0246457
-                constitution: 4.145608
-                constant: 5.025005
-                strength: 7.0614014
-                willpower: 2.027123
-                pierceResist: 1.2315135
-                stamina: 1.1730742
-                life: 7.4577446
-                intelligence: 3.6160767
-                dexterity: 9.301444
-                poisonResist: 1.4894159
-                mana: 4.9652185
-              damageAmount: 2.302136
+                slashResist: 1.0246457
+                electricResist: 1.1730742
+                fireResist: 6.846853
+                constitution: 1.2315135
+                constant: 9.36931
+                strength: 3.6160767
+                willpower: 7.386282
+                pierceResist: 1.4894159
+                stamina: 5.025005
+                life: 4.9652185
+                intelligence: 4.145608
+                dexterity: 2.027123
+                poisonResist: 7.4577446
+                mana: 9.965781
+              damageAmount: 9.301444
               damageType: none
               CasterId: CasterId
             faction: faction
@@ -4605,7 +4665,7 @@ components:
             - null
             - null
             lastDamageTaken: 6
-            lifePercentage: 9.36931
+            lifePercentage: 8.762042
             icon: icon
             equippedItems:
             - skills:
@@ -4623,7 +4683,7 @@ components:
                 casterEffects:
                   summons:
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -4636,7 +4696,7 @@ components:
                       - null
                     monster: null
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -4685,7 +4745,7 @@ components:
                 casterEffects:
                   summons:
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -4698,7 +4758,7 @@ components:
                       - null
                     monster: null
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -4734,7 +4794,7 @@ components:
                 damageType: null
                 target: none
               requirements: null
-              price: 6
+              price: 9
               name: name
               icon: icon
               attributes: null
@@ -4756,7 +4816,7 @@ components:
                 casterEffects:
                   summons:
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -4769,7 +4829,7 @@ components:
                       - null
                     monster: null
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -4818,7 +4878,7 @@ components:
                 casterEffects:
                   summons:
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -4831,7 +4891,7 @@ components:
                       - null
                     monster: null
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -4867,7 +4927,7 @@ components:
                 damageType: null
                 target: none
               requirements: null
-              price: 6
+              price: 9
               name: name
               icon: icon
               attributes: null
@@ -4877,44 +4937,44 @@ components:
             stun:
               isImmune: true
               isStunned: true
-            score: 9.018348
+            score: 3.5571952
             effects:
-            - duration: 9
+            - duration: 6
               effects:
-                slashResist: 7.386282
-                electricResist: 6.846853
-                fireResist: 1.0246457
-                constitution: 4.145608
-                constant: 5.025005
-                strength: 7.0614014
-                willpower: 2.027123
-                pierceResist: 1.2315135
-                stamina: 1.1730742
-                life: 7.4577446
-                intelligence: 3.6160767
-                dexterity: 9.301444
-                poisonResist: 1.4894159
-                mana: 4.9652185
-              damageAmount: 2.302136
+                slashResist: 1.0246457
+                electricResist: 1.1730742
+                fireResist: 6.846853
+                constitution: 1.2315135
+                constant: 9.36931
+                strength: 3.6160767
+                willpower: 7.386282
+                pierceResist: 1.4894159
+                stamina: 5.025005
+                life: 4.9652185
+                intelligence: 4.145608
+                dexterity: 2.027123
+                poisonResist: 7.4577446
+                mana: 9.965781
+              damageAmount: 9.301444
               damageType: none
               CasterId: CasterId
-            - duration: 9
+            - duration: 6
               effects:
-                slashResist: 7.386282
-                electricResist: 6.846853
-                fireResist: 1.0246457
-                constitution: 4.145608
-                constant: 5.025005
-                strength: 7.0614014
-                willpower: 2.027123
-                pierceResist: 1.2315135
-                stamina: 1.1730742
-                life: 7.4577446
-                intelligence: 3.6160767
-                dexterity: 9.301444
-                poisonResist: 1.4894159
-                mana: 4.9652185
-              damageAmount: 2.302136
+                slashResist: 1.0246457
+                electricResist: 1.1730742
+                fireResist: 6.846853
+                constitution: 1.2315135
+                constant: 9.36931
+                strength: 3.6160767
+                willpower: 7.386282
+                pierceResist: 1.4894159
+                stamina: 5.025005
+                life: 4.9652185
+                intelligence: 4.145608
+                dexterity: 2.027123
+                poisonResist: 7.4577446
+                mana: 9.965781
+              damageAmount: 9.301444
               damageType: none
               CasterId: CasterId
             faction: faction
@@ -4934,8 +4994,8 @@ components:
           - null
           - null
           position:
-            positionY: 5
-            positionX: 5
+            positionY: 7
+            positionX: 2
           portal: null
           items:
           - null
@@ -4948,40 +5008,40 @@ components:
           - null
           isFree: true
           players:
-          - score: 6.965118
+          - score: 2.8841622
             effects:
             - null
             - null
-            money: 3
+            money: 1
             equip:
             - null
             - null
-            lastDamageTaken: 2
-            skillPoints: 1.284659
+            lastDamageTaken: 6
+            skillPoints: 6.778325
             maxAttributes: null
             name: name
             coordinates:
-              positionY: 5
-              level: 6
+              positionY: 3
+              level: 5
               positionX: 6
             attributes: null
             id: id
             stun: null
-          - score: 6.965118
+          - score: 2.8841622
             effects:
             - null
             - null
-            money: 3
+            money: 1
             equip:
             - null
             - null
-            lastDamageTaken: 2
-            skillPoints: 1.284659
+            lastDamageTaken: 6
+            skillPoints: 6.778325
             maxAttributes: null
             name: name
             coordinates:
-              positionY: 5
-              level: 6
+              positionY: 3
+              level: 5
               positionX: 6
             attributes: null
             id: id
@@ -4992,7 +5052,7 @@ components:
             - null
             - null
             lastDamageTaken: 6
-            lifePercentage: 9.36931
+            lifePercentage: 8.762042
             icon: icon
             equippedItems:
             - skills:
@@ -5010,7 +5070,7 @@ components:
                 casterEffects:
                   summons:
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -5023,7 +5083,7 @@ components:
                       - null
                     monster: null
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -5072,7 +5132,7 @@ components:
                 casterEffects:
                   summons:
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -5085,7 +5145,7 @@ components:
                       - null
                     monster: null
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -5121,7 +5181,7 @@ components:
                 damageType: null
                 target: none
               requirements: null
-              price: 6
+              price: 9
               name: name
               icon: icon
               attributes: null
@@ -5143,7 +5203,7 @@ components:
                 casterEffects:
                   summons:
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -5156,7 +5216,7 @@ components:
                       - null
                     monster: null
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -5205,7 +5265,7 @@ components:
                 casterEffects:
                   summons:
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -5218,7 +5278,7 @@ components:
                       - null
                     monster: null
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -5254,7 +5314,7 @@ components:
                 damageType: null
                 target: none
               requirements: null
-              price: 6
+              price: 9
               name: name
               icon: icon
               attributes: null
@@ -5264,44 +5324,44 @@ components:
             stun:
               isImmune: true
               isStunned: true
-            score: 9.018348
+            score: 3.5571952
             effects:
-            - duration: 9
+            - duration: 6
               effects:
-                slashResist: 7.386282
-                electricResist: 6.846853
-                fireResist: 1.0246457
-                constitution: 4.145608
-                constant: 5.025005
-                strength: 7.0614014
-                willpower: 2.027123
-                pierceResist: 1.2315135
-                stamina: 1.1730742
-                life: 7.4577446
-                intelligence: 3.6160767
-                dexterity: 9.301444
-                poisonResist: 1.4894159
-                mana: 4.9652185
-              damageAmount: 2.302136
+                slashResist: 1.0246457
+                electricResist: 1.1730742
+                fireResist: 6.846853
+                constitution: 1.2315135
+                constant: 9.36931
+                strength: 3.6160767
+                willpower: 7.386282
+                pierceResist: 1.4894159
+                stamina: 5.025005
+                life: 4.9652185
+                intelligence: 4.145608
+                dexterity: 2.027123
+                poisonResist: 7.4577446
+                mana: 9.965781
+              damageAmount: 9.301444
               damageType: none
               CasterId: CasterId
-            - duration: 9
+            - duration: 6
               effects:
-                slashResist: 7.386282
-                electricResist: 6.846853
-                fireResist: 1.0246457
-                constitution: 4.145608
-                constant: 5.025005
-                strength: 7.0614014
-                willpower: 2.027123
-                pierceResist: 1.2315135
-                stamina: 1.1730742
-                life: 7.4577446
-                intelligence: 3.6160767
-                dexterity: 9.301444
-                poisonResist: 1.4894159
-                mana: 4.9652185
-              damageAmount: 2.302136
+                slashResist: 1.0246457
+                electricResist: 1.1730742
+                fireResist: 6.846853
+                constitution: 1.2315135
+                constant: 9.36931
+                strength: 3.6160767
+                willpower: 7.386282
+                pierceResist: 1.4894159
+                stamina: 5.025005
+                life: 4.9652185
+                intelligence: 4.145608
+                dexterity: 2.027123
+                poisonResist: 7.4577446
+                mana: 9.965781
+              damageAmount: 9.301444
               damageType: none
               CasterId: CasterId
             faction: faction
@@ -5321,7 +5381,7 @@ components:
             - null
             - null
             lastDamageTaken: 6
-            lifePercentage: 9.36931
+            lifePercentage: 8.762042
             icon: icon
             equippedItems:
             - skills:
@@ -5339,7 +5399,7 @@ components:
                 casterEffects:
                   summons:
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -5352,7 +5412,7 @@ components:
                       - null
                     monster: null
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -5401,7 +5461,7 @@ components:
                 casterEffects:
                   summons:
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -5414,7 +5474,7 @@ components:
                       - null
                     monster: null
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -5450,7 +5510,7 @@ components:
                 damageType: null
                 target: none
               requirements: null
-              price: 6
+              price: 9
               name: name
               icon: icon
               attributes: null
@@ -5472,7 +5532,7 @@ components:
                 casterEffects:
                   summons:
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -5485,7 +5545,7 @@ components:
                       - null
                     monster: null
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -5534,7 +5594,7 @@ components:
                 casterEffects:
                   summons:
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -5547,7 +5607,7 @@ components:
                       - null
                     monster: null
                   - waypoint:
-                      destinationFloor: 8
+                      destinationFloor: 6
                     item: null
                     skill: null
                     decoration:
@@ -5583,7 +5643,7 @@ components:
                 damageType: null
                 target: none
               requirements: null
-              price: 6
+              price: 9
               name: name
               icon: icon
               attributes: null
@@ -5593,44 +5653,44 @@ components:
             stun:
               isImmune: true
               isStunned: true
-            score: 9.018348
+            score: 3.5571952
             effects:
-            - duration: 9
+            - duration: 6
               effects:
-                slashResist: 7.386282
-                electricResist: 6.846853
-                fireResist: 1.0246457
-                constitution: 4.145608
-                constant: 5.025005
-                strength: 7.0614014
-                willpower: 2.027123
-                pierceResist: 1.2315135
-                stamina: 1.1730742
-                life: 7.4577446
-                intelligence: 3.6160767
-                dexterity: 9.301444
-                poisonResist: 1.4894159
-                mana: 4.9652185
-              damageAmount: 2.302136
+                slashResist: 1.0246457
+                electricResist: 1.1730742
+                fireResist: 6.846853
+                constitution: 1.2315135
+                constant: 9.36931
+                strength: 3.6160767
+                willpower: 7.386282
+                pierceResist: 1.4894159
+                stamina: 5.025005
+                life: 4.9652185
+                intelligence: 4.145608
+                dexterity: 2.027123
+                poisonResist: 7.4577446
+                mana: 9.965781
+              damageAmount: 9.301444
               damageType: none
               CasterId: CasterId
-            - duration: 9
+            - duration: 6
               effects:
-                slashResist: 7.386282
-                electricResist: 6.846853
-                fireResist: 1.0246457
-                constitution: 4.145608
-                constant: 5.025005
-                strength: 7.0614014
-                willpower: 2.027123
-                pierceResist: 1.2315135
-                stamina: 1.1730742
-                life: 7.4577446
-                intelligence: 3.6160767
-                dexterity: 9.301444
-                poisonResist: 1.4894159
-                mana: 4.9652185
-              damageAmount: 2.302136
+                slashResist: 1.0246457
+                electricResist: 1.1730742
+                fireResist: 6.846853
+                constitution: 1.2315135
+                constant: 9.36931
+                strength: 3.6160767
+                willpower: 7.386282
+                pierceResist: 1.4894159
+                stamina: 5.025005
+                life: 4.9652185
+                intelligence: 4.145608
+                dexterity: 2.027123
+                poisonResist: 7.4577446
+                mana: 9.965781
+              damageAmount: 9.301444
               damageType: none
               CasterId: CasterId
             faction: faction
@@ -5650,8 +5710,8 @@ components:
           - null
           - null
           position:
-            positionY: 5
-            positionX: 5
+            positionY: 7
+            positionX: 2
           portal: null
           items:
           - null
@@ -5659,14 +5719,6 @@ components:
           isStairs: true
           isWall: true
         width: 6
-        free:
-        - - {}
-          - {}
-        - - {}
-          - {}
-        ascii:
-        - ascii
-        - ascii
         height: 1
     dungeonsandtrollsMap:
       type: object
@@ -5677,7 +5729,21 @@ components:
             $ref: '#/components/schemas/dungeonsandtrollsLevel'
       example:
         levels:
-        - level: 0
+        - deprecationInSeconds: 5
+          playerMap:
+          - distance: 3
+            lineOfSight: true
+            position: null
+          - distance: 3
+            lineOfSight: true
+            position: null
+          horror: 5.962134
+          fogOfWar:
+          - fogOfWar: true
+            position: null
+          - fogOfWar: true
+            position: null
+          level: 0
           objects:
           - isSpawn: true
             effects:
@@ -5685,40 +5751,40 @@ components:
             - null
             isFree: true
             players:
-            - score: 6.965118
+            - score: 2.8841622
               effects:
               - null
               - null
-              money: 3
+              money: 1
               equip:
               - null
               - null
-              lastDamageTaken: 2
-              skillPoints: 1.284659
+              lastDamageTaken: 6
+              skillPoints: 6.778325
               maxAttributes: null
               name: name
               coordinates:
-                positionY: 5
-                level: 6
+                positionY: 3
+                level: 5
                 positionX: 6
               attributes: null
               id: id
               stun: null
-            - score: 6.965118
+            - score: 2.8841622
               effects:
               - null
               - null
-              money: 3
+              money: 1
               equip:
               - null
               - null
-              lastDamageTaken: 2
-              skillPoints: 1.284659
+              lastDamageTaken: 6
+              skillPoints: 6.778325
               maxAttributes: null
               name: name
               coordinates:
-                positionY: 5
-                level: 6
+                positionY: 3
+                level: 5
                 positionX: 6
               attributes: null
               id: id
@@ -5729,7 +5795,7 @@ components:
               - null
               - null
               lastDamageTaken: 6
-              lifePercentage: 9.36931
+              lifePercentage: 8.762042
               icon: icon
               equippedItems:
               - skills:
@@ -5747,7 +5813,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -5760,7 +5826,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -5809,7 +5875,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -5822,7 +5888,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -5858,7 +5924,7 @@ components:
                   damageType: null
                   target: none
                 requirements: null
-                price: 6
+                price: 9
                 name: name
                 icon: icon
                 attributes: null
@@ -5880,7 +5946,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -5893,7 +5959,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -5942,7 +6008,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -5955,7 +6021,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -5991,7 +6057,7 @@ components:
                   damageType: null
                   target: none
                 requirements: null
-                price: 6
+                price: 9
                 name: name
                 icon: icon
                 attributes: null
@@ -6001,44 +6067,44 @@ components:
               stun:
                 isImmune: true
                 isStunned: true
-              score: 9.018348
+              score: 3.5571952
               effects:
-              - duration: 9
+              - duration: 6
                 effects:
-                  slashResist: 7.386282
-                  electricResist: 6.846853
-                  fireResist: 1.0246457
-                  constitution: 4.145608
-                  constant: 5.025005
-                  strength: 7.0614014
-                  willpower: 2.027123
-                  pierceResist: 1.2315135
-                  stamina: 1.1730742
-                  life: 7.4577446
-                  intelligence: 3.6160767
-                  dexterity: 9.301444
-                  poisonResist: 1.4894159
-                  mana: 4.9652185
-                damageAmount: 2.302136
+                  slashResist: 1.0246457
+                  electricResist: 1.1730742
+                  fireResist: 6.846853
+                  constitution: 1.2315135
+                  constant: 9.36931
+                  strength: 3.6160767
+                  willpower: 7.386282
+                  pierceResist: 1.4894159
+                  stamina: 5.025005
+                  life: 4.9652185
+                  intelligence: 4.145608
+                  dexterity: 2.027123
+                  poisonResist: 7.4577446
+                  mana: 9.965781
+                damageAmount: 9.301444
                 damageType: none
                 CasterId: CasterId
-              - duration: 9
+              - duration: 6
                 effects:
-                  slashResist: 7.386282
-                  electricResist: 6.846853
-                  fireResist: 1.0246457
-                  constitution: 4.145608
-                  constant: 5.025005
-                  strength: 7.0614014
-                  willpower: 2.027123
-                  pierceResist: 1.2315135
-                  stamina: 1.1730742
-                  life: 7.4577446
-                  intelligence: 3.6160767
-                  dexterity: 9.301444
-                  poisonResist: 1.4894159
-                  mana: 4.9652185
-                damageAmount: 2.302136
+                  slashResist: 1.0246457
+                  electricResist: 1.1730742
+                  fireResist: 6.846853
+                  constitution: 1.2315135
+                  constant: 9.36931
+                  strength: 3.6160767
+                  willpower: 7.386282
+                  pierceResist: 1.4894159
+                  stamina: 5.025005
+                  life: 4.9652185
+                  intelligence: 4.145608
+                  dexterity: 2.027123
+                  poisonResist: 7.4577446
+                  mana: 9.965781
+                damageAmount: 9.301444
                 damageType: none
                 CasterId: CasterId
               faction: faction
@@ -6058,7 +6124,7 @@ components:
               - null
               - null
               lastDamageTaken: 6
-              lifePercentage: 9.36931
+              lifePercentage: 8.762042
               icon: icon
               equippedItems:
               - skills:
@@ -6076,7 +6142,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6089,7 +6155,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6138,7 +6204,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6151,7 +6217,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6187,7 +6253,7 @@ components:
                   damageType: null
                   target: none
                 requirements: null
-                price: 6
+                price: 9
                 name: name
                 icon: icon
                 attributes: null
@@ -6209,7 +6275,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6222,7 +6288,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6271,7 +6337,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6284,7 +6350,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6320,7 +6386,7 @@ components:
                   damageType: null
                   target: none
                 requirements: null
-                price: 6
+                price: 9
                 name: name
                 icon: icon
                 attributes: null
@@ -6330,44 +6396,44 @@ components:
               stun:
                 isImmune: true
                 isStunned: true
-              score: 9.018348
+              score: 3.5571952
               effects:
-              - duration: 9
+              - duration: 6
                 effects:
-                  slashResist: 7.386282
-                  electricResist: 6.846853
-                  fireResist: 1.0246457
-                  constitution: 4.145608
-                  constant: 5.025005
-                  strength: 7.0614014
-                  willpower: 2.027123
-                  pierceResist: 1.2315135
-                  stamina: 1.1730742
-                  life: 7.4577446
-                  intelligence: 3.6160767
-                  dexterity: 9.301444
-                  poisonResist: 1.4894159
-                  mana: 4.9652185
-                damageAmount: 2.302136
+                  slashResist: 1.0246457
+                  electricResist: 1.1730742
+                  fireResist: 6.846853
+                  constitution: 1.2315135
+                  constant: 9.36931
+                  strength: 3.6160767
+                  willpower: 7.386282
+                  pierceResist: 1.4894159
+                  stamina: 5.025005
+                  life: 4.9652185
+                  intelligence: 4.145608
+                  dexterity: 2.027123
+                  poisonResist: 7.4577446
+                  mana: 9.965781
+                damageAmount: 9.301444
                 damageType: none
                 CasterId: CasterId
-              - duration: 9
+              - duration: 6
                 effects:
-                  slashResist: 7.386282
-                  electricResist: 6.846853
-                  fireResist: 1.0246457
-                  constitution: 4.145608
-                  constant: 5.025005
-                  strength: 7.0614014
-                  willpower: 2.027123
-                  pierceResist: 1.2315135
-                  stamina: 1.1730742
-                  life: 7.4577446
-                  intelligence: 3.6160767
-                  dexterity: 9.301444
-                  poisonResist: 1.4894159
-                  mana: 4.9652185
-                damageAmount: 2.302136
+                  slashResist: 1.0246457
+                  electricResist: 1.1730742
+                  fireResist: 6.846853
+                  constitution: 1.2315135
+                  constant: 9.36931
+                  strength: 3.6160767
+                  willpower: 7.386282
+                  pierceResist: 1.4894159
+                  stamina: 5.025005
+                  life: 4.9652185
+                  intelligence: 4.145608
+                  dexterity: 2.027123
+                  poisonResist: 7.4577446
+                  mana: 9.965781
+                damageAmount: 9.301444
                 damageType: none
                 CasterId: CasterId
               faction: faction
@@ -6387,8 +6453,8 @@ components:
             - null
             - null
             position:
-              positionY: 5
-              positionX: 5
+              positionY: 7
+              positionX: 2
             portal: null
             items:
             - null
@@ -6401,40 +6467,40 @@ components:
             - null
             isFree: true
             players:
-            - score: 6.965118
+            - score: 2.8841622
               effects:
               - null
               - null
-              money: 3
+              money: 1
               equip:
               - null
               - null
-              lastDamageTaken: 2
-              skillPoints: 1.284659
+              lastDamageTaken: 6
+              skillPoints: 6.778325
               maxAttributes: null
               name: name
               coordinates:
-                positionY: 5
-                level: 6
+                positionY: 3
+                level: 5
                 positionX: 6
               attributes: null
               id: id
               stun: null
-            - score: 6.965118
+            - score: 2.8841622
               effects:
               - null
               - null
-              money: 3
+              money: 1
               equip:
               - null
               - null
-              lastDamageTaken: 2
-              skillPoints: 1.284659
+              lastDamageTaken: 6
+              skillPoints: 6.778325
               maxAttributes: null
               name: name
               coordinates:
-                positionY: 5
-                level: 6
+                positionY: 3
+                level: 5
                 positionX: 6
               attributes: null
               id: id
@@ -6445,7 +6511,7 @@ components:
               - null
               - null
               lastDamageTaken: 6
-              lifePercentage: 9.36931
+              lifePercentage: 8.762042
               icon: icon
               equippedItems:
               - skills:
@@ -6463,7 +6529,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6476,7 +6542,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6525,7 +6591,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6538,7 +6604,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6574,7 +6640,7 @@ components:
                   damageType: null
                   target: none
                 requirements: null
-                price: 6
+                price: 9
                 name: name
                 icon: icon
                 attributes: null
@@ -6596,7 +6662,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6609,7 +6675,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6658,7 +6724,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6671,7 +6737,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6707,7 +6773,7 @@ components:
                   damageType: null
                   target: none
                 requirements: null
-                price: 6
+                price: 9
                 name: name
                 icon: icon
                 attributes: null
@@ -6717,44 +6783,44 @@ components:
               stun:
                 isImmune: true
                 isStunned: true
-              score: 9.018348
+              score: 3.5571952
               effects:
-              - duration: 9
+              - duration: 6
                 effects:
-                  slashResist: 7.386282
-                  electricResist: 6.846853
-                  fireResist: 1.0246457
-                  constitution: 4.145608
-                  constant: 5.025005
-                  strength: 7.0614014
-                  willpower: 2.027123
-                  pierceResist: 1.2315135
-                  stamina: 1.1730742
-                  life: 7.4577446
-                  intelligence: 3.6160767
-                  dexterity: 9.301444
-                  poisonResist: 1.4894159
-                  mana: 4.9652185
-                damageAmount: 2.302136
+                  slashResist: 1.0246457
+                  electricResist: 1.1730742
+                  fireResist: 6.846853
+                  constitution: 1.2315135
+                  constant: 9.36931
+                  strength: 3.6160767
+                  willpower: 7.386282
+                  pierceResist: 1.4894159
+                  stamina: 5.025005
+                  life: 4.9652185
+                  intelligence: 4.145608
+                  dexterity: 2.027123
+                  poisonResist: 7.4577446
+                  mana: 9.965781
+                damageAmount: 9.301444
                 damageType: none
                 CasterId: CasterId
-              - duration: 9
+              - duration: 6
                 effects:
-                  slashResist: 7.386282
-                  electricResist: 6.846853
-                  fireResist: 1.0246457
-                  constitution: 4.145608
-                  constant: 5.025005
-                  strength: 7.0614014
-                  willpower: 2.027123
-                  pierceResist: 1.2315135
-                  stamina: 1.1730742
-                  life: 7.4577446
-                  intelligence: 3.6160767
-                  dexterity: 9.301444
-                  poisonResist: 1.4894159
-                  mana: 4.9652185
-                damageAmount: 2.302136
+                  slashResist: 1.0246457
+                  electricResist: 1.1730742
+                  fireResist: 6.846853
+                  constitution: 1.2315135
+                  constant: 9.36931
+                  strength: 3.6160767
+                  willpower: 7.386282
+                  pierceResist: 1.4894159
+                  stamina: 5.025005
+                  life: 4.9652185
+                  intelligence: 4.145608
+                  dexterity: 2.027123
+                  poisonResist: 7.4577446
+                  mana: 9.965781
+                damageAmount: 9.301444
                 damageType: none
                 CasterId: CasterId
               faction: faction
@@ -6774,7 +6840,7 @@ components:
               - null
               - null
               lastDamageTaken: 6
-              lifePercentage: 9.36931
+              lifePercentage: 8.762042
               icon: icon
               equippedItems:
               - skills:
@@ -6792,7 +6858,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6805,7 +6871,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6854,7 +6920,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6867,7 +6933,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6903,7 +6969,7 @@ components:
                   damageType: null
                   target: none
                 requirements: null
-                price: 6
+                price: 9
                 name: name
                 icon: icon
                 attributes: null
@@ -6925,7 +6991,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6938,7 +7004,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -6987,7 +7053,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7000,7 +7066,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7036,7 +7102,7 @@ components:
                   damageType: null
                   target: none
                 requirements: null
-                price: 6
+                price: 9
                 name: name
                 icon: icon
                 attributes: null
@@ -7046,44 +7112,44 @@ components:
               stun:
                 isImmune: true
                 isStunned: true
-              score: 9.018348
+              score: 3.5571952
               effects:
-              - duration: 9
+              - duration: 6
                 effects:
-                  slashResist: 7.386282
-                  electricResist: 6.846853
-                  fireResist: 1.0246457
-                  constitution: 4.145608
-                  constant: 5.025005
-                  strength: 7.0614014
-                  willpower: 2.027123
-                  pierceResist: 1.2315135
-                  stamina: 1.1730742
-                  life: 7.4577446
-                  intelligence: 3.6160767
-                  dexterity: 9.301444
-                  poisonResist: 1.4894159
-                  mana: 4.9652185
-                damageAmount: 2.302136
+                  slashResist: 1.0246457
+                  electricResist: 1.1730742
+                  fireResist: 6.846853
+                  constitution: 1.2315135
+                  constant: 9.36931
+                  strength: 3.6160767
+                  willpower: 7.386282
+                  pierceResist: 1.4894159
+                  stamina: 5.025005
+                  life: 4.9652185
+                  intelligence: 4.145608
+                  dexterity: 2.027123
+                  poisonResist: 7.4577446
+                  mana: 9.965781
+                damageAmount: 9.301444
                 damageType: none
                 CasterId: CasterId
-              - duration: 9
+              - duration: 6
                 effects:
-                  slashResist: 7.386282
-                  electricResist: 6.846853
-                  fireResist: 1.0246457
-                  constitution: 4.145608
-                  constant: 5.025005
-                  strength: 7.0614014
-                  willpower: 2.027123
-                  pierceResist: 1.2315135
-                  stamina: 1.1730742
-                  life: 7.4577446
-                  intelligence: 3.6160767
-                  dexterity: 9.301444
-                  poisonResist: 1.4894159
-                  mana: 4.9652185
-                damageAmount: 2.302136
+                  slashResist: 1.0246457
+                  electricResist: 1.1730742
+                  fireResist: 6.846853
+                  constitution: 1.2315135
+                  constant: 9.36931
+                  strength: 3.6160767
+                  willpower: 7.386282
+                  pierceResist: 1.4894159
+                  stamina: 5.025005
+                  life: 4.9652185
+                  intelligence: 4.145608
+                  dexterity: 2.027123
+                  poisonResist: 7.4577446
+                  mana: 9.965781
+                damageAmount: 9.301444
                 damageType: none
                 CasterId: CasterId
               faction: faction
@@ -7103,8 +7169,8 @@ components:
             - null
             - null
             position:
-              positionY: 5
-              positionX: 5
+              positionY: 7
+              positionX: 2
             portal: null
             items:
             - null
@@ -7112,16 +7178,22 @@ components:
             isStairs: true
             isWall: true
           width: 6
-          free:
-          - - {}
-            - {}
-          - - {}
-            - {}
-          ascii:
-          - ascii
-          - ascii
           height: 1
-        - level: 0
+        - deprecationInSeconds: 5
+          playerMap:
+          - distance: 3
+            lineOfSight: true
+            position: null
+          - distance: 3
+            lineOfSight: true
+            position: null
+          horror: 5.962134
+          fogOfWar:
+          - fogOfWar: true
+            position: null
+          - fogOfWar: true
+            position: null
+          level: 0
           objects:
           - isSpawn: true
             effects:
@@ -7129,40 +7201,40 @@ components:
             - null
             isFree: true
             players:
-            - score: 6.965118
+            - score: 2.8841622
               effects:
               - null
               - null
-              money: 3
+              money: 1
               equip:
               - null
               - null
-              lastDamageTaken: 2
-              skillPoints: 1.284659
+              lastDamageTaken: 6
+              skillPoints: 6.778325
               maxAttributes: null
               name: name
               coordinates:
-                positionY: 5
-                level: 6
+                positionY: 3
+                level: 5
                 positionX: 6
               attributes: null
               id: id
               stun: null
-            - score: 6.965118
+            - score: 2.8841622
               effects:
               - null
               - null
-              money: 3
+              money: 1
               equip:
               - null
               - null
-              lastDamageTaken: 2
-              skillPoints: 1.284659
+              lastDamageTaken: 6
+              skillPoints: 6.778325
               maxAttributes: null
               name: name
               coordinates:
-                positionY: 5
-                level: 6
+                positionY: 3
+                level: 5
                 positionX: 6
               attributes: null
               id: id
@@ -7173,7 +7245,7 @@ components:
               - null
               - null
               lastDamageTaken: 6
-              lifePercentage: 9.36931
+              lifePercentage: 8.762042
               icon: icon
               equippedItems:
               - skills:
@@ -7191,7 +7263,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7204,7 +7276,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7253,7 +7325,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7266,7 +7338,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7302,7 +7374,7 @@ components:
                   damageType: null
                   target: none
                 requirements: null
-                price: 6
+                price: 9
                 name: name
                 icon: icon
                 attributes: null
@@ -7324,7 +7396,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7337,7 +7409,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7386,7 +7458,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7399,7 +7471,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7435,7 +7507,7 @@ components:
                   damageType: null
                   target: none
                 requirements: null
-                price: 6
+                price: 9
                 name: name
                 icon: icon
                 attributes: null
@@ -7445,44 +7517,44 @@ components:
               stun:
                 isImmune: true
                 isStunned: true
-              score: 9.018348
+              score: 3.5571952
               effects:
-              - duration: 9
+              - duration: 6
                 effects:
-                  slashResist: 7.386282
-                  electricResist: 6.846853
-                  fireResist: 1.0246457
-                  constitution: 4.145608
-                  constant: 5.025005
-                  strength: 7.0614014
-                  willpower: 2.027123
-                  pierceResist: 1.2315135
-                  stamina: 1.1730742
-                  life: 7.4577446
-                  intelligence: 3.6160767
-                  dexterity: 9.301444
-                  poisonResist: 1.4894159
-                  mana: 4.9652185
-                damageAmount: 2.302136
+                  slashResist: 1.0246457
+                  electricResist: 1.1730742
+                  fireResist: 6.846853
+                  constitution: 1.2315135
+                  constant: 9.36931
+                  strength: 3.6160767
+                  willpower: 7.386282
+                  pierceResist: 1.4894159
+                  stamina: 5.025005
+                  life: 4.9652185
+                  intelligence: 4.145608
+                  dexterity: 2.027123
+                  poisonResist: 7.4577446
+                  mana: 9.965781
+                damageAmount: 9.301444
                 damageType: none
                 CasterId: CasterId
-              - duration: 9
+              - duration: 6
                 effects:
-                  slashResist: 7.386282
-                  electricResist: 6.846853
-                  fireResist: 1.0246457
-                  constitution: 4.145608
-                  constant: 5.025005
-                  strength: 7.0614014
-                  willpower: 2.027123
-                  pierceResist: 1.2315135
-                  stamina: 1.1730742
-                  life: 7.4577446
-                  intelligence: 3.6160767
-                  dexterity: 9.301444
-                  poisonResist: 1.4894159
-                  mana: 4.9652185
-                damageAmount: 2.302136
+                  slashResist: 1.0246457
+                  electricResist: 1.1730742
+                  fireResist: 6.846853
+                  constitution: 1.2315135
+                  constant: 9.36931
+                  strength: 3.6160767
+                  willpower: 7.386282
+                  pierceResist: 1.4894159
+                  stamina: 5.025005
+                  life: 4.9652185
+                  intelligence: 4.145608
+                  dexterity: 2.027123
+                  poisonResist: 7.4577446
+                  mana: 9.965781
+                damageAmount: 9.301444
                 damageType: none
                 CasterId: CasterId
               faction: faction
@@ -7502,7 +7574,7 @@ components:
               - null
               - null
               lastDamageTaken: 6
-              lifePercentage: 9.36931
+              lifePercentage: 8.762042
               icon: icon
               equippedItems:
               - skills:
@@ -7520,7 +7592,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7533,7 +7605,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7582,7 +7654,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7595,7 +7667,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7631,7 +7703,7 @@ components:
                   damageType: null
                   target: none
                 requirements: null
-                price: 6
+                price: 9
                 name: name
                 icon: icon
                 attributes: null
@@ -7653,7 +7725,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7666,7 +7738,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7715,7 +7787,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7728,7 +7800,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7764,7 +7836,7 @@ components:
                   damageType: null
                   target: none
                 requirements: null
-                price: 6
+                price: 9
                 name: name
                 icon: icon
                 attributes: null
@@ -7774,44 +7846,44 @@ components:
               stun:
                 isImmune: true
                 isStunned: true
-              score: 9.018348
+              score: 3.5571952
               effects:
-              - duration: 9
+              - duration: 6
                 effects:
-                  slashResist: 7.386282
-                  electricResist: 6.846853
-                  fireResist: 1.0246457
-                  constitution: 4.145608
-                  constant: 5.025005
-                  strength: 7.0614014
-                  willpower: 2.027123
-                  pierceResist: 1.2315135
-                  stamina: 1.1730742
-                  life: 7.4577446
-                  intelligence: 3.6160767
-                  dexterity: 9.301444
-                  poisonResist: 1.4894159
-                  mana: 4.9652185
-                damageAmount: 2.302136
+                  slashResist: 1.0246457
+                  electricResist: 1.1730742
+                  fireResist: 6.846853
+                  constitution: 1.2315135
+                  constant: 9.36931
+                  strength: 3.6160767
+                  willpower: 7.386282
+                  pierceResist: 1.4894159
+                  stamina: 5.025005
+                  life: 4.9652185
+                  intelligence: 4.145608
+                  dexterity: 2.027123
+                  poisonResist: 7.4577446
+                  mana: 9.965781
+                damageAmount: 9.301444
                 damageType: none
                 CasterId: CasterId
-              - duration: 9
+              - duration: 6
                 effects:
-                  slashResist: 7.386282
-                  electricResist: 6.846853
-                  fireResist: 1.0246457
-                  constitution: 4.145608
-                  constant: 5.025005
-                  strength: 7.0614014
-                  willpower: 2.027123
-                  pierceResist: 1.2315135
-                  stamina: 1.1730742
-                  life: 7.4577446
-                  intelligence: 3.6160767
-                  dexterity: 9.301444
-                  poisonResist: 1.4894159
-                  mana: 4.9652185
-                damageAmount: 2.302136
+                  slashResist: 1.0246457
+                  electricResist: 1.1730742
+                  fireResist: 6.846853
+                  constitution: 1.2315135
+                  constant: 9.36931
+                  strength: 3.6160767
+                  willpower: 7.386282
+                  pierceResist: 1.4894159
+                  stamina: 5.025005
+                  life: 4.9652185
+                  intelligence: 4.145608
+                  dexterity: 2.027123
+                  poisonResist: 7.4577446
+                  mana: 9.965781
+                damageAmount: 9.301444
                 damageType: none
                 CasterId: CasterId
               faction: faction
@@ -7831,8 +7903,8 @@ components:
             - null
             - null
             position:
-              positionY: 5
-              positionX: 5
+              positionY: 7
+              positionX: 2
             portal: null
             items:
             - null
@@ -7845,40 +7917,40 @@ components:
             - null
             isFree: true
             players:
-            - score: 6.965118
+            - score: 2.8841622
               effects:
               - null
               - null
-              money: 3
+              money: 1
               equip:
               - null
               - null
-              lastDamageTaken: 2
-              skillPoints: 1.284659
+              lastDamageTaken: 6
+              skillPoints: 6.778325
               maxAttributes: null
               name: name
               coordinates:
-                positionY: 5
-                level: 6
+                positionY: 3
+                level: 5
                 positionX: 6
               attributes: null
               id: id
               stun: null
-            - score: 6.965118
+            - score: 2.8841622
               effects:
               - null
               - null
-              money: 3
+              money: 1
               equip:
               - null
               - null
-              lastDamageTaken: 2
-              skillPoints: 1.284659
+              lastDamageTaken: 6
+              skillPoints: 6.778325
               maxAttributes: null
               name: name
               coordinates:
-                positionY: 5
-                level: 6
+                positionY: 3
+                level: 5
                 positionX: 6
               attributes: null
               id: id
@@ -7889,7 +7961,7 @@ components:
               - null
               - null
               lastDamageTaken: 6
-              lifePercentage: 9.36931
+              lifePercentage: 8.762042
               icon: icon
               equippedItems:
               - skills:
@@ -7907,7 +7979,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7920,7 +7992,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7969,7 +8041,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -7982,7 +8054,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -8018,7 +8090,7 @@ components:
                   damageType: null
                   target: none
                 requirements: null
-                price: 6
+                price: 9
                 name: name
                 icon: icon
                 attributes: null
@@ -8040,7 +8112,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -8053,7 +8125,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -8102,7 +8174,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -8115,7 +8187,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -8151,7 +8223,7 @@ components:
                   damageType: null
                   target: none
                 requirements: null
-                price: 6
+                price: 9
                 name: name
                 icon: icon
                 attributes: null
@@ -8161,44 +8233,44 @@ components:
               stun:
                 isImmune: true
                 isStunned: true
-              score: 9.018348
+              score: 3.5571952
               effects:
-              - duration: 9
+              - duration: 6
                 effects:
-                  slashResist: 7.386282
-                  electricResist: 6.846853
-                  fireResist: 1.0246457
-                  constitution: 4.145608
-                  constant: 5.025005
-                  strength: 7.0614014
-                  willpower: 2.027123
-                  pierceResist: 1.2315135
-                  stamina: 1.1730742
-                  life: 7.4577446
-                  intelligence: 3.6160767
-                  dexterity: 9.301444
-                  poisonResist: 1.4894159
-                  mana: 4.9652185
-                damageAmount: 2.302136
+                  slashResist: 1.0246457
+                  electricResist: 1.1730742
+                  fireResist: 6.846853
+                  constitution: 1.2315135
+                  constant: 9.36931
+                  strength: 3.6160767
+                  willpower: 7.386282
+                  pierceResist: 1.4894159
+                  stamina: 5.025005
+                  life: 4.9652185
+                  intelligence: 4.145608
+                  dexterity: 2.027123
+                  poisonResist: 7.4577446
+                  mana: 9.965781
+                damageAmount: 9.301444
                 damageType: none
                 CasterId: CasterId
-              - duration: 9
+              - duration: 6
                 effects:
-                  slashResist: 7.386282
-                  electricResist: 6.846853
-                  fireResist: 1.0246457
-                  constitution: 4.145608
-                  constant: 5.025005
-                  strength: 7.0614014
-                  willpower: 2.027123
-                  pierceResist: 1.2315135
-                  stamina: 1.1730742
-                  life: 7.4577446
-                  intelligence: 3.6160767
-                  dexterity: 9.301444
-                  poisonResist: 1.4894159
-                  mana: 4.9652185
-                damageAmount: 2.302136
+                  slashResist: 1.0246457
+                  electricResist: 1.1730742
+                  fireResist: 6.846853
+                  constitution: 1.2315135
+                  constant: 9.36931
+                  strength: 3.6160767
+                  willpower: 7.386282
+                  pierceResist: 1.4894159
+                  stamina: 5.025005
+                  life: 4.9652185
+                  intelligence: 4.145608
+                  dexterity: 2.027123
+                  poisonResist: 7.4577446
+                  mana: 9.965781
+                damageAmount: 9.301444
                 damageType: none
                 CasterId: CasterId
               faction: faction
@@ -8218,7 +8290,7 @@ components:
               - null
               - null
               lastDamageTaken: 6
-              lifePercentage: 9.36931
+              lifePercentage: 8.762042
               icon: icon
               equippedItems:
               - skills:
@@ -8236,7 +8308,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -8249,7 +8321,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -8298,7 +8370,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -8311,7 +8383,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -8347,7 +8419,7 @@ components:
                   damageType: null
                   target: none
                 requirements: null
-                price: 6
+                price: 9
                 name: name
                 icon: icon
                 attributes: null
@@ -8369,7 +8441,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -8382,7 +8454,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -8431,7 +8503,7 @@ components:
                   casterEffects:
                     summons:
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -8444,7 +8516,7 @@ components:
                         - null
                       monster: null
                     - waypoint:
-                        destinationFloor: 8
+                        destinationFloor: 6
                       item: null
                       skill: null
                       decoration:
@@ -8480,7 +8552,7 @@ components:
                   damageType: null
                   target: none
                 requirements: null
-                price: 6
+                price: 9
                 name: name
                 icon: icon
                 attributes: null
@@ -8490,44 +8562,44 @@ components:
               stun:
                 isImmune: true
                 isStunned: true
-              score: 9.018348
+              score: 3.5571952
               effects:
-              - duration: 9
+              - duration: 6
                 effects:
-                  slashResist: 7.386282
-                  electricResist: 6.846853
-                  fireResist: 1.0246457
-                  constitution: 4.145608
-                  constant: 5.025005
-                  strength: 7.0614014
-                  willpower: 2.027123
-                  pierceResist: 1.2315135
-                  stamina: 1.1730742
-                  life: 7.4577446
-                  intelligence: 3.6160767
-                  dexterity: 9.301444
-                  poisonResist: 1.4894159
-                  mana: 4.9652185
-                damageAmount: 2.302136
+                  slashResist: 1.0246457
+                  electricResist: 1.1730742
+                  fireResist: 6.846853
+                  constitution: 1.2315135
+                  constant: 9.36931
+                  strength: 3.6160767
+                  willpower: 7.386282
+                  pierceResist: 1.4894159
+                  stamina: 5.025005
+                  life: 4.9652185
+                  intelligence: 4.145608
+                  dexterity: 2.027123
+                  poisonResist: 7.4577446
+                  mana: 9.965781
+                damageAmount: 9.301444
                 damageType: none
                 CasterId: CasterId
-              - duration: 9
+              - duration: 6
                 effects:
-                  slashResist: 7.386282
-                  electricResist: 6.846853
-                  fireResist: 1.0246457
-                  constitution: 4.145608
-                  constant: 5.025005
-                  strength: 7.0614014
-                  willpower: 2.027123
-                  pierceResist: 1.2315135
-                  stamina: 1.1730742
-                  life: 7.4577446
-                  intelligence: 3.6160767
-                  dexterity: 9.301444
-                  poisonResist: 1.4894159
-                  mana: 4.9652185
-                damageAmount: 2.302136
+                  slashResist: 1.0246457
+                  electricResist: 1.1730742
+                  fireResist: 6.846853
+                  constitution: 1.2315135
+                  constant: 9.36931
+                  strength: 3.6160767
+                  willpower: 7.386282
+                  pierceResist: 1.4894159
+                  stamina: 5.025005
+                  life: 4.9652185
+                  intelligence: 4.145608
+                  dexterity: 2.027123
+                  poisonResist: 7.4577446
+                  mana: 9.965781
+                damageAmount: 9.301444
                 damageType: none
                 CasterId: CasterId
               faction: faction
@@ -8547,8 +8619,8 @@ components:
             - null
             - null
             position:
-              positionY: 5
-              positionX: 5
+              positionY: 7
+              positionX: 2
             portal: null
             items:
             - null
@@ -8556,14 +8628,6 @@ components:
             isStairs: true
             isWall: true
           width: 6
-          free:
-          - - {}
-            - {}
-          - - {}
-            - {}
-          ascii:
-          - ascii
-          - ascii
           height: 1
     dungeonsandtrollsMapObjects:
       type: object
@@ -8610,40 +8674,40 @@ components:
         - null
         isFree: true
         players:
-        - score: 6.965118
+        - score: 2.8841622
           effects:
           - null
           - null
-          money: 3
+          money: 1
           equip:
           - null
           - null
-          lastDamageTaken: 2
-          skillPoints: 1.284659
+          lastDamageTaken: 6
+          skillPoints: 6.778325
           maxAttributes: null
           name: name
           coordinates:
-            positionY: 5
-            level: 6
+            positionY: 3
+            level: 5
             positionX: 6
           attributes: null
           id: id
           stun: null
-        - score: 6.965118
+        - score: 2.8841622
           effects:
           - null
           - null
-          money: 3
+          money: 1
           equip:
           - null
           - null
-          lastDamageTaken: 2
-          skillPoints: 1.284659
+          lastDamageTaken: 6
+          skillPoints: 6.778325
           maxAttributes: null
           name: name
           coordinates:
-            positionY: 5
-            level: 6
+            positionY: 3
+            level: 5
             positionX: 6
           attributes: null
           id: id
@@ -8654,7 +8718,7 @@ components:
           - null
           - null
           lastDamageTaken: 6
-          lifePercentage: 9.36931
+          lifePercentage: 8.762042
           icon: icon
           equippedItems:
           - skills:
@@ -8672,7 +8736,7 @@ components:
               casterEffects:
                 summons:
                 - waypoint:
-                    destinationFloor: 8
+                    destinationFloor: 6
                   item: null
                   skill: null
                   decoration:
@@ -8685,7 +8749,7 @@ components:
                     - null
                   monster: null
                 - waypoint:
-                    destinationFloor: 8
+                    destinationFloor: 6
                   item: null
                   skill: null
                   decoration:
@@ -8734,7 +8798,7 @@ components:
               casterEffects:
                 summons:
                 - waypoint:
-                    destinationFloor: 8
+                    destinationFloor: 6
                   item: null
                   skill: null
                   decoration:
@@ -8747,7 +8811,7 @@ components:
                     - null
                   monster: null
                 - waypoint:
-                    destinationFloor: 8
+                    destinationFloor: 6
                   item: null
                   skill: null
                   decoration:
@@ -8783,7 +8847,7 @@ components:
               damageType: null
               target: none
             requirements: null
-            price: 6
+            price: 9
             name: name
             icon: icon
             attributes: null
@@ -8805,7 +8869,7 @@ components:
               casterEffects:
                 summons:
                 - waypoint:
-                    destinationFloor: 8
+                    destinationFloor: 6
                   item: null
                   skill: null
                   decoration:
@@ -8818,7 +8882,7 @@ components:
                     - null
                   monster: null
                 - waypoint:
-                    destinationFloor: 8
+                    destinationFloor: 6
                   item: null
                   skill: null
                   decoration:
@@ -8867,7 +8931,7 @@ components:
               casterEffects:
                 summons:
                 - waypoint:
-                    destinationFloor: 8
+                    destinationFloor: 6
                   item: null
                   skill: null
                   decoration:
@@ -8880,7 +8944,7 @@ components:
                     - null
                   monster: null
                 - waypoint:
-                    destinationFloor: 8
+                    destinationFloor: 6
                   item: null
                   skill: null
                   decoration:
@@ -8916,7 +8980,7 @@ components:
               damageType: null
               target: none
             requirements: null
-            price: 6
+            price: 9
             name: name
             icon: icon
             attributes: null
@@ -8926,44 +8990,44 @@ components:
           stun:
             isImmune: true
             isStunned: true
-          score: 9.018348
+          score: 3.5571952
           effects:
-          - duration: 9
+          - duration: 6
             effects:
-              slashResist: 7.386282
-              electricResist: 6.846853
-              fireResist: 1.0246457
-              constitution: 4.145608
-              constant: 5.025005
-              strength: 7.0614014
-              willpower: 2.027123
-              pierceResist: 1.2315135
-              stamina: 1.1730742
-              life: 7.4577446
-              intelligence: 3.6160767
-              dexterity: 9.301444
-              poisonResist: 1.4894159
-              mana: 4.9652185
-            damageAmount: 2.302136
+              slashResist: 1.0246457
+              electricResist: 1.1730742
+              fireResist: 6.846853
+              constitution: 1.2315135
+              constant: 9.36931
+              strength: 3.6160767
+              willpower: 7.386282
+              pierceResist: 1.4894159
+              stamina: 5.025005
+              life: 4.9652185
+              intelligence: 4.145608
+              dexterity: 2.027123
+              poisonResist: 7.4577446
+              mana: 9.965781
+            damageAmount: 9.301444
             damageType: none
             CasterId: CasterId
-          - duration: 9
+          - duration: 6
             effects:
-              slashResist: 7.386282
-              electricResist: 6.846853
-              fireResist: 1.0246457
-              constitution: 4.145608
-              constant: 5.025005
-              strength: 7.0614014
-              willpower: 2.027123
-              pierceResist: 1.2315135
-              stamina: 1.1730742
-              life: 7.4577446
-              intelligence: 3.6160767
-              dexterity: 9.301444
-              poisonResist: 1.4894159
-              mana: 4.9652185
-            damageAmount: 2.302136
+              slashResist: 1.0246457
+              electricResist: 1.1730742
+              fireResist: 6.846853
+              constitution: 1.2315135
+              constant: 9.36931
+              strength: 3.6160767
+              willpower: 7.386282
+              pierceResist: 1.4894159
+              stamina: 5.025005
+              life: 4.9652185
+              intelligence: 4.145608
+              dexterity: 2.027123
+              poisonResist: 7.4577446
+              mana: 9.965781
+            damageAmount: 9.301444
             damageType: none
             CasterId: CasterId
           faction: faction
@@ -8983,7 +9047,7 @@ components:
           - null
           - null
           lastDamageTaken: 6
-          lifePercentage: 9.36931
+          lifePercentage: 8.762042
           icon: icon
           equippedItems:
           - skills:
@@ -9001,7 +9065,7 @@ components:
               casterEffects:
                 summons:
                 - waypoint:
-                    destinationFloor: 8
+                    destinationFloor: 6
                   item: null
                   skill: null
                   decoration:
@@ -9014,7 +9078,7 @@ components:
                     - null
                   monster: null
                 - waypoint:
-                    destinationFloor: 8
+                    destinationFloor: 6
                   item: null
                   skill: null
                   decoration:
@@ -9063,7 +9127,7 @@ components:
               casterEffects:
                 summons:
                 - waypoint:
-                    destinationFloor: 8
+                    destinationFloor: 6
                   item: null
                   skill: null
                   decoration:
@@ -9076,7 +9140,7 @@ components:
                     - null
                   monster: null
                 - waypoint:
-                    destinationFloor: 8
+                    destinationFloor: 6
                   item: null
                   skill: null
                   decoration:
@@ -9112,7 +9176,7 @@ components:
               damageType: null
               target: none
             requirements: null
-            price: 6
+            price: 9
             name: name
             icon: icon
             attributes: null
@@ -9134,7 +9198,7 @@ components:
               casterEffects:
                 summons:
                 - waypoint:
-                    destinationFloor: 8
+                    destinationFloor: 6
                   item: null
                   skill: null
                   decoration:
@@ -9147,7 +9211,7 @@ components:
                     - null
                   monster: null
                 - waypoint:
-                    destinationFloor: 8
+                    destinationFloor: 6
                   item: null
                   skill: null
                   decoration:
@@ -9196,7 +9260,7 @@ components:
               casterEffects:
                 summons:
                 - waypoint:
-                    destinationFloor: 8
+                    destinationFloor: 6
                   item: null
                   skill: null
                   decoration:
@@ -9209,7 +9273,7 @@ components:
                     - null
                   monster: null
                 - waypoint:
-                    destinationFloor: 8
+                    destinationFloor: 6
                   item: null
                   skill: null
                   decoration:
@@ -9245,7 +9309,7 @@ components:
               damageType: null
               target: none
             requirements: null
-            price: 6
+            price: 9
             name: name
             icon: icon
             attributes: null
@@ -9255,44 +9319,44 @@ components:
           stun:
             isImmune: true
             isStunned: true
-          score: 9.018348
+          score: 3.5571952
           effects:
-          - duration: 9
+          - duration: 6
             effects:
-              slashResist: 7.386282
-              electricResist: 6.846853
-              fireResist: 1.0246457
-              constitution: 4.145608
-              constant: 5.025005
-              strength: 7.0614014
-              willpower: 2.027123
-              pierceResist: 1.2315135
-              stamina: 1.1730742
-              life: 7.4577446
-              intelligence: 3.6160767
-              dexterity: 9.301444
-              poisonResist: 1.4894159
-              mana: 4.9652185
-            damageAmount: 2.302136
+              slashResist: 1.0246457
+              electricResist: 1.1730742
+              fireResist: 6.846853
+              constitution: 1.2315135
+              constant: 9.36931
+              strength: 3.6160767
+              willpower: 7.386282
+              pierceResist: 1.4894159
+              stamina: 5.025005
+              life: 4.9652185
+              intelligence: 4.145608
+              dexterity: 2.027123
+              poisonResist: 7.4577446
+              mana: 9.965781
+            damageAmount: 9.301444
             damageType: none
             CasterId: CasterId
-          - duration: 9
+          - duration: 6
             effects:
-              slashResist: 7.386282
-              electricResist: 6.846853
-              fireResist: 1.0246457
-              constitution: 4.145608
-              constant: 5.025005
-              strength: 7.0614014
-              willpower: 2.027123
-              pierceResist: 1.2315135
-              stamina: 1.1730742
-              life: 7.4577446
-              intelligence: 3.6160767
-              dexterity: 9.301444
-              poisonResist: 1.4894159
-              mana: 4.9652185
-            damageAmount: 2.302136
+              slashResist: 1.0246457
+              electricResist: 1.1730742
+              fireResist: 6.846853
+              constitution: 1.2315135
+              constant: 9.36931
+              strength: 3.6160767
+              willpower: 7.386282
+              pierceResist: 1.4894159
+              stamina: 5.025005
+              life: 4.9652185
+              intelligence: 4.145608
+              dexterity: 2.027123
+              poisonResist: 7.4577446
+              mana: 9.965781
+            damageAmount: 9.301444
             damageType: none
             CasterId: CasterId
           faction: faction
@@ -9312,8 +9376,8 @@ components:
         - null
         - null
         position:
-          positionY: 5
-          positionX: 5
+          positionY: 7
+          positionX: 2
         portal: null
         items:
         - null
@@ -9377,7 +9441,7 @@ components:
         - null
         - null
         lastDamageTaken: 6
-        lifePercentage: 9.36931
+        lifePercentage: 8.762042
         icon: icon
         equippedItems:
         - skills:
@@ -9395,7 +9459,7 @@ components:
             casterEffects:
               summons:
               - waypoint:
-                  destinationFloor: 8
+                  destinationFloor: 6
                 item: null
                 skill: null
                 decoration:
@@ -9408,7 +9472,7 @@ components:
                   - null
                 monster: null
               - waypoint:
-                  destinationFloor: 8
+                  destinationFloor: 6
                 item: null
                 skill: null
                 decoration:
@@ -9457,7 +9521,7 @@ components:
             casterEffects:
               summons:
               - waypoint:
-                  destinationFloor: 8
+                  destinationFloor: 6
                 item: null
                 skill: null
                 decoration:
@@ -9470,7 +9534,7 @@ components:
                   - null
                 monster: null
               - waypoint:
-                  destinationFloor: 8
+                  destinationFloor: 6
                 item: null
                 skill: null
                 decoration:
@@ -9506,7 +9570,7 @@ components:
             damageType: null
             target: none
           requirements: null
-          price: 6
+          price: 9
           name: name
           icon: icon
           attributes: null
@@ -9528,7 +9592,7 @@ components:
             casterEffects:
               summons:
               - waypoint:
-                  destinationFloor: 8
+                  destinationFloor: 6
                 item: null
                 skill: null
                 decoration:
@@ -9541,7 +9605,7 @@ components:
                   - null
                 monster: null
               - waypoint:
-                  destinationFloor: 8
+                  destinationFloor: 6
                 item: null
                 skill: null
                 decoration:
@@ -9590,7 +9654,7 @@ components:
             casterEffects:
               summons:
               - waypoint:
-                  destinationFloor: 8
+                  destinationFloor: 6
                 item: null
                 skill: null
                 decoration:
@@ -9603,7 +9667,7 @@ components:
                   - null
                 monster: null
               - waypoint:
-                  destinationFloor: 8
+                  destinationFloor: 6
                 item: null
                 skill: null
                 decoration:
@@ -9639,7 +9703,7 @@ components:
             damageType: null
             target: none
           requirements: null
-          price: 6
+          price: 9
           name: name
           icon: icon
           attributes: null
@@ -9649,44 +9713,44 @@ components:
         stun:
           isImmune: true
           isStunned: true
-        score: 9.018348
+        score: 3.5571952
         effects:
-        - duration: 9
+        - duration: 6
           effects:
-            slashResist: 7.386282
-            electricResist: 6.846853
-            fireResist: 1.0246457
-            constitution: 4.145608
-            constant: 5.025005
-            strength: 7.0614014
-            willpower: 2.027123
-            pierceResist: 1.2315135
-            stamina: 1.1730742
-            life: 7.4577446
-            intelligence: 3.6160767
-            dexterity: 9.301444
-            poisonResist: 1.4894159
-            mana: 4.9652185
-          damageAmount: 2.302136
+            slashResist: 1.0246457
+            electricResist: 1.1730742
+            fireResist: 6.846853
+            constitution: 1.2315135
+            constant: 9.36931
+            strength: 3.6160767
+            willpower: 7.386282
+            pierceResist: 1.4894159
+            stamina: 5.025005
+            life: 4.9652185
+            intelligence: 4.145608
+            dexterity: 2.027123
+            poisonResist: 7.4577446
+            mana: 9.965781
+          damageAmount: 9.301444
           damageType: none
           CasterId: CasterId
-        - duration: 9
+        - duration: 6
           effects:
-            slashResist: 7.386282
-            electricResist: 6.846853
-            fireResist: 1.0246457
-            constitution: 4.145608
-            constant: 5.025005
-            strength: 7.0614014
-            willpower: 2.027123
-            pierceResist: 1.2315135
-            stamina: 1.1730742
-            life: 7.4577446
-            intelligence: 3.6160767
-            dexterity: 9.301444
-            poisonResist: 1.4894159
-            mana: 4.9652185
-          damageAmount: 2.302136
+            slashResist: 1.0246457
+            electricResist: 1.1730742
+            fireResist: 6.846853
+            constitution: 1.2315135
+            constant: 9.36931
+            strength: 3.6160767
+            willpower: 7.386282
+            pierceResist: 1.4894159
+            stamina: 5.025005
+            life: 4.9652185
+            intelligence: 4.145608
+            dexterity: 2.027123
+            poisonResist: 7.4577446
+            mana: 9.965781
+          damageAmount: 9.301444
           damageType: none
           CasterId: CasterId
         faction: faction
@@ -9702,6 +9766,20 @@ components:
           icon: icon
           slot: head
         algorithm: algorithm
+    dungeonsandtrollsPlayerSpecificMap:
+      type: object
+      properties:
+        position:
+          $ref: '#/components/schemas/dungeonsandtrollsPosition'
+        distance:
+          type: integer
+          format: int32
+        lineOfSight:
+          type: boolean
+      example:
+        distance: 3
+        lineOfSight: true
+        position: null
     dungeonsandtrollsPlayersInfo:
       type: object
       properties:
@@ -9711,40 +9789,40 @@ components:
             $ref: '#/components/schemas/dungeonsandtrollsCharacter'
       example:
         players:
-        - score: 6.965118
+        - score: 2.8841622
           effects:
           - null
           - null
-          money: 3
+          money: 1
           equip:
           - null
           - null
-          lastDamageTaken: 2
-          skillPoints: 1.284659
+          lastDamageTaken: 6
+          skillPoints: 6.778325
           maxAttributes: null
           name: name
           coordinates:
-            positionY: 5
-            level: 6
+            positionY: 3
+            level: 5
             positionX: 6
           attributes: null
           id: id
           stun: null
-        - score: 6.965118
+        - score: 2.8841622
           effects:
           - null
           - null
-          money: 3
+          money: 1
           equip:
           - null
           - null
-          lastDamageTaken: 2
-          skillPoints: 1.284659
+          lastDamageTaken: 6
+          skillPoints: 6.778325
           maxAttributes: null
           name: name
           coordinates:
-            positionY: 5
-            level: 6
+            positionY: 3
+            level: 5
             positionX: 6
           attributes: null
           id: id
@@ -9759,8 +9837,8 @@ components:
           type: integer
           format: int32
       example:
-        positionY: 5
-        positionX: 5
+        positionY: 7
+        positionX: 2
     dungeonsandtrollsRegistration:
       type: object
       properties:
@@ -9824,7 +9902,7 @@ components:
         casterEffects:
           summons:
           - waypoint:
-              destinationFloor: 8
+              destinationFloor: 6
             item: null
             skill: null
             decoration:
@@ -9837,7 +9915,7 @@ components:
               - null
             monster: null
           - waypoint:
-              destinationFloor: 8
+              destinationFloor: 6
             item: null
             skill: null
             decoration:
@@ -9932,7 +10010,7 @@ components:
       example:
         summons:
         - waypoint:
-            destinationFloor: 8
+            destinationFloor: 6
           item: null
           skill: null
           decoration:
@@ -9945,7 +10023,7 @@ components:
             - null
           monster: null
         - waypoint:
-            destinationFloor: 8
+            destinationFloor: 6
           item: null
           skill: null
           decoration:
@@ -10049,7 +10127,7 @@ components:
           type: integer
           format: int32
       example:
-        destinationFloor: 8
+        destinationFloor: 6
     protobufAny:
       type: object
       properties:
@@ -10058,11 +10136,6 @@ components:
       additionalProperties:
         type: object
       x-schema-name: protobufAny
-    protobufNullValue:
-      type: string
-      default: NULL_VALUE
-      enum:
-      - NULL_VALUE
     rpcStatus:
       type: object
       properties:

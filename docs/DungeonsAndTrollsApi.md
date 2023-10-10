@@ -138,6 +138,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **blocking** | **optional.Bool**| default false | 
  **items** | **optional.Bool**| default true | 
+ **fogOfWar** | **optional.Bool**| default false | 
 
 ### Return type
 
@@ -173,6 +174,7 @@ Name | Type | Description  | Notes
 
  **blocking** | **optional.Bool**| default false | 
  **items** | **optional.Bool**| default true | 
+ **fogOfWar** | **optional.Bool**| default false | 
 
 ### Return type
 

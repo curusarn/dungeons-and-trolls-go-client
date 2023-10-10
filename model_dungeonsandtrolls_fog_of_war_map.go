@@ -8,7 +8,7 @@
  */
 package swagger
 
-type DungeonsandtrollsStun struct {
-	IsStunned bool `json:"isStunned,omitempty"`
-	IsImmune bool `json:"isImmune,omitempty"`
+type DungeonsandtrollsFogOfWarMap struct {
+	Position *DungeonsandtrollsPosition `json:"position,omitempty"`
+	FogOfWar bool `json:"fogOfWar,omitempty"`
 }

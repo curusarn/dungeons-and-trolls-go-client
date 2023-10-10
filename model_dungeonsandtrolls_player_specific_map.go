@@ -8,7 +8,8 @@
  */
 package swagger
 
-type DungeonsandtrollsStun struct {
-	IsStunned bool `json:"isStunned,omitempty"`
-	IsImmune bool `json:"isImmune,omitempty"`
+type DungeonsandtrollsPlayerSpecificMap struct {
+	Position *DungeonsandtrollsPosition `json:"position,omitempty"`
+	Distance int32 `json:"distance,omitempty"`
+	LineOfSight bool `json:"lineOfSight,omitempty"`
 }
